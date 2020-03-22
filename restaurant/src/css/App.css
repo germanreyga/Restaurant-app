@@ -1,0 +1,56 @@
+.home-link {
+  color: rgb(141, 197, 56);
+  border-bottom: 2px solid;
+  border-bottom-color: rgb(141, 197, 56);
+}
+
+.home-link:hover {
+  background-color: rgb(141, 197, 56);
+  color: white;
+  text-decoration: none;
+}
+
+.order-link {
+  color: rgb(80, 121, 20);
+  border-bottom: 2px solid;
+  border-bottom-color: rgb(80, 121, 20);
+}
+
+.order-link:hover {
+  background-color: rgb(80, 121, 20);
+  color: white;
+  text-decoration: none;
+}
+
+.menu-link {
+  color: rgb(248, 116, 8);
+  border-bottom: 2px solid;
+  border-bottom-color: rgb(248, 116, 8);
+}
+
+.menu-link:hover {
+  background-color: rgb(248, 116, 8);
+  color: white;
+  text-decoration: none;
+}
+
+.nav-option {
+  margin-right: 2%;
+  letter-spacing: 0.25em;
+  padding: 7.5%;
+}
+
+.btn-orange {
+  background-color: rgb(255, 201, 131);
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+
+.btn-orange:hover {
+  background-color: rgb(245, 165, 60);
+  color: white;
+}
+
+.food-form-group {
+  margin-bottom: 0em;
+}

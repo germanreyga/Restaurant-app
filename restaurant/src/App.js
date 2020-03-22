@@ -1,28 +1,26 @@
 import React, { Component } from "react";
-import "./App.css";
-import axios from "axios";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Navigation } from "./components/Navigation";
+import { Home } from "./components/Home";
+import { Order } from "./components/Order";
+import { Register } from "./components/Register";
+import { Login } from "./components/Login";
+import "./css/App.css";
 
 class App extends Component {
-  state = {
-    hello: null
-  };
-
-  componentDidMount() {
-    axios
-      .get("/hello")
-      .then(res => this.setState({ hello: res.data }))
-      .catch(err => console.log(err));
-  }
-
   render() {
     return (
-      <React.Fragment>
-        <h1>Restaurant App</h1>
-        <div>
-          <h2>Contents of the JSON response after requesting /hello </h2>
-          <div>{this.state.hello ? <div> {this.state.hello} </div> : null}</div>
+      <BrowserRouter>
+        <Navigation />
+        <div className="container">
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/client/order" component={Order} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+          </Switch>
         </div>
-      </React.Fragment>
+      </BrowserRouter>
     );
   }
 }
