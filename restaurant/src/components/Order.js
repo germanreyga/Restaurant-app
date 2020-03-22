@@ -17,7 +17,6 @@ export class Order extends Component {
       .get("/posts")
       .then(res => {
         this.setState({ food: res.data });
-        console.log("Success fetching");
       })
       .catch(err => console.log(err));
   }
@@ -52,20 +51,20 @@ function Food(props) {
           </Card.Body>
           <Card.Footer className="text-muted">
             <form method="POST" action="/add">
-              <div className="form-group row food-form-group">
+              <div className="form-group row food-form-group ">
                 <input
                   type="number"
                   id="qty"
                   name="qty"
-                  className="form-control"
+                  className="form-control rounded-0"
                   placeholder="Qty."
                   style={{ width: "45%", height: "100%" }}
-                  min="0"
+                  min="1"
                   max="5"
                   required
                 />
                 <input
-                  className="btn-sm btn-primary"
+                  className="btn-sm btn-primary rounded-0"
                   type="Submit"
                   defaultValue="Add to order"
                 />

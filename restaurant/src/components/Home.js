@@ -15,7 +15,6 @@ export class Home extends Component {
       .get("/posts")
       .then(res => {
         this.setState({ posts: res.data });
-        console.log(this.state.posts);
       })
       .catch(err => console.log(err));
   }
