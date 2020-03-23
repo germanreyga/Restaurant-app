@@ -19,12 +19,14 @@ let appConfig = require("./configs/app");
 let session = require("express-session");
 let flash = require("express-flash");
 let sessionStore = new session.MemoryStore();
+
+app.use(bodyParser.json()); // support json encoded bodies
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 3600000 }, // 1 Hour
     store: sessionStore,
     saveUninitialized: true,
     resave: "true",

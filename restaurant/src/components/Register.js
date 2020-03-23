@@ -13,10 +13,16 @@ export class Register extends Component {
     inputType: "client",
     inputPassword: undefined,
     inputConfirmPassword: undefined,
-    year: undefined,
+    year: "_",
     errors: [],
     success: undefined
   };
+
+  async componentDidMount() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    this.setState({ year: currentYear });
+  }
 
   async handleInputChange(event) {
     // This method lets us control multiple inputs in a form.
@@ -34,12 +40,6 @@ export class Register extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.createUser(this.state);
-  }
-
-  async componentDidMount() {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    this.setState({ year: currentYear });
   }
 
   createUser(userinfo) {
@@ -62,7 +62,6 @@ export class Register extends Component {
             errors: res.data.message.errors
           });
         } else {
-          console.log(res.data.message);
           this.setState({ success: res.data.message, errors: [] });
         }
       })
@@ -150,7 +149,7 @@ export class Register extends Component {
 function Success(props) {
   if (props.success !== undefined) {
     return <div className="alert alert-success">User created successfully</div>;
-  } else if (props.success === undefined) {
+  } else {
     return <div></div>;
   }
 }

@@ -24,3 +24,16 @@ exports.registerUser = (req, res) => {
       res.status(500).json({ message: error });
     });
 };
+
+exports.userCredentials = (req, res) => {
+  if (req.user !== undefined) {
+    return res.json({ user: req.user.username, type: req.user.type });
+  } else {
+    return res.status(500).json({ message: "No logged in user" });
+  }
+};
+
+exports.logout = (req, res) => {
+  req.logout();
+  res.json({ message: "Logout successfull" });
+};

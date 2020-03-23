@@ -9,5 +9,14 @@ router.post(
   authValidator.registerUser,
   authController.registerUser
 );
+router.get("/userCredentials", authController.userCredentials);
+router.post(
+  "/loginUser",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/register"
+  })
+);
+router.get("/logout", authController.logout);
 
 module.exports = router;

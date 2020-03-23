@@ -36,7 +36,7 @@ passport.use(strategy);
 
 // Guarda en las variables de sesión el id del usuario loggeado
 passport.serializeUser((user, done) => {
-  done(null, user.email);
+  done(null, user.username);
 });
 
 // Cierra la sesión del usuario
