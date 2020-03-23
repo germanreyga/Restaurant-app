@@ -15,8 +15,9 @@ exports.registerUser = (req, res) => {
   type = req.body.inputType;
   password = req.body.inputPassword;
   hashedPass = bcrypt.hashSync(password, 10);
+  id_store = 1;
 
-  UserModel.createUser(username, type, hashedPass)
+  UserModel.createUser(username, type, hashedPass, id_store)
     .then(_ => {
       res.json({ message: "User created succesfully" });
     })
