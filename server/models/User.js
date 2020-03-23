@@ -7,8 +7,8 @@ exports.createUser = (username, type, password) => {
   return result;
 };
 
-exports.findByUserusername = email => {
-  const result = knex.from("users").where({ email: email });
+exports.findByUsername = username => {
+  const result = knex.from("users").where({ username: username });
   return result;
 };
 
