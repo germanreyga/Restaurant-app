@@ -155,7 +155,7 @@ function Success(props) {
 }
 
 function Errors(props) {
-  if (props.errors.length === 0) {
+  if (!props.errors || props.errors.length === 0) {
     return <div></div>;
   }
   return (

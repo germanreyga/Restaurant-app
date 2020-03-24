@@ -12,7 +12,7 @@ exports.up = function(knex) {
       table.string("username", 255).notNullable();
       table.string("password", 255).notNullable();
       table.string("type", 512).notNullable();
-      table.integer("id_store").unsigned().notNullable();
+      table.integer("id_store").unsigned();
       table.foreign("id_store").references("id_store").inTable("stores");
       table.timestamps(true,true);
     })
