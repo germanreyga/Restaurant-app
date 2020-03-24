@@ -35,8 +35,8 @@ exports.registerUser = (req, res) => {
       });
   }
   else if(type === "employee") {
-    id_store =  1;
-    //id_store =  req.body.inputId_store
+    //id_store =  1;
+    id_store =  req.body.inputId_store
       UserModel.createUserEmployee(username, type, hashedPass, id_store)
       .then(_ => {
         res.json({ message: "User created succesfully" });
