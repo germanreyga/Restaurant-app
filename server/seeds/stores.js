@@ -1,16 +1,12 @@
 exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex("stores")
-    .del()
-    .then(function() {
-      // Inserts seed entries
-      return knex("stores").insert([
-        {
-          location:
-            "María Auxiliadora 7, San Bartolo el Chico, 14380 Ciudad de México, CDMX",
-          name: "ITESM CDMX",
-          description: "Placeholder"
-        }
+
+    return knex('stores').del()
+    .then(function () {
+      return knex('stores').insert([
+        {location: 'Legorreta', name: 'FastFruit', description: 'Junto al comedor de lego'},
+        {location: 'CIE', name: 'FastFruit', description: 'Escondido dentro del primer piso'},
+        {location: 'Disney', name: 'FastFruit', description: 'En frente de prepa'}
       ]);
     });
-};
+  };
+  
