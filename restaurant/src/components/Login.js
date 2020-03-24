@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert } from "react-bootstrap";
 import axios from "axios";
 
 export class Login extends Component {
@@ -97,6 +98,7 @@ export class Login extends Component {
           />
         </div>
         <br />
+        <Alert variant={"info"}>You need to login to place orders!</Alert>
         <Error error={this.state.error} />
         <br />
         <button className="btn btn-lg btn-orange btn-block" type="submit">
@@ -112,5 +114,5 @@ function Error(props) {
   if (props.error === undefined) {
     return <div></div>;
   }
-  return <div className="alert alert-danger">{props.error}</div>;
+  return <Alert variant={"danger"}>{props.error}</Alert>;
 }
