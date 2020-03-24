@@ -6,7 +6,9 @@ let passport = require("passport");
 let authController = require("../controllers/AuthController");
 let foodController = require("../controllers/FoodController");
 let orderController = require("../controllers/OrderController");
-const storeController = require("../controllers/StoreController"); 
+let storeController = require("../controllers/StoreController");
+
+/* Routes */
 router.post(
   "/registerUser",
   authValidator.registerUser,
@@ -27,7 +29,9 @@ router.get("/logout", authController.logout);
 router.get("/food", foodController.allFood);
 
 router.post("/order", orderController.createOrder);
-router.get("/stores/All", storeController.getAllStores);
 
+router.get("/stores/all", storeController.getAllStores);
+
+router.get("/employees/all", storeController.getAllEmployees);
 
 module.exports = router;

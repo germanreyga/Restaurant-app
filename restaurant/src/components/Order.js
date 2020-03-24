@@ -30,7 +30,7 @@ export class Order extends Component {
     event.preventDefault();
     event.persist();
 
-    // Moves the user to the logi page if he isn't logged in
+    // Moves the user to the login page if he isn't logged in
     const loggedUserId = await this.getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
@@ -175,11 +175,9 @@ function Food(props) {
   });
 
   return (
-    <React.Fragment>
-      <div className="row justify-content-center">
-        <CardDeck>{listFood}</CardDeck>
-      </div>
-    </React.Fragment>
+    <div className="row justify-content-center">
+      <CardDeck>{listFood}</CardDeck>
+    </div>
   );
 }
 
@@ -209,7 +207,7 @@ function CartListItems(props) {
   const cartListItems = props.cart.map((item, index) => {
     return (
       <tr key={index}>
-        <td> {item.id_product - 1}</td>
+        <td>{item.id_product - 1}</td>
         <td>{item.name}</td>
         <td>{item.quantity}</td>
         <td>${item.price} MXN</td>

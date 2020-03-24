@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert } from "react-bootstrap";
+import { Alert, Form } from "react-bootstrap";
 import axios from "axios";
 
 export class Register extends Component {
@@ -67,6 +67,7 @@ export class Register extends Component {
         }
       })
       .catch(err => {
+        console.log(err);
         this.setState({ success: undefined, errors: err.description });
         console.log(err);
       });
@@ -75,7 +76,7 @@ export class Register extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <form className="form-signin" onSubmit={this.handleSubmit}>
+        <Form className="form-signin" onSubmit={this.handleSubmit}>
           <div className="text-center mb-4">
             <h1 className="h3 mb-3 font-weight-normal">Register</h1>
             <p>
@@ -92,20 +93,6 @@ export class Register extends Component {
               onChange={this.handleInputChange}
               required
             />
-          </div>
-          <div className="form-label-group">
-            <label htmlFor="inputType">Type</label>
-            <select
-              id="inputType"
-              name="inputType"
-              className="form-control"
-              value={this.state.type}
-              onChange={this.handleInputChange}
-              required
-            >
-              <option value="client">Client</option>
-              <option value="admin">Administrator</option>
-            </select>
           </div>
           <div className="form-label-group">
             <label htmlFor="inputPassword">Password</label>
@@ -141,7 +128,7 @@ export class Register extends Component {
           <p className="mt-5 mb-3 text-muted text-center">
             © {this.state.year}
           </p>
-        </form>
+        </Form>
       </div>
     );
   }
