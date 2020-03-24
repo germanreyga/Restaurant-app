@@ -1,8 +1,18 @@
 const { check } = require("express-validator");
+const User = require("../models/User");
 
 exports.registerUser = [
   // Revisa que el nombre no sea vacío
   check("inputUsername").notEmpty(),
+  // Checks that username doesn't exists already in db
+  check("inputUsername").custom(async (value, _) => {
+    const userExists = await User.checkExistingUser(value);
+    if (userExists === true) {
+      throw new Error("Username already exists, pick another one");
+    } else {
+      return value;
+    }
+  }),
   // Revisa que el usuario sea basic o admin
   check("inputType").custom((value, _) => {
     if (value !== "client" && value !== "admin") {

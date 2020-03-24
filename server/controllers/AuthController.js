@@ -11,13 +11,23 @@ exports.registerUser = (req, res) => {
     });
   }
 
-  username = req.body.inputUsername;
-  type = req.body.inputType;
-  password = req.body.inputPassword;
-  hashedPass = bcrypt.hashSync(password, 10);
-  id_store = 1;
+  let username = req.body.inputUsername;
+  let type = req.body.inputType;
+  let password = req.body.inputPassword;
+  let hashedPass = bcrypt.hashSync(password, 10);
+  let id_store = 1;
 
-  if (type === "client") {
+  // Erase this, testing purposes only
+  UserModel.createUser(username, type, hashedPass, id_store)
+    .then(_ => {
+      res.json({ message: "User created succesfully" });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: error });
+    });
+
+  /* if (type === "client") {
     UserModel.createUser(username, type, hashedPass)
       .then(_ => {
         res.json({ message: "User created succesfully" });
@@ -49,7 +59,7 @@ exports.registerUser = (req, res) => {
       status: 500,
       message: "Something went wrong with the form's type"
     });
-  }
+  } */
 };
 
 exports.userCredentials = (req, res) => {

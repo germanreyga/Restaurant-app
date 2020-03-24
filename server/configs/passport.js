@@ -8,8 +8,8 @@ const userTableFields = {
   passwordField: "inputPassword"
 };
 
-const verifyCallback = (inputUsername, inputPassword, done) => {
-  UserModel.findByUsername(inputUsername)
+const verifyCallback = async (inputUsername, inputPassword, done) => {
+  await UserModel.findByUsername(inputUsername)
     .then(user => {
       // Si no encuentra un usuario entonces regresa falso
       if (!user || user.length == 0) {

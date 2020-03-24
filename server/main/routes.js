@@ -6,7 +6,9 @@ let passport = require("passport");
 let authController = require("../controllers/AuthController");
 let foodController = require("../controllers/FoodController");
 let orderController = require("../controllers/OrderController");
-const storeController = require("../controllers/StoreController"); 
+let storeController = require("../controllers/StoreController");
+
+/* Router */
 router.post(
   "/registerUser",
   authValidator.registerUser,
@@ -28,6 +30,5 @@ router.get("/food", foodController.allFood);
 
 router.post("/order", orderController.createOrder);
 router.get("/stores/All", storeController.getAllStores);
-
 
 module.exports = router;
