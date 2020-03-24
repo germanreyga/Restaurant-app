@@ -1,9 +1,14 @@
 const knex = require("../database/connection");
 
-exports.createUser = (username, type, password) => {
+exports.createUser = (username, type, password, id_store) => {
   const result = knex
     .from("users")
-    .insert({ username: username, type: type, password: password });
+    .insert({
+      username: username,
+      type: type,
+      password: password,
+      id_store: id_store
+    });
   return result;
 };
 

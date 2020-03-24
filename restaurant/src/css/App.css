@@ -53,4 +53,15 @@
 
 .food-form-group {
   margin-bottom: 0em;
+  width: 100%;
+}
+
+.food-form-group > input {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.food-form-group > button {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
 }

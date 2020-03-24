@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert } from "react-bootstrap";
 import axios from "axios";
 
 export class Register extends Component {
@@ -148,7 +149,7 @@ export class Register extends Component {
 
 function Success(props) {
   if (props.success !== undefined) {
-    return <div className="alert alert-success">User created successfully</div>;
+    return <Alert variant={"success"}>User created successfully</Alert>;
   } else {
     return <div></div>;
   }
@@ -159,13 +160,13 @@ function Errors(props) {
     return <div></div>;
   }
   return (
-    <div className="alert alert-danger">
+    <Alert variant={"danger"}>
       Oops! the following errors were found:
       <ul>
         {props.errors.map((value, index) => {
           return <li key={index}>{value.msg}</li>;
         })}
       </ul>
-    </div>
+    </Alert>
   );
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Form, Navbar, Nav, Button } from "react-bootstrap";
 import axios from "axios";
 
 export class Navigation extends Component {
@@ -98,9 +98,11 @@ function GuestMenuButtons(props) {
 function UserMenuButtons(props) {
   return (
     <React.Fragment>
-      <form onSubmit={props.onSubmit}>
-        <input type="submit" value="Logout" className="btn btn-orange" />
-      </form>
+      <Form onSubmit={props.onSubmit}>
+        <Button type="submit" value="Logout" className="btn btn-orange">
+          Logout
+        </Button>
+      </Form>
     </React.Fragment>
   );
 }
