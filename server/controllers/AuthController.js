@@ -15,9 +15,15 @@ exports.registerUser = (req, res) => {
   let type = req.body.inputType;
   let password = req.body.inputPassword;
   let hashedPass = bcrypt.hashSync(password, 10);
-  let id_store = 1;
+  let id_store;
 
-  // Erase this, testing purposes only
+  // Nulls the id_store if the user is a client type, since it's not related to a specific store
+  if (type === "client" || req.body.inputStore === undefined) {
+    id_store = undefined;
+  } else {
+    id_store = req.body.inputStore;
+  }
+
   UserModel.createUser(username, type, hashedPass, id_store)
     .then(_ => {
       res.json({ message: "User created succesfully" });
@@ -26,40 +32,6 @@ exports.registerUser = (req, res) => {
       console.log(error);
       res.status(500).json({ message: error });
     });
-
-  /* if (type === "client") {
-    UserModel.createUser(username, type, hashedPass)
-      .then(_ => {
-        res.json({ message: "User created succesfully" });
-      })
-      .catch(error => {
-        res.status(500).json({ message: error });
-      });
-  } else if (type === "admin") {
-    UserModel.createUser(username, type, hashedPass)
-      .then(_ => {
-        res.json({ message: "User created succesfully" });
-      })
-      .catch(error => {
-        res.status(500).json({ message: error });
-      });
-  } else if (type === "employee") {
-    //ESTO DEBE SER SU PROPIO METODO ESTA AQUI AHORITA PARA PURO TESTING
-    id_store = 1;
-    //id_store =  req.body.inputId_store
-    UserModel.createUserEmployee(username, type, hashedPass, id_store)
-      .then(_ => {
-        res.json({ message: "User created succesfully" });
-      })
-      .catch(error => {
-        res.status(500).json({ message: error });
-      });
-  } else {
-    return res.json({
-      status: 500,
-      message: "Something went wrong with the form's type"
-    });
-  } */
 };
 
 exports.userCredentials = (req, res) => {

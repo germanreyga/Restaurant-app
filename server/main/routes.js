@@ -8,7 +8,7 @@ let foodController = require("../controllers/FoodController");
 let orderController = require("../controllers/OrderController");
 let storeController = require("../controllers/StoreController");
 
-/* Router */
+/* Routes */
 router.post(
   "/registerUser",
   authValidator.registerUser,
@@ -29,6 +29,9 @@ router.get("/logout", authController.logout);
 router.get("/food", foodController.allFood);
 
 router.post("/order", orderController.createOrder);
-router.get("/stores/All", storeController.getAllStores);
+
+router.get("/stores/all", storeController.getAllStores);
+
+router.get("/employees/all", storeController.getAllEmployees);
 
 module.exports = router;

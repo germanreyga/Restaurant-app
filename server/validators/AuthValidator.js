@@ -15,7 +15,7 @@ exports.registerUser = [
   }),
   // Revisa que el usuario sea basic o admin
   check("inputType").custom((value, _) => {
-    if (value !== "client" && value !== "admin") {
+    if (value !== "client" && value !== "admin" && value !== "employee") {
       throw new Error("User role not valid");
     } else {
       return value;

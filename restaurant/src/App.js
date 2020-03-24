@@ -5,6 +5,7 @@ import { Home } from "./components/Home";
 import { Order } from "./components/Order";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
+import { AdminDashboard } from "./components/AdminDashboard";
 import "./css/App.css";
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
             <Route path="/client/order" component={Order} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/admintools" component={AdminDashboard} />
           </Switch>
         </div>
       </BrowserRouter>
