@@ -11,7 +11,7 @@ exports.createOrder = (req, res) => {
   const status_payment = "unpaid";
   const status_order = "preparing";
   const order_total = preciseRound(totalprice, 2);
-  const id_user = req.body.id;
+  const id_user = req.user.id_user; // Passport.js user session
 
   const data = {
     cart: cart,
