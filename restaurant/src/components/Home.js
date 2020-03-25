@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 
 const axiosInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com"
@@ -23,7 +25,11 @@ export class Home extends Component {
     return (
       <React.Fragment>
         <h1>Restaurant App</h1>
-        <Comment posts={this.state.posts} />
+        <AwesomeSlider>
+          <div data-src={require("../bg.jpg")} />
+          <div data-src={require("../ffcups.jpg")} />
+          <div data-src={require("../ffeat.jpg")} />
+        </AwesomeSlider>
       </React.Fragment>
     );
   }
