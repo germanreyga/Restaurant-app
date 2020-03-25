@@ -43,7 +43,7 @@ function preciseRound(num, decimals) {
   ).toFixed(decimals);
 }
 
-function findOrder(id){
+function findOrder(id, res){
   OrderModel.find(id)
     .then((order) => {
       return order;
@@ -65,7 +65,7 @@ exports.showAllOrders = (req, res) => {
 
 exports.orderReady = (req, res) => {
   let id = req.body.id;
-  let foundOrder = findOrder(id);
+  let foundOrder = findOrder(id, res);
   OrderModel.markAsReady(foundOrder)
     .then((data) => {
       res.json({ data: data })
@@ -77,7 +77,7 @@ exports.orderReady = (req, res) => {
 
 exports.orderDelivered = (req,res) => {
   let id = req.body.id;
-  let foundOrder = findOrder(id);
+  let foundOrder = findOrder(id, res);
   OrderModel.markAsDelivered(foundOrder)
     .then((data) => {
       res.json({ data: data })
@@ -87,17 +87,18 @@ exports.orderDelivered = (req,res) => {
     });
 }
 
-// exports.productsFromOrder = (req, res) => {
-//   let id = req.body.id;
-//   let foundOrder = findOrder(id);
-//   OrderModel.selectProductsFromOrder(foundOrder)
-//     .then((data) => {
-//       res.json({ data: data})
-//     })
-//     .catch(error => {
-//       res.status(500).json({ message: error })
-//     });
-// }
+exports.productsFromOrder = (req, res) => {
+  let id = req.body.id;
+  let foundOrder = findOrder(id, res);
+  OrderModel.selectProductsFromOrder(foundOrder)
+    .then((data) => {
+      res.json({ data: data})
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: error })
+    });
+}
 
 exports.showUsersOrders = (req, res) => {
   let idUser = req.user.id_user;
