@@ -123,7 +123,7 @@ export class Register extends Component {
           <Errors errors={this.state.errors} />
           <br />
           <button className="btn btn-lg btn-orange btn-block" type="submit">
-            Sign in
+            Register
           </button>
           <p className="mt-5 mb-3 text-muted text-center">
             © {this.state.year}
