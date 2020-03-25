@@ -42,3 +42,70 @@ function preciseRound(num, decimals) {
     ) / t
   ).toFixed(decimals);
 }
+
+function findOrder(id){
+  OrderModel.find(id)
+    .then((order) => {
+      return order;
+    })
+    .catch(error => {
+      res.status(500).json({ message: error});
+    });
+}
+
+exports.showAllOrders = (req, res) => {
+  OrderModel.all()
+    .then(data => {
+      res.json({ data: data });
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+};
+
+exports.orderReady = (req, res) => {
+  let id = req.body.id;
+  let foundOrder = findOrder(id);
+  OrderModel.markAsReady(foundOrder)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+}
+
+exports.orderDelivered = (req,res) => {
+  let id = req.body.id;
+  let foundOrder = findOrder(id);
+  OrderModel.markAsDelivered(foundOrder)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+}
+
+// exports.productsFromOrder = (req, res) => {
+//   let id = req.body.id;
+//   let foundOrder = findOrder(id);
+//   OrderModel.selectProductsFromOrder(foundOrder)
+//     .then((data) => {
+//       res.json({ data: data})
+//     })
+//     .catch(error => {
+//       res.status(500).json({ message: error })
+//     });
+// }
+
+exports.showUsersOrders = (req, res) => {
+  let idUser = req.user.id_user;
+  OrderModel.selectByClient(idUser)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error })
+    });
+}

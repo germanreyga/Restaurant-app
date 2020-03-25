@@ -1,5 +1,9 @@
 const knex = require("../database/connection");
 
+exports.PREPARING = 'preparing';
+exports.READY = 'ready';
+exports.DELIVERED = 'delivered';
+
 exports.createOrder = async data => {
   const cart = data.cart;
   const order_hour = data.order_hour;
@@ -41,3 +45,42 @@ exports.createOrder = async data => {
     console.error(error);
   }
 };
+
+exports.all = () =>{
+  return knex
+    .from('orders')
+    .select('*');
+}
+
+exports.find = (id) => {
+  return knex
+    .select('*')
+    .from('orders')
+    .where('id_order',id)
+    .first();
+}
+
+exports.markAsReady = (order) => {
+  return knex('orders')
+    .update({status: this.READY})
+    .where('id_order', order.id);
+}
+
+exports.markAsDelivered = (order) => {
+  return knex('orders')
+    .update({status: this.DELIVERED})
+    .where('id_order', order.id);
+}
+
+exports.selectByClient = (id) => {
+  return knex
+    .from('orders')
+    .where('id_user', id);
+}
+
+// exports.selectProductsFromOrder = (id) => {
+//   return knex('products')
+//     .join('order_product','order_product.id_product','=', 'products.id_product')
+//     .join('orders','order_product.id_product','=', id)
+//     .select('products.id_product','products.name','products.price');
+// }
