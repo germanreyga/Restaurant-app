@@ -20,7 +20,7 @@ Go back to root directory:
 
 ## Edit environment variables
 
-Edit the .env.example file:
+Edit the .env.example file in the `server` directory:
 
 1. Remove the .example extension in the filename
 2. Edit the file so the environment variables match your database and PC settings
@@ -29,7 +29,7 @@ Edit the .env.example file:
 
 This project requires MariaDB/MySQL to be running on the PC.
 
-Create the MariaDB/MySQL database for the app. Then go back to root directory:
+Create the MariaDB/MySQL database for the app. Then go back to `server` directory:
 
 1. `npm run migrations` to create the database schema
 1. `npm run seeds` to fill up the database with some data
