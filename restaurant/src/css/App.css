@@ -103,3 +103,69 @@
 .order-card {
   background-color: rgba(255, 244, 183, 0.877);
 }
+
+footer {
+  margin-top: 3%;
+  padding: 10px 0px;
+}
+
+footer .fa:hover {
+  color: #675f5f;
+}
+
+.logo-footer {
+  font-weight: 800;
+  font-size: 30px;
+}
+
+.address span,
+.contact span,
+.social span,
+.header-form {
+  font-weight: 800;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: block;
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+
+.address li p,
+.contact li a,
+.social li a {
+  color: white;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.address,
+.contact,
+.social {
+  list-style: none;
+}
+
+.social li {
+  float: left;
+}
+
+.fa {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.btn-search {
+  background: #484848;
+  border: none;
+  padding: 5px 15px;
+}
+
+.input-search {
+  border: none;
+  height: 30px;
+  padding-left: 10px;
+}
+
+/* i {
+  font-size: 35px !important;
+} */

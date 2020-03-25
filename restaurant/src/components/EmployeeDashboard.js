@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardDeck, Table, Button, Form } from "react-bootstrap";
+import { Card, Alert, CardDeck, Table, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 export class EmployeeDashboard extends Component {
@@ -106,44 +106,53 @@ export class EmployeeDashboard extends Component {
 
 function PendingOrders(props) {
   const orders = props.orders;
-  const orderList = orders.map((outside, index) => {
-    const orderListInside = outside.order.map((inside, index) => {
+
+  if (orders.length !== undefined && orders.length > 0) {
+    const orderList = orders.map((outside, index) => {
+      const orderListInside = outside.order.map((inside, index) => {
+        return (
+          <div className="text-center border-bottom" key={index}>
+            {inside.name} x {inside.quantity}
+          </div>
+        );
+      });
       return (
-        <div className="text-center border-bottom" key={index}>
-          {inside.name} x {inside.quantity}
-        </div>
+        <Card
+          border="dark"
+          key={index}
+          className="text-center order-card"
+          style={{ width: "18rem", height: "100%" }}
+        >
+          <Card.Header as="h5">Order #{outside.order[0].id_order}</Card.Header>
+          <Card.Body>
+            <Card.Subtitle className="mb-2 text-muted">
+              By: {outside.order[0].username}
+            </Card.Subtitle>
+            {orderListInside}
+            <div className="font-weight-bold">
+              ${outside.order[0].order_total}
+            </div>
+          </Card.Body>
+          <Card.Footer>
+            <Form onSubmit={props.onSubmit}>
+              <input
+                name="id"
+                defaultValue={outside.order[0].id_order}
+                hidden
+              />
+              <Button type="submit" className="btn btn-dark">
+                Mark as ready
+              </Button>
+            </Form>
+          </Card.Footer>
+        </Card>
       );
     });
-    return (
-      <Card
-        border="dark"
-        key={index}
-        className="text-center order-card"
-        style={{ width: "18rem", height: "100%" }}
-      >
-        <Card.Header as="h5">Order #{outside.order[0].id_order}</Card.Header>
-        <Card.Body>
-          <Card.Subtitle className="mb-2 text-muted">
-            By: {outside.order[0].username}
-          </Card.Subtitle>
-          {orderListInside}
-          <div className="font-weight-bold">
-            ${outside.order[0].order_total}
-          </div>
-        </Card.Body>
-        <Card.Footer>
-          <Form onSubmit={props.onSubmit}>
-            <input name="id" defaultValue={outside.order[0].id_order} hidden />
-            <Button type="submit" className="btn btn-dark">
-              Mark as ready
-            </Button>
-          </Form>
-        </Card.Footer>
-      </Card>
-    );
-  });
 
-  return <CardDeck>{orderList}</CardDeck>;
+    return <CardDeck>{orderList}</CardDeck>;
+  } else {
+    return <Alert variant="secondary">No orders to prepare</Alert>;
+  }
 }
 
 function OtherOrders(props) {

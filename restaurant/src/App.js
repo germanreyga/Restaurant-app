@@ -24,6 +24,35 @@ class App extends Component {
             <Route path="/employee/tools" component={EmployeeDashboard} />
           </Switch>
         </div>
+        <footer className="bg-dark text-white address">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <ul>
+                  <span className="text-uppercase">Authors</span>
+                  <li>Kevin Ruvalcaba P.</li>
+                  <li>Alejandro Moreno L.</li>
+                  <li>Germán Reyes G.</li>
+                </ul>
+              </div>
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <ul className="social">
+                  <span>Project's repository</span>
+                  <li>
+                    <a href="https://github.com/germanreyga/Restaurant-app">
+                      <img
+                        alt="Qries"
+                        src="https://boxboat.com/assets/wf/images/github.9412ae55426a.png"
+                        width="50"
+                        height="50"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
       </BrowserRouter>
     );
   }
