@@ -30,6 +30,16 @@ router.get("/food", foodController.allFood);
 
 router.post("/order", orderController.createOrder);
 
+router.get("/order/all", orderController.showAllOrders); //show all orders
+
+router.post("/order/ready", orderController.orderReady); //mark order as ready
+
+router.post("/order/delivered", orderController.orderDelivered); //mark order as delivered
+
+router.get("/order/products", orderController.productsFromOrder); //get products from certain order
+
+router.get("/order/list", orderController.showUsersOrders); //show a user's orders
+
 router.get("/stores/all", storeController.getAllStores);
 
 router.get("/employees/all", storeController.getAllEmployees);

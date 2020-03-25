@@ -42,3 +42,58 @@ function preciseRound(num, decimals) {
     ) / t
   ).toFixed(decimals);
 }
+
+exports.showAllOrders = (req, res) => {
+  OrderModel.all()
+    .then(data => {
+      res.json({ data: data });
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+};
+
+exports.orderReady = (req, res) => {
+  let id = req.body.id;
+  OrderModel.markAsReady(id)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+}
+
+exports.orderDelivered = (req,res) => {
+  let id = req.body.id;
+  OrderModel.markAsDelivered(id)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+}
+
+exports.productsFromOrder = (req, res) => {
+  let id = req.body.id;
+  OrderModel.selectProductsFromOrder(id)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: error })
+    });
+}
+
+exports.showUsersOrders = (req, res) => {
+  let idUser = req.user.id_user;
+  OrderModel.selectByClient(idUser)
+    .then((data) => {
+      res.json({ data: data })
+    })
+    .catch(error => {
+      res.status(500).json({ message: error })
+    });
+}
