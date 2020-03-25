@@ -196,7 +196,6 @@ function Cart(props) {
     return (
       <React.Fragment>
         <Alert variant="secondary">No items in your cart</Alert>
-        <br />
         <CartSubmitStatus cartSubmitSuccess={props.cartSubmitSuccess} />
       </React.Fragment>
     );
