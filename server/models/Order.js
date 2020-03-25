@@ -60,16 +60,16 @@ exports.find = (id) => {
     .first();
 }
 
-exports.markAsReady = (order) => {
+exports.markAsReady = (id) => {
   return knex('orders')
-    .update({status: this.READY})
-    .where('id_order', order.id);
+    .update({ status_order: this.READY })
+    .where('id_order', id);
 }
 
-exports.markAsDelivered = (order) => {
+exports.markAsDelivered = (id) => {
   return knex('orders')
-    .update({status: this.DELIVERED})
-    .where('id_order', order.id);
+    .update({ status_order: this.DELIVERED })
+    .where('id_order', id);
 }
 
 exports.selectByClient = (id) => {

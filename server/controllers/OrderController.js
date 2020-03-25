@@ -43,16 +43,6 @@ function preciseRound(num, decimals) {
   ).toFixed(decimals);
 }
 
-function findOrder(id, res){
-  OrderModel.find(id)
-    .then((order) => {
-      return order;
-    })
-    .catch(error => {
-      res.status(500).json({ message: error});
-    });
-}
-
 exports.showAllOrders = (req, res) => {
   OrderModel.all()
     .then(data => {
@@ -65,8 +55,7 @@ exports.showAllOrders = (req, res) => {
 
 exports.orderReady = (req, res) => {
   let id = req.body.id;
-  let foundOrder = findOrder(id, res);
-  OrderModel.markAsReady(foundOrder)
+  OrderModel.markAsReady(id)
     .then((data) => {
       res.json({ data: data })
     })
@@ -77,8 +66,7 @@ exports.orderReady = (req, res) => {
 
 exports.orderDelivered = (req,res) => {
   let id = req.body.id;
-  let foundOrder = findOrder(id, res);
-  OrderModel.markAsDelivered(foundOrder)
+  OrderModel.markAsDelivered(id)
     .then((data) => {
       res.json({ data: data })
     })
@@ -89,10 +77,9 @@ exports.orderDelivered = (req,res) => {
 
 exports.productsFromOrder = (req, res) => {
   let id = req.body.id;
-  // let foundOrder = findOrder(id, res);
   OrderModel.selectProductsFromOrder(id)
     .then((data) => {
-      res.json({ data: data})
+      res.json({ data: data })
     })
     .catch(error => {
       console.log(error);
