@@ -89,8 +89,8 @@ exports.orderDelivered = (req,res) => {
 
 exports.productsFromOrder = (req, res) => {
   let id = req.body.id;
-  let foundOrder = findOrder(id, res);
-  OrderModel.selectProductsFromOrder(foundOrder)
+  // let foundOrder = findOrder(id, res);
+  OrderModel.selectProductsFromOrder(id)
     .then((data) => {
       res.json({ data: data})
     })

@@ -81,6 +81,6 @@ exports.selectByClient = (id) => {
 exports.selectProductsFromOrder = (id) => {
   return knex('products')
     .join('order_product','order_product.id_product','=', 'products.id_product')
-    .join('orders','order_product.id_product','=', id)
+    .join('orders','order_product.id_order','=', id)
     .select('products.id_product','products.name','products.price');
 }
