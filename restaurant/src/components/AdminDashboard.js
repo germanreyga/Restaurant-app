@@ -11,7 +11,7 @@ export class AdminDashboard extends Component {
 
   state = {
     inputType: "employee",
-    inputStore: 1,
+    inputStore: "-",
     errors: [],
     success: undefined,
     employees: [],
@@ -134,7 +134,11 @@ function EmployeeForm(props) {
           value={props.state.type}
           onChange={props.handleInputChange}
           required
+          defaultValue="-"
         >
+          <option value="-" disabled>
+            ---
+          </option>
           <option value="employee">Employee</option>
           <option value="admin">Administrator</option>
         </select>
@@ -146,10 +150,13 @@ function EmployeeForm(props) {
           id="inputStore"
           name="inputStore"
           className="form-control"
-          value={props.state.inputStore}
+          defaultValue={props.state.inputStore}
           onChange={props.handleInputChange}
           required
         >
+          <option value="-" disabled>
+            ---
+          </option>
           <StoreList stores={props.state.stores}></StoreList>
         </select>
       </div>

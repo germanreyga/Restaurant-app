@@ -77,6 +77,7 @@
   margin-top: 0.5em;
   color: white;
   border-color: rgb(255, 201, 131);
+  padding: 0.5em 3em;
 }
 
 .btn-orange:hover {
@@ -130,13 +131,9 @@ footer .fa:hover {
   letter-spacing: 3px;
 }
 
-.address li p,
-.contact li a,
-.social li a {
-  color: white;
-  letter-spacing: 2px;
-  text-decoration: none;
+.address li {
   font-size: 13px;
+  letter-spacing: 3px;
 }
 
 .address,
@@ -166,6 +163,9 @@ footer .fa:hover {
   padding-left: 10px;
 }
 
-/* i {
-  font-size: 35px !important;
-} */
+.access-butons {
+  text-align: center;
+}
+.access-butons > a {
+  width: 45%;
+}

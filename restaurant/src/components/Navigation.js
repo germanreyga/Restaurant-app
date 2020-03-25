@@ -67,10 +67,13 @@ export class Navigation extends Component {
               <AdminLink type={this.state.type}></AdminLink>
               <EmployeeLink type={this.state.type}></EmployeeLink>
             </Nav>
-            <MenuButtons
-              isLoggedIn={this.state.isLoggedIn}
-              onSubmit={this.handleSubmit}
-            />
+
+            <div className="access-butons">
+              <MenuButtons
+                isLoggedIn={this.state.isLoggedIn}
+                onSubmit={this.handleSubmit}
+              />
+            </div>
           </Navbar.Collapse>
         </Navbar>
       </>
