@@ -1,5 +1,8 @@
 let OrderModel = require("../models/Order");
 
+exports.STATUS_PAYMENT = "unpaid";
+exports.STATUS_ORDER = "preparing";
+
 exports.createOrder = (req, res) => {
   const cart = req.body.cart;
   totalprice = 0;
@@ -8,8 +11,8 @@ exports.createOrder = (req, res) => {
   });
 
   const order_hour = new Date();
-  const status_payment = "unpaid";
-  const status_order = "preparing";
+  const status_payment = this.STATUS_PAYMENT;
+  const status_order = this.STATUS_ORDER;
   const order_total = preciseRound(totalprice, 2);
   const id_user = req.user.id_user; // Passport.js user session
 
@@ -54,46 +57,67 @@ exports.showAllOrders = (req, res) => {
 };
 
 exports.orderReady = (req, res) => {
-  let id = req.body.id;
+  let id = req.params.id;
   OrderModel.markAsReady(id)
-    .then((data) => {
-      res.json({ data: data })
+    .then(data => {
+      res.json({ data: data });
     })
     .catch(error => {
       res.status(500).json({ message: error });
     });
-}
+};
 
-exports.orderDelivered = (req,res) => {
-  let id = req.body.id;
+exports.orderDelivered = (req, res) => {
+  let id = req.params.id;
   OrderModel.markAsDelivered(id)
-    .then((data) => {
-      res.json({ data: data })
+    .then(data => {
+      res.json({ data: data });
     })
     .catch(error => {
       res.status(500).json({ message: error });
     });
-}
+};
+
+exports.findRDOrders = (req, res) => {
+  OrderModel.readyOrDelivered()
+    .then(data => {
+      res.json({ data: data });
+    })
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
+};
 
 exports.productsFromOrder = (req, res) => {
-  let id = req.body.id;
+  let id = req.params.id;
   OrderModel.selectProductsFromOrder(id)
-    .then((data) => {
-      res.json({ data: data })
+    .then(data => {
+      res.json({ data: data });
     })
     .catch(error => {
       console.log(error);
-      res.status(500).json({ message: error })
+      res.status(500).json({ message: error });
     });
-}
+};
+
+exports.getPreparingOrdersIds = (req, res) => {
+  OrderModel.selectPreparingOrders()
+    .then(data => {
+      res.json({ data: data });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: error });
+    });
+};
 
 exports.showUsersOrders = (req, res) => {
   let idUser = req.user.id_user;
   OrderModel.selectByClient(idUser)
-    .then((data) => {
-      res.json({ data: data })
+    .then(data => {
+      res.json({ data: data });
     })
     .catch(error => {
-      res.status(500).json({ message: error })
+      res.status(500).json({ message: error });
     });
-}
+};

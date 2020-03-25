@@ -1,8 +1,8 @@
 const knex = require("../database/connection");
 
-exports.PREPARING = 'preparing';
-exports.READY = 'ready';
-exports.DELIVERED = 'delivered';
+exports.PREPARING = "preparing";
+exports.READY = "ready";
+exports.DELIVERED = "delivered";
 
 exports.createOrder = async data => {
   const cart = data.cart;
@@ -46,41 +46,64 @@ exports.createOrder = async data => {
   }
 };
 
-exports.all = () =>{
-  return knex
-    .from('orders')
-    .select('*');
-}
+exports.all = () => {
+  return knex.from("orders").select("*");
+};
 
-exports.find = (id) => {
+exports.find = id => {
   return knex
-    .select('*')
-    .from('orders')
-    .where('id_order',id)
+    .select("*")
+    .from("orders")
+    .where("id_order", id)
     .first();
-}
+};
 
-exports.markAsReady = (id) => {
-  return knex('orders')
+exports.markAsReady = id => {
+  return knex("orders")
     .update({ status_order: this.READY })
-    .where('id_order', id);
-}
+    .where("id_order", id);
+};
 
-exports.markAsDelivered = (id) => {
-  return knex('orders')
+exports.markAsDelivered = id => {
+  console.log("ENTRA");
+  return knex("orders")
     .update({ status_order: this.DELIVERED })
-    .where('id_order', id);
-}
+    .where("id_order", id);
+};
 
-exports.selectByClient = (id) => {
-  return knex
-    .from('orders')
-    .where('id_user', id);
-}
+exports.selectByClient = id => {
+  return knex.from("orders").where("id_user", id);
+};
 
-exports.selectProductsFromOrder = (id) => {
-  return knex('products')
-    .join('order_product','order_product.id_product','=', 'products.id_product')
-    .join('orders','order_product.id_order','=', id)
-    .select('products.id_product','products.name','products.price');
-}
+exports.selectProductsFromOrder = id => {
+  return knex("products")
+    .join(
+      "order_product",
+      "order_product.id_product",
+      "=",
+      "products.id_product"
+    )
+    .join("orders", "order_product.id_order", "=", "orders.id_order")
+    .join("users", "orders.id_user", "=", "users.id_user")
+    .where("orders.id_order", id)
+    .select(
+      "products.id_product",
+      "products.name",
+      "products.price",
+      "order_product.id_order",
+      "order_product.quantity",
+      "orders.order_total",
+      "users.id_user",
+      "users.username"
+    );
+};
+
+exports.selectPreparingOrders = id => {
+  return knex("orders")
+    .where("status_order", this.PREPARING)
+    .column("id_order");
+};
+
+exports.readyOrDelivered = () => {
+  return knex("orders").whereIn("status_order", [this.READY, this.DELIVERED]);
+};

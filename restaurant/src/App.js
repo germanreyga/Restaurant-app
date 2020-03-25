@@ -6,6 +6,7 @@ import { Order } from "./components/Order";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import { AdminDashboard } from "./components/AdminDashboard";
+import { EmployeeDashboard } from "./components/EmployeeDashboard";
 import "./css/App.css";
 
 class App extends Component {
@@ -19,7 +20,8 @@ class App extends Component {
             <Route path="/client/order" component={Order} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/admintools" component={AdminDashboard} />
+            <Route path="/admin/tools" component={AdminDashboard} />
+            <Route path="/employee/tools" component={EmployeeDashboard} />
           </Switch>
         </div>
       </BrowserRouter>

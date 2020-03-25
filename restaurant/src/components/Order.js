@@ -19,7 +19,7 @@ export class Order extends Component {
 
   componentDidMount() {
     axios
-      .get("/food")
+      .get("/food/all")
       .then(res => {
         this.setState({ food: res.data.data });
       })
@@ -97,7 +97,7 @@ export class Order extends Component {
   async getUserId() {
     let id = undefined;
     await axios
-      .get("/userCredentials")
+      .get("/user/credentials")
       .then(res => {
         id = res.data.user;
       })
@@ -195,7 +195,7 @@ function Cart(props) {
   } else {
     return (
       <React.Fragment>
-        <div>No items in your cart</div>
+        <Alert variant="secondary">No items in your cart</Alert>
         <br />
         <CartSubmitStatus cartSubmitSuccess={props.cartSubmitSuccess} />
       </React.Fragment>

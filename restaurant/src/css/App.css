@@ -8,18 +8,20 @@
   background-color: rgb(141, 197, 56);
   color: white;
   text-decoration: none;
+  transition-duration: 0.5s;
 }
 
 .order-link {
-  color: rgb(80, 121, 20);
+  color: rgb(106, 161, 23);
   border-bottom: 2px solid;
-  border-bottom-color: rgb(80, 121, 20);
+  border-bottom-color: rgb(106, 161, 23);
 }
 
 .order-link:hover {
-  background-color: rgb(80, 121, 20);
+  background-color: rgb(106, 161, 23);
   color: white;
   text-decoration: none;
+  transition-duration: 0.5s;
 }
 
 .menu-link {
@@ -32,12 +34,41 @@
   background-color: rgb(248, 116, 8);
   color: white;
   text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+.admin-link {
+  color: rgb(80, 121, 20);
+  border-bottom: 2px solid;
+  border-bottom-color: rgb(80, 121, 20);
+}
+
+.admin-link:hover {
+  background-color: rgb(80, 121, 20);
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+.employee-link {
+  color: rgb(255, 157, 77);
+  border-bottom: 2px solid;
+  border-bottom-color: rgb(255, 157, 77);
+}
+
+.employee-link:hover {
+  background-color: rgb(255, 157, 77);
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.5s;
 }
 
 .nav-option {
   margin-right: 2%;
   letter-spacing: 0.25em;
-  padding: 7.5%;
+  padding: 2.5%;
+  min-height: 65px;
+  max-height: 65px;
 }
 
 .btn-orange {
@@ -67,4 +98,8 @@
 .food-form-group > button {
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
+}
+
+.order-card {
+  background-color: rgba(255, 244, 183, 0.877);
 }

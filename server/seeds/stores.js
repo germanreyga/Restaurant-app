@@ -26,6 +26,16 @@ exports.seed = async function(knex) {
             }
           ]);
         });
+
+      await knex("users").insert([
+        {
+          username: "admin",
+          password:
+            "$2b$10$si/2T4or/Vj7o0fvCH0akOv/Yyppvdeyh8RX4ik7wO4xfBtyc3kXi",
+          type: "admin",
+          id_store: undefined
+        }
+      ]);
     });
   } catch (error) {
     console.log("ERROR");

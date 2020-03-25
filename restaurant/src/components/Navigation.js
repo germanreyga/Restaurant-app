@@ -10,14 +10,16 @@ export class Navigation extends Component {
   }
 
   state = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    type: undefined
   };
 
   componentDidMount() {
     axios
-      .get("/userCredentials")
+      .get("/user/credentials")
       .then(res => {
-        this.setState({ isLoggedIn: true });
+        // Changes to type of user login
+        this.setState({ isLoggedIn: true, type: res.data.type });
       })
       .catch(err => {
         this.setState({ isLoggedIn: false });
@@ -46,7 +48,7 @@ export class Navigation extends Component {
           <Navbar.Brand href="/#">FOOD FACTORY</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav className="mr-auto text-center">
               <NavLink className="d-inline nav-option home-link" to="/">
                 Home
               </NavLink>
@@ -62,6 +64,8 @@ export class Navigation extends Component {
               >
                 Menu
               </NavLink>
+              <AdminLink type={this.state.type}></AdminLink>
+              <EmployeeLink type={this.state.type}></EmployeeLink>
             </Nav>
             <MenuButtons
               isLoggedIn={this.state.isLoggedIn}
@@ -112,5 +116,40 @@ function MenuButtons(props) {
     return <UserMenuButtons onSubmit={props.onSubmit} />;
   } else {
     return <GuestMenuButtons onSubmit={props.onSubmit} />;
+  }
+}
+
+function AdminLink(props) {
+  if (
+    props.type === undefined ||
+    props.type === "client" ||
+    props.type === "employee"
+  ) {
+    return null;
+  } else if (props.type === "admin") {
+    return (
+      <NavLink className="d-inline nav-option admin-link" to="/admin/tools">
+        Admin tools
+      </NavLink>
+    );
+  } else {
+    return null;
+  }
+}
+
+function EmployeeLink(props) {
+  if (props.type === undefined || props.type === "client") {
+    return null;
+  } else if (props.type === "admin" || props.type === "employee") {
+    return (
+      <NavLink
+        className="d-inline nav-option employee-link"
+        to="/employee/tools"
+      >
+        Employee tools
+      </NavLink>
+    );
+  } else {
+    return null;
   }
 }

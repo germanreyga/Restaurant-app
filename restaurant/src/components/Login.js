@@ -99,8 +99,13 @@ export class Login extends Component {
         </div>
         <br />
         <Alert variant={"info"}>You need to login to place orders!</Alert>
+        <Alert variant={"info"}>
+          <ul>
+            <li>Master admin username: admin</li>
+            <li>Master admin password: admin</li>
+          </ul>
+        </Alert>
         <Error error={this.state.error} />
-        <br />
         <button className="btn btn-lg btn-orange btn-block" type="submit">
           Login
         </button>

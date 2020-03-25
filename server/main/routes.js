@@ -15,7 +15,6 @@ router.post(
   authController.registerUser
 );
 
-router.get("/userCredentials", authController.userCredentials);
 router.post(
   "/loginUser",
   passport.authenticate("local", {
@@ -24,21 +23,27 @@ router.post(
   })
 );
 
+router.get("/user/credentials", authController.userCredentials);
+
 router.get("/logout", authController.logout);
 
-router.get("/food", foodController.allFood);
+router.get("/food/all", foodController.allFood);
 
 router.post("/order", orderController.createOrder);
 
 router.get("/order/all", orderController.showAllOrders); //show all orders
 
-router.post("/order/ready", orderController.orderReady); //mark order as ready
+router.get("/order/readyOrDelivered", orderController.findRDOrders);
 
-router.post("/order/delivered", orderController.orderDelivered); //mark order as delivered
+router.post("/order/ready/:id", orderController.orderReady); //mark order as ready
 
-router.get("/order/products", orderController.productsFromOrder); //get products from certain order
+router.post("/order/delivered/:id", orderController.orderDelivered); //mark order as delivered
+
+router.get("/order/products/:id", orderController.productsFromOrder); //get products from certain order
 
 router.get("/order/list", orderController.showUsersOrders); //show a user's orders
+
+router.get("/order/preparing", orderController.getPreparingOrdersIds);
 
 router.get("/stores/all", storeController.getAllStores);
 

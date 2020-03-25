@@ -93,22 +93,20 @@ export class AdminDashboard extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="container">
-          <br />
-          <h3>Add employee</h3>
-          <EmployeeForm
-            onSubmit={this.handleSubmit}
-            state={this.state}
-            handleInputChange={this.handleInputChange}
-          />
-          <hr />
-          <br />
-          <h3>Employee list</h3>
-          <EmployeeList employees={this.state.employees} />
-          <hr />
-        </div>
-      </React.Fragment>
+      <div className="container">
+        <br />
+        <h3>Add employee</h3>
+        <hr />
+        <EmployeeForm
+          onSubmit={this.handleSubmit}
+          state={this.state}
+          handleInputChange={this.handleInputChange}
+        />
+        <br />
+        <h3>Employee list</h3>
+        <hr />
+        <EmployeeList employees={this.state.employees} />
+      </div>
     );
   }
 }
@@ -230,18 +228,19 @@ function StoreList(props) {
 
 function EmployeeList(props) {
   const employees = props.employees;
-  const listEmployees = employees.map((value, index) => {
-    return (
-      <tr key={value.id_user}>
-        <td>{value.id_user}</td>
-        <td>{value.username}</td>
-        <td>{value.type}</td>
-        <td>{value.id_store}</td>
-      </tr>
-    );
-  });
 
   if (employees.length > 0) {
+    const listEmployees = employees.map((value, index) => {
+      return (
+        <tr key={value.id_user}>
+          <td>{value.id_user}</td>
+          <td>{value.username}</td>
+          <td>{value.type}</td>
+          <td>{value.id_store}</td>
+        </tr>
+      );
+    });
+
     return (
       <Table striped bordered hover size="sm" className="text-center">
         <thead>
