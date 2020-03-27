@@ -7,6 +7,7 @@ import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { EmployeeDashboard } from "./components/EmployeeDashboard";
+import { FoodMenu } from "./components/FoodMenu";  
 import "./css/App.css";
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
         <div className="container">
           <Switch>
             <Route path="/" component={Home} exact />
+            <Route path="/FoodMenu" component = {FoodMenu}/>
             <Route path="/client/order" component={Order} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />

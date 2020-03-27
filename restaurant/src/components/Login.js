@@ -98,7 +98,6 @@ export class Login extends Component {
           />
         </div>
         <br />
-        <Alert variant={"info"}>You need to login to place orders!</Alert>
         <Alert variant={"info"}>
           <ul>
             <li>Master admin username: admin</li>

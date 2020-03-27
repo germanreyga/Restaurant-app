@@ -52,18 +52,7 @@ export class Navigation extends Component {
               <NavLink className="d-inline nav-option home-link" to="/">
                 Home
               </NavLink>
-              <NavLink
-                className="d-inline nav-option order-link"
-                to="/client/order"
-              >
-                Order
-              </NavLink>
-              <NavLink
-                className="d-inline nav-option menu-link"
-                to="/client/menu"
-              >
-                Menu
-              </NavLink>
+              <OrderLink type={this.state.isLoggedIn}></OrderLink>
               <AdminLink type={this.state.type}></AdminLink>
               <EmployeeLink type={this.state.type}></EmployeeLink>
             </Nav>
@@ -119,6 +108,23 @@ function MenuButtons(props) {
     return <UserMenuButtons onSubmit={props.onSubmit} />;
   } else {
     return <GuestMenuButtons onSubmit={props.onSubmit} />;
+  }
+}
+
+function OrderLink(props){
+  if(props.type){
+    return (
+      <NavLink className="d-inline nav-option order-link" to="/client/order">
+        Order
+      </NavLink>
+    );
+  }else{
+    return (
+      <NavLink className="d-inline nav-option menu-link" to="/FoodMenu">
+        Menu
+      </NavLink>
+    );
+    ;
   }
 }
 

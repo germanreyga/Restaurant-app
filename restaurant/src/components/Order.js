@@ -142,7 +142,7 @@ function Food(props) {
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Body>
-            <Card.Title>Food #{index}</Card.Title>
+    <Card.Title>{value.name.split(' ')[0]}</Card.Title>
             <Card.Text>{value.name}</Card.Text>
             <Card.Text>Price: {value.price} MXN</Card.Text>
           </Card.Body>
