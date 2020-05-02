@@ -19,7 +19,7 @@ router.post(
   "/loginUser",
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/register"
+    failureRedirect: "/register",
   })
 );
 

@@ -1,6 +1,12 @@
 var createError = require("http-errors");
 var express = require("express");
+const socketIO = require("socket.io");
+const cors = require("cors");
 var app = express();
+// Socket.io Server
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -12,13 +18,15 @@ require("./configs/passport");
 // Debugger
 app.use(logger("dev"));
 
-// Configurations
-let appConfig = require("./configs/app");
-
 // Express, Express sessions and Passport
 let session = require("express-session");
 let flash = require("express-flash");
 let sessionStore = new session.MemoryStore();
+
+// Socket.io logic
+io.on("connection", (socket) => {
+  console.log("New client connected" + socket.id);
+});
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(express.json());
@@ -30,7 +38,7 @@ app.use(
     store: sessionStore,
     saveUninitialized: true,
     resave: "true",
-    secret: appConfig.secret
+    secret: "YOU_SHOULD_NOT_USE_THIS_SECRET",
   })
 );
 app.use(flash());
@@ -41,4 +49,11 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", routes);
 
-module.exports = app;
+// Cors config
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
+module.exports = { app: app, server: server };

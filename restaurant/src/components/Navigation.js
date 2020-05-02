@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Form, Navbar, Nav, Button } from "react-bootstrap";
 import axios from "axios";
-
+import socketIOClient from "socket.io-client";
 export class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -11,17 +11,19 @@ export class Navigation extends Component {
 
   state = {
     isLoggedIn: false,
-    type: undefined
+    type: undefined,
   };
 
   componentDidMount() {
+    const socket = socketIOClient("http://localhost:5000/");
+
     axios
       .get("/user/credentials")
-      .then(res => {
+      .then((res) => {
         // Changes to type of user login
         this.setState({ isLoggedIn: true, type: res.data.type });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ isLoggedIn: false });
       });
   }
@@ -31,11 +33,11 @@ export class Navigation extends Component {
 
     axios
       .get("/logout")
-      .then(res => {
+      .then((res) => {
         this.setState({ isLoggedIn: false });
         window.location.href = "/login";
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         this.setState({ isLoggedIn: true, error: "User couldn't logout" });
       });
@@ -111,20 +113,19 @@ function MenuButtons(props) {
   }
 }
 
-function OrderLink(props){
-  if(props.type){
+function OrderLink(props) {
+  if (props.type) {
     return (
       <NavLink className="d-inline nav-option order-link" to="/client/order">
         Order
       </NavLink>
     );
-  }else{
+  } else {
     return (
       <NavLink className="d-inline nav-option menu-link" to="/FoodMenu">
         Menu
       </NavLink>
     );
-    ;
   }
 }
 
