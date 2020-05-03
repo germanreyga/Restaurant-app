@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Form, Navbar, Nav, Button } from "react-bootstrap";
 import axios from "axios";
-import socketIOClient from "socket.io-client";
 export class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -15,8 +14,6 @@ export class Navigation extends Component {
   };
 
   componentDidMount() {
-    const socket = socketIOClient("http://localhost:5000/");
-
     axios
       .get("/user/credentials")
       .then((res) => {

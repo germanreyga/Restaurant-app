@@ -1,24 +1,37 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { Home } from "./components/Home";
-import { Order } from "./components/Order";
+import Order from "./components/Order";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { EmployeeDashboard } from "./components/EmployeeDashboard";
-import { FoodMenu } from "./components/FoodMenu";  
+import { FoodMenu } from "./components/FoodMenu";
+import { UserContext } from "./components/context/Context";
 import "./css/App.css";
+import socketIOClient from "socket.io-client";
 
-class App extends Component {
-  render() {
-    return (
+function App() {
+  const [userInfo, setUserInfo] = useState(true);
+
+  useEffect(() => {
+    // Start a web socket globally
+    const socket = socketIOClient("/");
+  }, []);
+
+  useEffect(() => {
+    console.log("STATE: " + userInfo);
+  }, [userInfo]);
+
+  return (
+    <UserContext.Provider value={[userInfo, setUserInfo]}>
       <BrowserRouter>
         <Navigation />
         <div className="container">
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/FoodMenu" component = {FoodMenu}/>
+            <Route path="/FoodMenu" component={FoodMenu} />
             <Route path="/client/order" component={Order} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
@@ -56,8 +69,8 @@ class App extends Component {
           </div>
         </footer>
       </BrowserRouter>
-    );
-  }
+    </UserContext.Provider>
+  );
 }
 
 export default App;

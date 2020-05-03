@@ -1,37 +1,39 @@
-import React, { Component } from "react";
+import React, { Component, useContext, useState, useEffect } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
+import { UserContext } from "./context/Context";
 import axios from "axios";
 
-export class Order extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSubmit2 = this.handleSubmit2.bind(this);
-  }
-
-  state = {
-    food: [],
-    cart: [],
+export default function Order() {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [cart, setCart] = useState([]);
+  const [foodList, setFoodList] = useState([]);
+  const [order, setOrder] = useState({
     totalprice: 0,
     index: 0,
-    cartSubmitSuccess: false
-  };
+    cartSubmitSuccess: false,
+  });
 
-  componentDidMount() {
+  useEffect(() => {
+    setOrder({
+      totalprice: 0,
+      index: 0,
+      cartSubmitSuccess: false,
+    });
+
     axios
       .get("/food/all")
-      .then(res => {
-        this.setState({ food: res.data.data });
+      .then((res) => {
+        setFoodList(res.data.data);
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  }, []);
 
-  async handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     event.persist();
 
     // Moves the user to the login page if he isn't logged in
-    const loggedUserId = await this.getUserId();
+    const loggedUserId = await getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
       return (window.location.href = "/login");
@@ -44,31 +46,31 @@ export class Order extends Component {
     const qty = event.target[3].value; // Gets the input with the quantity
     const price_x_quantity = parseFloat(qty) * parseFloat(price);
     const price_x_quantity_rounded = preciseRound(price_x_quantity, 2);
-    const new_cart = this.state.cart;
+    const new_cart = cart;
     new_cart.push({
       id_product: id,
       name: name,
       quantity: qty,
-      price: price_x_quantity_rounded
+      price: price_x_quantity_rounded,
     });
 
-    const oldTotalPrice = this.state.totalprice;
+    const oldTotalPrice = order.totalprice;
     const newTotalPrice =
       parseFloat(oldTotalPrice) + parseFloat(price_x_quantity);
     const roundedPriceTwoDecimals = preciseRound(newTotalPrice, 2);
-    this.setState({
+    setOrder({
       cart: new_cart,
-      totalprice: roundedPriceTwoDecimals
+      totalprice: roundedPriceTwoDecimals,
     });
 
     event.target[3].value = "";
-  }
+  };
 
-  async handleSubmit2(event) {
+  const handleSubmit2 = async (event) => {
     event.preventDefault();
     event.persist();
     // Moves the user to the login page if he isn't logged in
-    const loggedUserId = await this.getUserId();
+    const loggedUserId = await getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
       return (window.location.href = "/login");
@@ -76,65 +78,65 @@ export class Order extends Component {
 
     const body = {
       id: loggedUserId,
-      cart: this.state.cart
+      cart: cart,
     };
 
     axios({
       method: "post",
       url: "/order",
-      data: body
+      data: body,
     })
-      .then(res => {
-        this.setState({ cart: [], cartSubmitSuccess: true });
+      .then((res) => {
+        setCart([]);
+        setOrder({ cartSubmitSuccess: true });
+        setUserInfo(false);
         console.log(res);
       })
-      .catch(err => {
-        this.setState({ cartSubmitSuccess: false });
+      .catch((err) => {
+        setOrder({ cartSubmitSuccess: false });
         console.log(err);
       });
-  }
+  };
 
-  async getUserId() {
+  const getUserId = async () => {
     let id = undefined;
     await axios
       .get("/user/credentials")
-      .then(res => {
+      .then((res) => {
         id = res.data.user;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("ERR");
         console.log(err);
       });
 
     return id;
-  }
+  };
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className="container">
-          <br />
-          <h3>Cart</h3>
-          <hr />
-          <Cart
-            totalprice={this.state.totalprice}
-            cart={this.state.cart}
-            cartSubmitSuccess={this.state.cartSubmitSuccess}
-            onSubmit={this.handleSubmit2}
-          />
-          <br />
-          <h3>Food</h3>
-          <hr />
-          <Food food={this.state.food} onSubmit={this.handleSubmit} />
-        </div>
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <div className="container">
+        <br />
+        <h3>Cart</h3>
+        <hr />
+        <Cart
+          totalprice={order.totalprice}
+          cart={cart}
+          cartSubmitSuccess={order.cartSubmitSuccess}
+          onSubmit={handleSubmit2}
+        />
+        <br />
+        <h3>Food</h3>
+        <hr />
+        <Food food={foodList} onSubmit={handleSubmit} />
+      </div>
+    </React.Fragment>
+  );
 }
 
 function Food(props) {
-  const foods = props.food;
-  const listFood = foods.map((value, index) => {
+  const foodList = props.food;
+  const listFood = foodList.map((value, index) => {
     return (
       <div key={index} className="col-auto mb-4">
         <Card
@@ -142,7 +144,7 @@ function Food(props) {
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Body>
-    <Card.Title>{value.name.split(' ')[0]}</Card.Title>
+            <Card.Title>{value.name.split(" ")[0]}</Card.Title>
             <Card.Text>{value.name}</Card.Text>
             <Card.Text>Price: {value.price} MXN</Card.Text>
           </Card.Body>

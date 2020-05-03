@@ -25,7 +25,11 @@ let sessionStore = new session.MemoryStore();
 
 // Socket.io logic
 io.on("connection", (socket) => {
-  console.log("New client connected" + socket.id);
+  console.log("New client connected, id:", socket.id, "at", new Date());
+
+  socket.on("new-order-placed", (data) => {
+    io.sockets.emit("inform-employees", { message: data.message });
+  });
 });
 
 app.use(bodyParser.json()); // support json encoded bodies
