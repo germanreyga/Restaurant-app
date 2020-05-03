@@ -8,7 +8,6 @@ import { Login } from "./components/Login";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { EmployeeDashboard } from "./components/EmployeeDashboard";
 import { FoodMenu } from "./components/FoodMenu";
-import { OrderContext } from "./components/context/Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
@@ -17,14 +16,17 @@ import axios from "axios";
 let socket;
 
 function App() {
-  const [orderStatus, setOrderStatus] = useState(true);
-  const isFirstRun = useRef(true);
+  const [notifyNewOrder, setNotifyNewOrder] = useState(true);
+  const [notifyOrderReady, setNotifyOrderReady] = useState("client_id");
+  const isFirstRunNewOrder = useRef(true);
+  const isFirstRunOrderReady = useRef(true);
 
   useEffect(() => {
     let userType = "";
-
-    getUserType().then((result) => {
-      userType = result;
+    let userId = "";
+    getUserCredentials().then((user) => {
+      userId = user.id;
+      userType = user.type;
       // Start a web socket globally
       socket = socketIOClient("/");
 
@@ -39,75 +41,106 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
+    if (isFirstRunNewOrder.current) {
+      isFirstRunNewOrder.current = false;
       return;
     }
 
     socket.emit("new-order-placed", { message: "New order has been placed" });
-  }, [orderStatus]);
+  }, [notifyNewOrder]);
 
-  async function getUserType() {
+  useEffect(() => {
+    if (isFirstRunOrderReady.current) {
+      isFirstRunOrderReady.current = false;
+      return;
+    }
+
+    //socket.emit("new-order-placed", { message: "New order has been placed" });
+  }, [notifyOrderReady]);
+
+  return (
+    <BrowserRouter>
+      <Navigation />
+      <div className="container">
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/FoodMenu" component={FoodMenu} />
+          <Route
+            path="/client/order"
+            render={(props) => (
+              <Order
+                notifyNewOrder={notifyNewOrder}
+                setNotifyNewOrder={setNotifyNewOrder}
+              />
+            )}
+          />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/admin/tools" component={AdminDashboard} />
+          <Route
+            path="/employee/tools"
+            render={(props) => (
+              <EmployeeDashboard
+                notifyOrderReady={notifyOrderReady}
+                SetNotifyOrderReady={setNotifyOrderReady}
+              />
+            )}
+          />
+        </Switch>
+      </div>
+      <footer className="bg-dark text-white address">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <ul>
+                <span className="text-uppercase">Authors</span>
+                <li>Kevin Ruvalcaba P.</li>
+                <li>Alejandro Moreno L.</li>
+                <li>Germán Reyes G.</li>
+              </ul>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <ul className="social">
+                <span>Project's repository</span>
+                <li>
+                  <a href="https://github.com/germanreyga/Restaurant-app">
+                    <img
+                      alt="Qries"
+                      src="https://boxboat.com/assets/wf/images/github.9412ae55426a.png"
+                      width="50"
+                      height="50"
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <ToastContainer />
+      </footer>
+    </BrowserRouter>
+  );
+
+  async function getUserCredentials() {
     let type = undefined;
+    let id = undefined;
     await axios
       .get("/user/credentials")
       .then((res) => {
         type = res.data.type;
+        id = res.data.id;
       })
       .catch((err) => {
         console.log(err);
       });
-    return type;
-  }
 
-  return (
-    <OrderContext.Provider value={[orderStatus, setOrderStatus]}>
-      <BrowserRouter>
-        <Navigation />
-        <div className="container">
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/FoodMenu" component={FoodMenu} />
-            <Route path="/client/order" component={Order} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/admin/tools" component={AdminDashboard} />
-            <Route path="/employee/tools" component={EmployeeDashboard} />
-          </Switch>
-        </div>
-        <footer className="bg-dark text-white address">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <ul>
-                  <span className="text-uppercase">Authors</span>
-                  <li>Kevin Ruvalcaba P.</li>
-                  <li>Alejandro Moreno L.</li>
-                  <li>Germán Reyes G.</li>
-                </ul>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <ul className="social">
-                  <span>Project's repository</span>
-                  <li>
-                    <a href="https://github.com/germanreyga/Restaurant-app">
-                      <img
-                        alt="Qries"
-                        src="https://boxboat.com/assets/wf/images/github.9412ae55426a.png"
-                        width="50"
-                        height="50"
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <ToastContainer />
-        </footer>
-      </BrowserRouter>
-    </OrderContext.Provider>
-  );
+    const user = {
+      id: id,
+      type: type,
+    };
+
+    return user;
+  }
 }
 
 export default App;

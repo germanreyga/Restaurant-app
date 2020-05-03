@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
 
   socket.on("new-order-placed", (data) => {
     io.sockets.emit("inform-employees", {
-      message: "New order has been placed by a client",
+      message: "New order has been placed by a client!",
     });
   });
 });

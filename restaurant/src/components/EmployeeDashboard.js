@@ -4,11 +4,13 @@ import axios from "axios";
 
 export class EmployeeDashboard extends Component {
   async componentDidMount() {
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSubmit2 = this.handleSubmit2.bind(this);
+    this.pendingOrderSubmit = this.pendingOrderSubmit.bind(this);
+    this.otherOrderSubmit = this.otherOrderSubmit.bind(this);
     await this.getPreparingOrdersIds();
     await this.getPreparingOrdersList();
     await this.getReadOrDelivOrdersList();
+    const notifyOrderReady = this.props.notifyOrderReady;
+    const setNotifyOrderReady = this.props.setNotifyOrderReady;
   }
 
   state = {
@@ -17,12 +19,11 @@ export class EmployeeDashboard extends Component {
     otherOrdersList: [],
   };
 
-  async handleSubmit(event) {
+  async pendingOrderSubmit(event) {
     event.preventDefault();
     event.persist();
 
-    /* WARNING: Really hardcoded, needs to change */
-    const id = event.target[0].value; // Gets the input with the id_order
+    const id = event.target.id.value; // Gets the input with the id_order
 
     await axios
       .post(`/order/ready/${id}`)
@@ -34,12 +35,11 @@ export class EmployeeDashboard extends Component {
     window.location.reload();
   }
 
-  async handleSubmit2(event) {
+  async otherOrderSubmit(event) {
     event.preventDefault();
     event.persist();
 
-    /* WARNING: Really hardcoded, needs to change */
-    const id = event.target[0].value; // Gets the input with the id_order
+    const id = event.target.id.value; // Gets the input with the id_order
 
     await axios
       .post(`/order/delivered/${id}`)
@@ -90,14 +90,14 @@ export class EmployeeDashboard extends Component {
         <hr />
         <PendingOrders
           orders={this.state.preparingOrdersList}
-          onSubmit={this.handleSubmit}
+          onSubmit={this.pendingOrderSubmit}
         />
         <br />
         <h3>Completed orders</h3>
         <hr />
         <OtherOrders
           orders={this.state.otherOrdersList}
-          onSubmit={this.handleSubmit2}
+          onSubmit={this.otherOrderSubmit}
         />
       </div>
     );

@@ -7,7 +7,7 @@ exports.registerUser = (req, res) => {
   if (!errors.isEmpty()) {
     return res.json({
       status: 500,
-      message: errors
+      message: errors,
     });
   }
 
@@ -25,10 +25,10 @@ exports.registerUser = (req, res) => {
   }
 
   UserModel.createUser(username, type, hashedPass, id_store)
-    .then(_ => {
+    .then((_) => {
       res.json({ message: "User created succesfully" });
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       res.status(500).json({ message: error });
     });
@@ -36,7 +36,11 @@ exports.registerUser = (req, res) => {
 
 exports.userCredentials = (req, res) => {
   if (req.user !== undefined) {
-    return res.json({ user: req.user.username, type: req.user.type });
+    return res.json({
+      user: req.user.username,
+      type: req.user.type,
+      id: req.user.id_user,
+    });
   } else {
     return res.status(500).json({ message: "No logged in user" });
   }

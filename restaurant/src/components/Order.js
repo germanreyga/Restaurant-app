@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
-import { OrderContext } from "./context/Context";
 import axios from "axios";
 
-function Order() {
-  const [orderStatus, setOrderStatus] = useContext(OrderContext);
+function Order(props) {
+  const notifyNewOrder = props.notifyNewOrder;
+  const setNotifyNewOrder = props.setNotifyNewOrder;
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [order, setOrder] = useState({
@@ -39,11 +39,10 @@ function Order() {
       return (window.location.href = "/login");
     }
 
-    /* WARNING: Really hardcoded, needs to change */
-    const id = event.target[0].value; // Gets the input with the id
-    const name = event.target[1].value; // Gets the input with the name
-    const price = event.target[2].value; // Gets the input with the price
-    const qty = event.target[3].value; // Gets the input with the quantity
+    const id = event.target.id.value; // Gets the input with the id
+    const name = event.target.name.value; // Gets the input with the name
+    const price = event.target.price.value; // Gets the input with the price
+    const qty = event.target.qty.value; // Gets the input with the quantity
     const price_x_quantity = parseFloat(qty) * parseFloat(price);
     const price_x_quantity_rounded = preciseRound(price_x_quantity, 2);
     const new_cart = cart;
@@ -58,12 +57,13 @@ function Order() {
     const newTotalPrice =
       parseFloat(oldTotalPrice) + parseFloat(price_x_quantity);
     const roundedPriceTwoDecimals = preciseRound(newTotalPrice, 2);
+
     setOrder({
       cart: new_cart,
       totalprice: roundedPriceTwoDecimals,
     });
 
-    event.target[3].value = "";
+    event.target.qty.value = "";
   };
 
   const handleSubmit2 = async (event) => {
@@ -89,7 +89,7 @@ function Order() {
       .then((res) => {
         setCart([]);
         setOrder({ cartSubmitSuccess: true });
-        setOrderStatus(!orderStatus);
+        setNotifyNewOrder(!notifyNewOrder);
         console.log(res);
       })
       .catch((err) => {
