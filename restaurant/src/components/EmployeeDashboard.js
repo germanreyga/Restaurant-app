@@ -1,25 +1,27 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Alert, CardDeck, Table, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-export class EmployeeDashboard extends Component {
-  async componentDidMount() {
-    this.pendingOrderSubmit = this.pendingOrderSubmit.bind(this);
-    this.otherOrderSubmit = this.otherOrderSubmit.bind(this);
-    await this.getPreparingOrdersIds();
-    await this.getPreparingOrdersList();
-    await this.getReadyOrDelivOrdersList();
-    const notifyOrderReady = this.props.notifyOrderReady;
-    const setNotifyOrderReady = this.props.setNotifyOrderReady;
-  }
+function EmployeeDashboard(props) {
+  const [preparingOrdersList, setPreparingOrdersList] = useState([]);
+  const [otherOrdersList, setOtherOrdersList] = useState([]);
+  const setNotifyOrderReady = props.setNotifyOrderReady;
 
-  state = {
-    preparingOrderIds: [],
-    preparingOrdersList: [],
-    otherOrdersList: [],
-  };
+  useEffect(() => {
+    const firstLoad = async () => {
+      await getPreparingOrders().then((list) => {
+        setPreparingOrdersList(list);
+      });
 
-  async pendingOrderSubmit(event) {
+      await getReadyOrDelivOrdersList().then((list) => {
+        setOtherOrdersList(list);
+      });
+    };
+
+    firstLoad();
+  }, []);
+
+  const pendingOrderSubmit = async (event) => {
     event.preventDefault();
     event.persist();
 
@@ -28,16 +30,14 @@ export class EmployeeDashboard extends Component {
     await axios
       .post(`/order/ready/${id}`)
       .then((res) => {
-        console.log(res);
+        setNotifyOrderReady(res.data.order_id);
       })
       .catch((err) => console.log(err));
 
-    await this.getPreparingOrdersIds();
-    await this.getPreparingOrdersList();
-    await this.getReadyOrDelivOrdersList();
-  }
+    reloadData();
+  };
 
-  async otherOrderSubmit(event) {
+  const otherOrderSubmit = async (event) => {
     event.preventDefault();
     event.persist();
 
@@ -50,67 +50,74 @@ export class EmployeeDashboard extends Component {
       })
       .catch((err) => console.log(err));
 
-    await this.getReadyOrDelivOrdersList();
-  }
+    reloadData();
+  };
 
-  async getPreparingOrdersIds() {
+  const getPreparingOrders = async () => {
+    let newList = [];
     await axios
       .get("/order/preparing")
       .then((res) => {
-        this.setState({ preparingOrderIds: res.data.data });
+        const ids = res.data.data;
+
+        ids.map(async (item, index) => {
+          await axios
+            .get(`/order/products/${item.id_order}`)
+            .then((res) => {
+              newList.push({ order: res.data.data });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
       })
-      .catch((err) => console.log(err));
-  }
+      .catch((err) => {
+        console.log(err);
+      });
 
-  async getPreparingOrdersList() {
-    this.setState({ preparingOrdersList: [] });
+    return newList;
+  };
 
-    this.state.preparingOrderIds.map(async (item, index) => {
-      await axios
-        .get(`/order/products/${item.id_order}`)
-        .then((res) => {
-          const newPreparingOrdersList = this.state.preparingOrdersList;
-          newPreparingOrdersList.push({ order: res.data.data });
-          this.setState({ preparingOrdersList: newPreparingOrdersList });
-        })
-        .catch((err) => console.log(err));
-    });
-  }
-
-  async getReadyOrDelivOrdersList() {
+  const getReadyOrDelivOrdersList = async () => {
+    let list = [];
     await axios
       .get("/order/readyOrDelivered")
       .then((res) => {
-        this.setState({ otherOrdersList: res.data.data });
+        list = res.data.data;
       })
       .catch((err) => console.log(err));
-  }
+    return list;
+  };
 
-  render() {
-    return (
-      <div className="container">
-        <br />
-        <h3>Orders to prepare</h3>
-        <hr />
-        <PendingOrders
-          orders={this.state.preparingOrdersList}
-          onSubmit={this.pendingOrderSubmit}
-        />
-        <br />
-        <h3>Completed orders</h3>
-        <hr />
-        <OtherOrders
-          orders={this.state.otherOrdersList}
-          onSubmit={this.otherOrderSubmit}
-        />
-      </div>
-    );
-  }
+  const reloadData = async () => {
+    await getPreparingOrders().then((list) => {
+      setPreparingOrdersList(list);
+    });
+
+    await getReadyOrDelivOrdersList().then((list) => {
+      setOtherOrdersList(list);
+    });
+  };
+
+  return (
+    <div className="container">
+      <br />
+      <h3>Orders to prepare</h3>
+      <hr />
+      <PendingOrders
+        orders={preparingOrdersList}
+        onSubmit={pendingOrderSubmit}
+      />
+      <br />
+      <h3>Completed orders</h3>
+      <hr />
+      <OtherOrders orders={otherOrdersList} onSubmit={otherOrderSubmit} />
+    </div>
+  );
 }
 
 function PendingOrders(props) {
   const orders = props.orders;
-
   if (orders.length !== undefined && orders.length > 0) {
     const orderList = orders.map((outside, index) => {
       const orderListInside = outside.order.map((inside, index) => {
@@ -212,3 +219,5 @@ function StatusTD(props) {
     return <td></td>;
   }
 }
+
+export default EmployeeDashboard;

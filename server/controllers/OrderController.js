@@ -22,14 +22,14 @@ exports.createOrder = (req, res) => {
     status_payment: status_payment,
     status_order: status_order,
     order_total: order_total,
-    id_user: id_user
+    id_user: id_user,
   };
 
   OrderModel.createOrder(data)
-    .then(data => {
+    .then((data) => {
       res.json({ message: "Success" });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ message: err });
     });
@@ -48,10 +48,21 @@ function preciseRound(num, decimals) {
 
 exports.showAllOrders = (req, res) => {
   OrderModel.all()
-    .then(data => {
+    .then((data) => {
       res.json({ data: data });
     })
-    .catch(error => {
+    .catch((error) => {
+      res.status(500).json({ message: error });
+    });
+};
+
+exports.showAllOrdersFromId = (req, res) => {
+  const id = req.params.id;
+  OrderModel.selectByClient(id)
+    .then((data) => {
+      res.json({ ids: data });
+    })
+    .catch((error) => {
       res.status(500).json({ message: error });
     });
 };
@@ -59,10 +70,10 @@ exports.showAllOrders = (req, res) => {
 exports.orderReady = (req, res) => {
   let id = req.params.id;
   OrderModel.markAsReady(id)
-    .then(data => {
-      res.json({ data: data });
+    .then((data) => {
+      res.json({ data: data, order_id: id });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({ message: error });
     });
 };
@@ -70,20 +81,20 @@ exports.orderReady = (req, res) => {
 exports.orderDelivered = (req, res) => {
   let id = req.params.id;
   OrderModel.markAsDelivered(id)
-    .then(data => {
-      res.json({ data: data });
+    .then((data) => {
+      res.json({ data: data, order_id: id });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({ message: error });
     });
 };
 
 exports.findRDOrders = (req, res) => {
   OrderModel.readyOrDelivered()
-    .then(data => {
+    .then((data) => {
       res.json({ data: data });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({ message: error });
     });
 };
@@ -91,10 +102,10 @@ exports.findRDOrders = (req, res) => {
 exports.productsFromOrder = (req, res) => {
   let id = req.params.id;
   OrderModel.selectProductsFromOrder(id)
-    .then(data => {
+    .then((data) => {
       res.json({ data: data });
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       res.status(500).json({ message: error });
     });
@@ -102,10 +113,10 @@ exports.productsFromOrder = (req, res) => {
 
 exports.getPreparingOrdersIds = (req, res) => {
   OrderModel.selectPreparingOrders()
-    .then(data => {
+    .then((data) => {
       res.json({ data: data });
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       res.status(500).json({ message: error });
     });
@@ -114,10 +125,10 @@ exports.getPreparingOrdersIds = (req, res) => {
 exports.showUsersOrders = (req, res) => {
   let idUser = req.user.id_user;
   OrderModel.selectByClient(idUser)
-    .then(data => {
+    .then((data) => {
       res.json({ data: data });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({ message: error });
     });
 };

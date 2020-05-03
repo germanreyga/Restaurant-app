@@ -6,9 +6,10 @@ import Order from "./components/Order";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import { AdminDashboard } from "./components/AdminDashboard";
-import { EmployeeDashboard } from "./components/EmployeeDashboard";
+import EmployeeDashboard from "./components/EmployeeDashboard";
 import { FoodMenu } from "./components/FoodMenu";
 import { ToastContainer, toast } from "react-toastify";
+import { OrderListContext } from "./components/context/Context";
 import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
 import socketIOClient from "socket.io-client";
@@ -16,29 +17,44 @@ import axios from "axios";
 let socket;
 
 function App() {
+  const [orderList, setOrderList] = useState(true);
   const [notifyNewOrder, setNotifyNewOrder] = useState(true);
   const [notifyOrderReady, setNotifyOrderReady] = useState("client_id");
   const isFirstRunNewOrder = useRef(true);
   const isFirstRunOrderReady = useRef(true);
 
   useEffect(() => {
-    let userType = "";
-    let userId = "";
+    console.log("CAMBIA");
     getUserCredentials().then((user) => {
-      userId = user.id;
-      userType = user.type;
-      // Start a web socket globally
-      socket = socketIOClient("/");
+      getUserOrdersIds(user.id).then((ids) => {
+        // Start a web socket globally
+        socket = socketIOClient("/");
 
-      socket.on("inform-employees", (data) => {
-        if (userType === "admin" || userType === "employee")
-          toast.success(data.message, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            className: "ff-info-toast",
-          });
+        // Inform an employee when a new order has been placed by a client
+        socket.on("inform-employees", (data) => {
+          if (user.type === "admin" || user.type === "employee")
+            toast.success(data.message, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              className: "ff-notice-toast",
+            });
+        });
+
+        // Inform a client when his order has been prepared by an employee
+        socket.on("inform-client", (data) => {
+          if (
+            (user.type === "admin" ||
+              user.type === "employee" ||
+              user.type === "client") &&
+            ids.includes(parseInt(data.id))
+          )
+            toast.success(data.message, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              className: "ff-ready-toast",
+            });
+        });
       });
     });
-  }, []);
+  }, [orderList]);
 
   useEffect(() => {
     if (isFirstRunNewOrder.current) {
@@ -55,70 +71,75 @@ function App() {
       return;
     }
 
-    //socket.emit("new-order-placed", { message: "New order has been placed" });
+    socket.emit("order-ready", {
+      message: "An order has been marked as ready",
+      id: notifyOrderReady,
+    });
   }, [notifyOrderReady]);
 
   return (
-    <BrowserRouter>
-      <Navigation />
-      <div className="container">
-        <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/FoodMenu" component={FoodMenu} />
-          <Route
-            path="/client/order"
-            render={(props) => (
-              <Order
-                notifyNewOrder={notifyNewOrder}
-                setNotifyNewOrder={setNotifyNewOrder}
-              />
-            )}
-          />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/admin/tools" component={AdminDashboard} />
-          <Route
-            path="/employee/tools"
-            render={(props) => (
-              <EmployeeDashboard
-                notifyOrderReady={notifyOrderReady}
-                SetNotifyOrderReady={setNotifyOrderReady}
-              />
-            )}
-          />
-        </Switch>
-      </div>
-      <footer className="bg-dark text-white address">
+    <OrderListContext.Provider value={[orderList, setOrderList]}>
+      <BrowserRouter>
+        <Navigation />
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <ul>
-                <span className="text-uppercase">Authors</span>
-                <li>Kevin Ruvalcaba P.</li>
-                <li>Alejandro Moreno L.</li>
-                <li>Germán Reyes G.</li>
-              </ul>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <ul className="social">
-                <span>Project's repository</span>
-                <li>
-                  <a href="https://github.com/germanreyga/Restaurant-app">
-                    <img
-                      alt="Qries"
-                      src="https://boxboat.com/assets/wf/images/github.9412ae55426a.png"
-                      width="50"
-                      height="50"
-                    />
-                  </a>
-                </li>
-              </ul>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/FoodMenu" component={FoodMenu} />
+            <Route
+              path="/client/order"
+              render={(props) => (
+                <Order
+                  notifyNewOrder={notifyNewOrder}
+                  setNotifyNewOrder={setNotifyNewOrder}
+                />
+              )}
+            />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/admin/tools" component={AdminDashboard} />
+            <Route
+              path="/employee/tools"
+              render={(props) => (
+                <EmployeeDashboard
+                  notifyOrderReady={notifyOrderReady}
+                  setNotifyOrderReady={setNotifyOrderReady}
+                />
+              )}
+            />
+          </Switch>
+        </div>
+        <footer className="bg-dark text-white address">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <ul>
+                  <span className="text-uppercase">Authors</span>
+                  <li>Kevin Ruvalcaba P.</li>
+                  <li>Alejandro Moreno L.</li>
+                  <li>Germán Reyes G.</li>
+                </ul>
+              </div>
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <ul className="social">
+                  <span>Project's repository</span>
+                  <li>
+                    <a href="https://github.com/germanreyga/Restaurant-app">
+                      <img
+                        alt="Qries"
+                        src="https://boxboat.com/assets/wf/images/github.9412ae55426a.png"
+                        width="50"
+                        height="50"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <ToastContainer />
-      </footer>
-    </BrowserRouter>
+          <ToastContainer />
+        </footer>
+      </BrowserRouter>
+    </OrderListContext.Provider>
   );
 
   async function getUserCredentials() {
@@ -138,8 +159,27 @@ function App() {
       id: id,
       type: type,
     };
-
     return user;
+    //setCredentials(user);
+  }
+
+  async function getUserOrdersIds(id) {
+    let ids = [];
+    await axios
+      .get(`/order/all/${id}`)
+      .then((res) => {
+        ids = res.data.ids;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const numericalIds = ids.map((object) => {
+      return object.id_order;
+    });
+
+    return numericalIds;
+    //setOrdersIds(numericalIds);
   }
 }
 

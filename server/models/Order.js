@@ -4,7 +4,7 @@ exports.PREPARING = "preparing";
 exports.READY = "ready";
 exports.DELIVERED = "delivered";
 
-exports.createOrder = async data => {
+exports.createOrder = async (data) => {
   const cart = data.cart;
   const order_hour = data.order_hour;
   const status_payment = data.status_payment;
@@ -13,32 +13,30 @@ exports.createOrder = async data => {
   const id_user = data.id_user;
 
   try {
-    return await knex.transaction(async trx => {
+    return await knex.transaction(async (trx) => {
       const insertid = await knex("orders")
         .insert({
           order_hour: order_hour,
           status_payment: status_payment,
           status_order: status_order,
           order_total: order_total,
-          id_user: id_user
+          id_user: id_user,
         })
         .transacting(trx);
 
       const singleinsertid = insertid[0];
       let products = [];
       let index = 0;
-      cart.forEach(cartitem => {
+      cart.forEach((cartitem) => {
         products.push({
           id_order: singleinsertid,
           id_product: cartitem.id_product,
-          quantity: cartitem.quantity
+          quantity: cartitem.quantity,
         });
         index++;
       });
 
-      await knex("order_product")
-        .insert(products)
-        .transacting(trx);
+      await knex("order_product").insert(products).transacting(trx);
     });
   } catch (error) {
     console.log("ERROR");
@@ -50,32 +48,27 @@ exports.all = () => {
   return knex.from("orders").select("*");
 };
 
-exports.find = id => {
-  return knex
-    .select("*")
-    .from("orders")
-    .where("id_order", id)
-    .first();
+exports.find = (id) => {
+  return knex.select("*").from("orders").where("id_order", id).first();
 };
 
-exports.markAsReady = id => {
+exports.markAsReady = (id) => {
   return knex("orders")
     .update({ status_order: this.READY })
     .where("id_order", id);
 };
 
-exports.markAsDelivered = id => {
-  console.log("ENTRA");
+exports.markAsDelivered = (id) => {
   return knex("orders")
     .update({ status_order: this.DELIVERED })
     .where("id_order", id);
 };
 
-exports.selectByClient = id => {
-  return knex.from("orders").where("id_user", id);
+exports.selectByClient = (id) => {
+  return knex.from("orders").where("id_user", id).select("id_order");
 };
 
-exports.selectProductsFromOrder = id => {
+exports.selectProductsFromOrder = (id) => {
   return knex("products")
     .join(
       "order_product",
@@ -98,7 +91,7 @@ exports.selectProductsFromOrder = id => {
     );
 };
 
-exports.selectPreparingOrders = id => {
+exports.selectPreparingOrders = (id) => {
   return knex("orders")
     .where("status_order", this.PREPARING)
     .column("id_order");

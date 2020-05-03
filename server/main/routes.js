@@ -33,6 +33,8 @@ router.post("/order", orderController.createOrder);
 
 router.get("/order/all", orderController.showAllOrders); //show all orders
 
+router.get("/order/all/:id", orderController.showAllOrdersFromId); //show all orders from a specific user_id
+
 router.get("/order/readyOrDelivered", orderController.findRDOrders);
 
 router.post("/order/ready/:id", orderController.orderReady); //mark order as ready

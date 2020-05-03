@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
+import { OrderListContext } from "./context/Context";
 import axios from "axios";
 
 function Order(props) {
   const notifyNewOrder = props.notifyNewOrder;
   const setNotifyNewOrder = props.setNotifyNewOrder;
+  const [orderList, setOrderList] = useContext(OrderListContext);
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [order, setOrder] = useState({
@@ -28,7 +30,7 @@ function Order(props) {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = async (event) => {
+  const addToCart = async (event) => {
     event.preventDefault();
     event.persist();
 
@@ -66,7 +68,7 @@ function Order(props) {
     event.target.qty.value = "";
   };
 
-  const handleSubmit2 = async (event) => {
+  const cartSubmit = async (event) => {
     event.preventDefault();
     event.persist();
     // Moves the user to the login page if he isn't logged in
@@ -90,6 +92,7 @@ function Order(props) {
         setCart([]);
         setOrder({ cartSubmitSuccess: true });
         setNotifyNewOrder(!notifyNewOrder);
+        setOrderList(!orderList);
         console.log(res);
       })
       .catch((err) => {
@@ -106,7 +109,6 @@ function Order(props) {
         id = res.data.user;
       })
       .catch((err) => {
-        console.log("ERR");
         console.log(err);
       });
 
@@ -123,12 +125,12 @@ function Order(props) {
           totalprice={order.totalprice}
           cart={cart}
           cartSubmitSuccess={order.cartSubmitSuccess}
-          onSubmit={handleSubmit2}
+          onSubmit={cartSubmit}
         />
         <br />
         <h3>Food</h3>
         <hr />
-        <Food food={foodList} onSubmit={handleSubmit} />
+        <Food food={foodList} onSubmit={addToCart} />
       </div>
     </React.Fragment>
   );

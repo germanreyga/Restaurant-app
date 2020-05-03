@@ -103,6 +103,7 @@
 
 .order-card {
   background-color: rgba(255, 244, 183, 0.877);
+  border-color: #e1e1e1 !important;
 }
 
 footer {
@@ -176,7 +177,12 @@ footer .fa:hover {
   grid-gap: 0.5rem;
 }
 
-.ff-info-toast {
+.ff-notice-toast {
   background-color: #d4edda !important;
   color: #155724 !important;
+}
+
+.ff-ready-toast {
+  background-color: #ffe8bd !important;
+  color: #9c7835 !important;
 }

@@ -32,6 +32,13 @@ io.on("connection", (socket) => {
       message: "New order has been placed by a client!",
     });
   });
+
+  socket.on("order-ready", (data) => {
+    io.sockets.emit("inform-client", {
+      message: "Your order is ready! You can go pick it up now.",
+      id: data.id,
+    });
+  });
 });
 
 app.use(bodyParser.json()); // support json encoded bodies
