@@ -8,7 +8,7 @@ export class EmployeeDashboard extends Component {
     this.otherOrderSubmit = this.otherOrderSubmit.bind(this);
     await this.getPreparingOrdersIds();
     await this.getPreparingOrdersList();
-    await this.getReadOrDelivOrdersList();
+    await this.getReadyOrDelivOrdersList();
     const notifyOrderReady = this.props.notifyOrderReady;
     const setNotifyOrderReady = this.props.setNotifyOrderReady;
   }
@@ -28,11 +28,13 @@ export class EmployeeDashboard extends Component {
     await axios
       .post(`/order/ready/${id}`)
       .then((res) => {
-        console.log("SUCCESS");
+        console.log(res);
       })
       .catch((err) => console.log(err));
 
-    window.location.reload();
+    await this.getPreparingOrdersIds();
+    await this.getPreparingOrdersList();
+    await this.getReadyOrDelivOrdersList();
   }
 
   async otherOrderSubmit(event) {
@@ -44,11 +46,11 @@ export class EmployeeDashboard extends Component {
     await axios
       .post(`/order/delivered/${id}`)
       .then((res) => {
-        console.log("SUCCESS");
+        console.log(res);
       })
       .catch((err) => console.log(err));
 
-    window.location.reload();
+    await this.getReadyOrDelivOrdersList();
   }
 
   async getPreparingOrdersIds() {
@@ -61,6 +63,8 @@ export class EmployeeDashboard extends Component {
   }
 
   async getPreparingOrdersList() {
+    this.setState({ preparingOrdersList: [] });
+
     this.state.preparingOrderIds.map(async (item, index) => {
       await axios
         .get(`/order/products/${item.id_order}`)
@@ -73,7 +77,7 @@ export class EmployeeDashboard extends Component {
     });
   }
 
-  async getReadOrDelivOrdersList() {
+  async getReadyOrDelivOrdersList() {
     await axios
       .get("/order/readyOrDelivered")
       .then((res) => {
