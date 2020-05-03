@@ -169,3 +169,14 @@ footer .fa:hover {
 .access-butons > a {
   width: 45%;
 }
+
+.order-card-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 0.5rem;
+}
+
+.ff-info-toast {
+  background-color: #d4edda !important;
+  color: #155724 !important;
+}

@@ -1,10 +1,10 @@
-import React, { Component, useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
-import { UserContext } from "./context/Context";
+import { OrderContext } from "./context/Context";
 import axios from "axios";
 
-export default function Order() {
-  const [userInfo, setUserInfo] = useContext(UserContext);
+function Order() {
+  const [orderStatus, setOrderStatus] = useContext(OrderContext);
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [order, setOrder] = useState({
@@ -89,7 +89,7 @@ export default function Order() {
       .then((res) => {
         setCart([]);
         setOrder({ cartSubmitSuccess: true });
-        setUserInfo(false);
+        setOrderStatus(!orderStatus);
         console.log(res);
       })
       .catch((err) => {
@@ -267,3 +267,5 @@ function preciseRound(num, decimals) {
     ) / t
   ).toFixed(decimals);
 }
+
+export default Order;

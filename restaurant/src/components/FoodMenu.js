@@ -3,34 +3,31 @@ import { Alert, Card, Form, CardDeck } from "react-bootstrap";
 import axios from "axios";
 
 export class FoodMenu extends Component {
-
   state = {
     food: [],
     cart: [],
     totalprice: 0,
     index: 0,
-    cartSubmitSuccess: false
+    cartSubmitSuccess: false,
   };
 
   componentDidMount() {
     axios
       .get("/food/all")
-      .then(res => {
+      .then((res) => {
         this.setState({ food: res.data.data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
-
 
   async getUserId() {
     let id = undefined;
     await axios
       .get("/user/credentials")
-      .then(res => {
+      .then((res) => {
         id = res.data.user;
       })
-      .catch(err => {
-        console.log("ERR");
+      .catch((err) => {
         console.log(err);
       });
 
@@ -41,11 +38,13 @@ export class FoodMenu extends Component {
     return (
       <React.Fragment>
         <div className="container">
-        <Alert variant={"info"}>Inicia session para hacer tus ordenes! <a href="/login">Login</a> </Alert>
+          <Alert variant={"info"}>
+            Inicia session para hacer tus ordenes! <a href="/login">Login</a>{" "}
+          </Alert>
           <br />
           <h3>Menu de hoy</h3>
           <hr />
-          <Food food={this.state.food}  />
+          <Food food={this.state.food} />
         </div>
       </React.Fragment>
     );
@@ -62,7 +61,7 @@ function Food(props) {
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Body>
-    <Card.Title>{value.name.split(' ')[0]}</Card.Title>
+            <Card.Title>{value.name.split(" ")[0]}</Card.Title>
             <Card.Text>{value.name}</Card.Text>
             <Card.Text>Price: {value.price} MXN</Card.Text>
           </Card.Body>
@@ -86,4 +85,3 @@ function Food(props) {
     </div>
   );
 }
-

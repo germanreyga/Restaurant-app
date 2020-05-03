@@ -28,7 +28,9 @@ io.on("connection", (socket) => {
   console.log("New client connected, id:", socket.id, "at", new Date());
 
   socket.on("new-order-placed", (data) => {
-    io.sockets.emit("inform-employees", { message: data.message });
+    io.sockets.emit("inform-employees", {
+      message: "New order has been placed by a client",
+    });
   });
 });
 

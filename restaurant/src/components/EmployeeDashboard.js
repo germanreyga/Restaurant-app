@@ -14,7 +14,7 @@ export class EmployeeDashboard extends Component {
   state = {
     preparingOrderIds: [],
     preparingOrdersList: [],
-    otherOrdersList: []
+    otherOrdersList: [],
   };
 
   async handleSubmit(event) {
@@ -26,10 +26,10 @@ export class EmployeeDashboard extends Component {
 
     await axios
       .post(`/order/ready/${id}`)
-      .then(res => {
+      .then((res) => {
         console.log("SUCCESS");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     window.location.reload();
   }
@@ -43,10 +43,10 @@ export class EmployeeDashboard extends Component {
 
     await axios
       .post(`/order/delivered/${id}`)
-      .then(res => {
+      .then((res) => {
         console.log("SUCCESS");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     window.location.reload();
   }
@@ -54,32 +54,32 @@ export class EmployeeDashboard extends Component {
   async getPreparingOrdersIds() {
     await axios
       .get("/order/preparing")
-      .then(res => {
+      .then((res) => {
         this.setState({ preparingOrderIds: res.data.data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   async getPreparingOrdersList() {
     this.state.preparingOrderIds.map(async (item, index) => {
       await axios
         .get(`/order/products/${item.id_order}`)
-        .then(res => {
+        .then((res) => {
           const newPreparingOrdersList = this.state.preparingOrdersList;
           newPreparingOrdersList.push({ order: res.data.data });
           this.setState({ preparingOrdersList: newPreparingOrdersList });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   }
 
   async getReadOrDelivOrdersList() {
     await axios
       .get("/order/readyOrDelivered")
-      .then(res => {
+      .then((res) => {
         this.setState({ otherOrdersList: res.data.data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -149,7 +149,7 @@ function PendingOrders(props) {
       );
     });
 
-    return <CardDeck>{orderList}</CardDeck>;
+    return <CardDeck className={"order-card-deck"}>{orderList}</CardDeck>;
   } else {
     return <Alert variant="secondary">No orders to prepare</Alert>;
   }
