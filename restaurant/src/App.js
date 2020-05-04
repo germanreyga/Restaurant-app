@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
+import fb from './fb.png';
+import tw from './tw.png';
+import ig from './ig.png';
 let socket;
 
 function App() {
@@ -111,7 +114,7 @@ function App() {
         <footer className="bg-dark text-white address">
           <div className="container">
             <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mr-5">
                 <ul>
                   <span className="text-uppercase">Authors</span>
                   <li>Kevin Ruvalcaba P.</li>
@@ -119,7 +122,7 @@ function App() {
                   <li>Germán Reyes G.</li>
                 </ul>
               </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mr-5">
                 <ul className="social">
                   <span>Project's repository</span>
                   <li>
@@ -131,6 +134,32 @@ function App() {
                         height="50"
                       />
                     </a>
+                  </li>
+                </ul>
+              </div>
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <ul className="social">
+                  <span>Social Networks</span>
+                  <li>
+                      <img
+                        alt="Facebook"
+                        src={fb}
+                        className="social-icons"
+                      />
+                  </li>
+                  <li>
+                      <img
+                        alt="twitter"
+                        src={tw}
+                        className="social-icons"
+                      />
+                  </li>
+                  <li>
+                      <img
+                        alt="instagram"
+                        src={ig}
+                        className="social-icons"
+                      />
                   </li>
                 </ul>
               </div>

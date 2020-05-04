@@ -186,3 +186,9 @@ footer .fa:hover {
   background-color: #ffe8bd !important;
   color: #9c7835 !important;
 }
+
+.social-icons{
+  margin-right: 30px;
+  width: 25px;
+  height: 25px;
+}

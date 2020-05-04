@@ -43,12 +43,12 @@ export class Navigation extends Component {
   render() {
     return (
       <>
-        <Navbar bg="white" expand="lg">
-          <Navbar.Brand href="/#">FOOD FACTORY</Navbar.Brand>
+        <Navbar bg="light" expand="lg" className="mb-5">
+          <Navbar.Brand className="mr-5" href="/#">FOOD FACTORY</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto text-center">
-              <NavLink className="d-inline nav-option home-link" to="/">
+              <NavLink className="d-inline nav-option home-link w-100" to="/">
                 Home
               </NavLink>
               <OrderLink type={this.state.isLoggedIn}></OrderLink>
@@ -94,7 +94,7 @@ function UserMenuButtons(props) {
   return (
     <React.Fragment>
       <Form onSubmit={props.onSubmit}>
-        <Button type="submit" value="Logout" className="btn btn-orange">
+        <Button type="submit" value="Logout" className="btn btn-danger">
           Logout
         </Button>
       </Form>
@@ -113,13 +113,13 @@ function MenuButtons(props) {
 function OrderLink(props) {
   if (props.type) {
     return (
-      <NavLink className="d-inline nav-option order-link" to="/client/order">
+      <NavLink className="d-inline nav-option order-link w-100" to="/client/order">
         Order
       </NavLink>
     );
   } else {
     return (
-      <NavLink className="d-inline nav-option menu-link" to="/FoodMenu">
+      <NavLink className="d-inline nav-option menu-link w-100" to="/FoodMenu">
         Menu
       </NavLink>
     );
@@ -135,7 +135,7 @@ function AdminLink(props) {
     return null;
   } else if (props.type === "admin") {
     return (
-      <NavLink className="d-inline nav-option admin-link" to="/admin/tools">
+      <NavLink className="d-inline nav-option admin-link w-100" to="/admin/tools">
         Admin tools
       </NavLink>
     );
@@ -150,7 +150,7 @@ function EmployeeLink(props) {
   } else if (props.type === "admin" || props.type === "employee") {
     return (
       <NavLink
-        className="d-inline nav-option employee-link"
+        className="d-inline nav-option employee-link w-100"
         to="/employee/tools"
       >
         Employee tools
