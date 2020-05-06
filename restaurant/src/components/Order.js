@@ -11,6 +11,8 @@ function Order(props) {
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [storeList, setStoreList] = useState([]);
+  const [selectedStore, setSelectedStore] = useState('');
+  const [displayMap, setDisplayMap]  = useState(false);
   const [order, setOrder] = useState({
     totalprice: 0,
     index: 0,
@@ -22,6 +24,7 @@ function Order(props) {
       totalprice: 0,
       index: 0,
       cartSubmitSuccess: false,
+      orderAccepted: false
     });
 
     axios
@@ -52,6 +55,8 @@ function Order(props) {
               orderedStores.push({
                 name: `${store.name}: (${store.location})`,
                 distance: holder,
+                latitude: store.latitude,
+                longitude: store.longitude,
                 id_store: store.id_store
               });
             });
@@ -59,6 +64,9 @@ function Order(props) {
               return a.distance - b.distance;
             });
             setStoreList(orderedStores);
+            const url = ` https://embed.waze.com/iframe?zoom=16&lat=${orderedStores[0].latitude}&lon=${orderedStores[0].longitude}&ct=livemap`
+            
+            setSelectedStore(url);
             }).catch((err) => { console.log(err);});
         });
 
@@ -104,6 +112,10 @@ function Order(props) {
     event.target.qty.value = "";
   };
 
+  const confirmedOrder = (event) => {
+    setDisplayMap(true);
+  }
+
   const cartSubmit = async (event) => {
     event.preventDefault();
     event.persist();
@@ -129,6 +141,7 @@ function Order(props) {
         setOrder({ cartSubmitSuccess: true });
         setNotifyNewOrder(!notifyNewOrder);
         setOrderList(!orderList);
+        setDisplayMap(false);
         console.log(res);
       })
       .catch((err) => {
@@ -136,6 +149,18 @@ function Order(props) {
         console.log(err);
       });
   };
+
+  const changeMap = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    console.log(value, name);
+    storeList.forEach(store => {
+      if(store.id_store == value){
+        setSelectedStore(`https://embed.waze.com/iframe?zoom=16&lat=${store.latitude}&lon=${store.longitude}&ct=livemap`);
+      }
+    })
+  }
 
   const getUserId = async () => {
     let id = undefined;
@@ -162,19 +187,18 @@ function Order(props) {
           cart={cart}
           cartSubmitSuccess={order.cartSubmitSuccess}
           stores={storeList}
-          onSubmit={cartSubmit}
+          selected={selectedStore}
+          handleChange={changeMap}
+          onSubmit={confirmedOrder}
+          sendOrder={cartSubmit}
+          displayMap={displayMap}
         />
         <br />
         <h3>Food</h3>
         <hr />
         <Food food={foodList} onSubmit={addToCart} />
       </div>
-      {/* 
-      <iframe width="425" height="350" frameborder="0"
-        scrolling="no" marginheight="0" marginwidth="0"
-        src="https://maps.google.com/maps?q=19.2853,-99.141301&hl=es&z=14&amp;output=embed">
-      </iframe>
- */}
+      
 
     </React.Fragment>
     
@@ -232,19 +256,35 @@ function Food(props) {
 
 function Cart(props) {
   const cart = props.cart;
+  const url = String(props.selected);
   if (cart.length > 0) {
     return (
       <>
         <label >Send Order TO </label>
-        <select id="inputStore" name="inputStore" className="form-control" required>
-          <DeliveryList stores={props.stores} />
-        </select>
+        
         <CartListItems
         totalprice={props.totalprice}
         cart={props.cart}
         key={0}
         onSubmit={props.onSubmit}
         />       
+        {props.displayMap && (
+          <>
+              <div style={{"margin" : "0px 19%"}}>
+                <td>
+                  <select id="inputStore" name="inputStore" className="form-control" required onChange={props.handleChange}>
+                    <DeliveryList stores={props.stores} />
+                  </select>
+                  <iframe width="425" height="350" frameborder="0" scrolling="no" marginleft="50%" marginheight="0" marginwidth="0" src={url}></iframe>
+                  <Form onSubmit={props.sendOrder} style={{"margin" : "0px 38%"}}>
+                    <Button type="submit" className="btn-sm btn-dark" marginleft="50%">
+                      Submit order
+                    </Button>
+                  </Form>
+                </td>
+              </div>
+          </>
+        )}
       </>
     );
   } else {
@@ -278,11 +318,9 @@ function CartListItems(props) {
       </tr>
       <tr>
         <td colSpan="4">
-          <Form onSubmit={props.onSubmit}>
-            <Button type="submit" className="btn-sm btn-dark">
-              Submit order
+            <Button type="submit" className="btn-sm btn-dark" onClick={props.onSubmit}>
+              Confirm order
             </Button>
-          </Form>
         </td>
       </tr>
     </React.Fragment>
@@ -315,7 +353,7 @@ function DeliveryList(props) {
   const listStores = stores.map((value, index) => {
     return (
       <option key={value.id_store} value={value.id_store}>
-        {value.name} a ({`${Math.floor(value.distance*1000)}m`})
+        {value.name} is {`${Math.floor(value.distance*1000)}m away`}
       </option>
     );
   });
