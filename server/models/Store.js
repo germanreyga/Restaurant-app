@@ -3,7 +3,7 @@ const knex = require("../database/connection");
 exports.findAll = () => {
   const result = knex
     .from("stores")
-    .column("id_store", "name", "location")
+    .column("id_store", "name", "location", "latitude", "longitude")
     .timeout(1000, { cancel: true });
   return result;
 };

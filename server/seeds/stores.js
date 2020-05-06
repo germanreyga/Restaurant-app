@@ -12,17 +12,23 @@ exports.seed = async function(knex) {
             {
               location: "Legorreta",
               name: "FastFruit",
-              description: "Junto al comedor de lego"
+              description: "Junto al comedor de lego",
+              latitude: 19.284161,
+              longitude: -99.133877
             },
             {
               location: "CIE",
               name: "FastFruit",
-              description: "Escondido dentro del primer piso"
+              description: "Escondido dentro del primer piso",
+              latitude: 19.28292,
+              longitude: -99.1390861
             },
             {
               location: "Disney",
               name: "FastFruit",
-              description: "En frente de prepa"
+              description: "En frente de prepa",
+              latitude: 19.2853,
+              longitude: -99.141301
             }
           ]);
         });

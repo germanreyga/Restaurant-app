@@ -5,6 +5,8 @@ exports.up = function(knex) {
       table.string("location", 512).notNullable();
       table.string("name", 512).notNullable();
       table.string("description",512).notNullable();
+      table.float("latitude").notNullable();
+      table.float("longitude").notNullable();
       table.timestamps(true,true);
     })
     .createTable("users", table => {

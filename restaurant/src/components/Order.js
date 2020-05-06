@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
 import { OrderListContext } from "./context/Context";
 import axios from "axios";
+import {distance, preciseRound} from '../constants/Functions';
 
 function Order(props) {
   const notifyNewOrder = props.notifyNewOrder;
@@ -9,6 +10,7 @@ function Order(props) {
   const [orderList, setOrderList] = useContext(OrderListContext);
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
+  const [storeList, setStoreList] = useState([]);
   const [order, setOrder] = useState({
     totalprice: 0,
     index: 0,
@@ -28,6 +30,40 @@ function Order(props) {
         setFoodList(res.data.data);
       })
       .catch((err) => console.log(err));
+      var userCoordinates = []
+      //API to get user latitude and longitud
+      axios('https://freegeoip.app/json/')
+        .then((res) => { 
+          userCoordinates = [res.data.latitude, res.data.longitude];
+          return userCoordinates;
+          //find which sotre is closes to the user
+        })
+        .catch((err) => {
+          //This usually fails if the user has addblock or some other 
+          //similar extension. Default value then is Disney's  
+          userCoordinates = [19.2853, -99.141301];
+          console.log(err)
+          return userCoordinates;
+        }).then((userCoordinates)=> {
+          axios("/stores/all").then((res) => {
+            var orderedStores = [];
+            res.data.data.forEach(store => {
+              let holder = distance(userCoordinates[0], userCoordinates[1], store.latitude,store.longitude, 'K');
+              orderedStores.push({
+                name: `${store.name}: (${store.location})`,
+                distance: holder,
+                id_store: store.id_store
+              });
+            });
+            orderedStores.sort((a,b) => {
+              return a.distance - b.distance;
+            });
+            setStoreList(orderedStores);
+            }).catch((err) => { console.log(err);});
+        });
+
+      
+
   }, []);
 
   const addToCart = async (event) => {
@@ -125,6 +161,7 @@ function Order(props) {
           totalprice={order.totalprice}
           cart={cart}
           cartSubmitSuccess={order.cartSubmitSuccess}
+          stores={storeList}
           onSubmit={cartSubmit}
         />
         <br />
@@ -132,7 +169,15 @@ function Order(props) {
         <hr />
         <Food food={foodList} onSubmit={addToCart} />
       </div>
+      {/* 
+      <iframe width="425" height="350" frameborder="0"
+        scrolling="no" marginheight="0" marginwidth="0"
+        src="https://maps.google.com/maps?q=19.2853,-99.141301&hl=es&z=14&amp;output=embed">
+      </iframe>
+ */}
+
     </React.Fragment>
+    
   );
 }
 
@@ -189,12 +234,18 @@ function Cart(props) {
   const cart = props.cart;
   if (cart.length > 0) {
     return (
-      <CartListItems
+      <>
+        <label >Send Order TO </label>
+        <select id="inputStore" name="inputStore" className="form-control" required>
+          <DeliveryList stores={props.stores} />
+        </select>
+        <CartListItems
         totalprice={props.totalprice}
         cart={props.cart}
         key={0}
         onSubmit={props.onSubmit}
-      />
+        />       
+      </>
     );
   } else {
     return (
@@ -259,15 +310,19 @@ function CartSubmitStatus(props) {
   }
 }
 
-function preciseRound(num, decimals) {
-  var t = Math.pow(10, decimals);
-  return (
-    Math.round(
-      num * t +
-        (decimals > 0 ? 1 : 0) *
-          (Math.sign(num) * (10 / Math.pow(100, decimals)))
-    ) / t
-  ).toFixed(decimals);
+function DeliveryList(props) {
+  const stores = props.stores;
+  const listStores = stores.map((value, index) => {
+    return (
+      <option key={value.id_store} value={value.id_store}>
+        {value.name} a ({`${Math.floor(value.distance*1000)}m`})
+      </option>
+    );
+  });
+
+  return <React.Fragment>{listStores}</React.Fragment>;
 }
+
+
 
 export default Order;
