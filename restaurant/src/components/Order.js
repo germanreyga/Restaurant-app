@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
 import { OrderListContext } from "./context/Context";
 import axios from "axios";
-import {distance, preciseRound} from '../constants/Functions';
+import { distance, preciseRound } from "../constants/Functions";
 
 function Order(props) {
   const notifyNewOrder = props.notifyNewOrder;
@@ -11,8 +11,8 @@ function Order(props) {
   const [cart, setCart] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [storeList, setStoreList] = useState([]);
-  const [selectedStore, setSelectedStore] = useState('');
-  const [displayMap, setDisplayMap]  = useState(false);
+  const [selectedStore, setSelectedStore] = useState("");
+  const [displayMap, setDisplayMap] = useState(false);
   const [order, setOrder] = useState({
     totalprice: 0,
     index: 0,
@@ -24,7 +24,7 @@ function Order(props) {
       totalprice: 0,
       index: 0,
       cartSubmitSuccess: false,
-      orderAccepted: false
+      orderAccepted: false,
     });
 
     axios
@@ -33,45 +33,53 @@ function Order(props) {
         setFoodList(res.data.data);
       })
       .catch((err) => console.log(err));
-      var userCoordinates = []
-      //API to get user latitude and longitud
-      axios('https://freegeoip.app/json/')
-        .then((res) => { 
-          userCoordinates = [res.data.latitude, res.data.longitude];
-          return userCoordinates;
-          //find which sotre is closes to the user
-        })
-        .catch((err) => {
-          //This usually fails if the user has addblock or some other 
-          //similar extension. Default value then is Disney's  
-          userCoordinates = [19.2853, -99.141301];
-          console.log(err)
-          return userCoordinates;
-        }).then((userCoordinates)=> {
-          axios("/stores/all").then((res) => {
+    var userCoordinates = [];
+    //API to get user latitude and longitud
+    axios("https://freegeoip.app/json/")
+      .then((res) => {
+        userCoordinates = [res.data.latitude, res.data.longitude];
+        return userCoordinates;
+        //find which sotre is closes to the user
+      })
+      .catch((err) => {
+        //This usually fails if the user has addblock or some other
+        //similar extension. Default value then is Disney's
+        userCoordinates = [19.2853, -99.141301];
+        console.log(err);
+        return userCoordinates;
+      })
+      .then((userCoordinates) => {
+        axios("/stores/all")
+          .then((res) => {
             var orderedStores = [];
-            res.data.data.forEach(store => {
-              let holder = distance(userCoordinates[0], userCoordinates[1], store.latitude,store.longitude, 'K');
+            res.data.data.forEach((store) => {
+              let holder = distance(
+                userCoordinates[0],
+                userCoordinates[1],
+                store.latitude,
+                store.longitude,
+                "K"
+              );
               orderedStores.push({
                 name: `${store.name}: (${store.location})`,
                 distance: holder,
                 latitude: store.latitude,
                 longitude: store.longitude,
-                id_store: store.id_store
+                id_store: store.id_store,
               });
             });
-            orderedStores.sort((a,b) => {
+            orderedStores.sort((a, b) => {
               return a.distance - b.distance;
             });
             setStoreList(orderedStores);
-            const url = ` https://embed.waze.com/iframe?zoom=16&lat=${orderedStores[0].latitude}&lon=${orderedStores[0].longitude}&ct=livemap`
-            
+            const url = ` https://embed.waze.com/iframe?zoom=16&lat=${orderedStores[0].latitude}&lon=${orderedStores[0].longitude}&ct=livemap`;
+
             setSelectedStore(url);
-            }).catch((err) => { console.log(err);});
-        });
-
-      
-
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
   }, []);
 
   const addToCart = async (event) => {
@@ -114,7 +122,7 @@ function Order(props) {
 
   const confirmedOrder = (event) => {
     setDisplayMap(true);
-  }
+  };
 
   const cartSubmit = async (event) => {
     event.preventDefault();
@@ -155,12 +163,14 @@ function Order(props) {
     const value = target.value;
     const name = target.name;
     console.log(value, name);
-    storeList.forEach(store => {
-      if(store.id_store == value){
-        setSelectedStore(`https://embed.waze.com/iframe?zoom=16&lat=${store.latitude}&lon=${store.longitude}&ct=livemap`);
+    storeList.forEach((store) => {
+      if (store.id_store === value) {
+        setSelectedStore(
+          `https://embed.waze.com/iframe?zoom=16&lat=${store.latitude}&lon=${store.longitude}&ct=livemap`
+        );
       }
-    })
-  }
+    });
+  };
 
   const getUserId = async () => {
     let id = undefined;
@@ -198,16 +208,13 @@ function Order(props) {
         <hr />
         <Food food={foodList} onSubmit={addToCart} />
       </div>
-      
-
     </React.Fragment>
-    
   );
 }
 
 function Food(props) {
   const foodList = props.food;
-  const listFood = foodList.map((value, index) => {
+  const listFood = foodList.map((food, index) => {
     return (
       <div key={index} className="col-auto mb-4">
         <Card
@@ -215,16 +222,16 @@ function Food(props) {
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Body>
-            <Card.Title>{value.name.split(" ")[0]}</Card.Title>
-            <Card.Text>{value.name}</Card.Text>
-            <Card.Text>Price: {value.price} MXN</Card.Text>
+            <Card.Title>{food.category}</Card.Title>
+            <Card.Text>{food.name}</Card.Text>
+            <Card.Text>Price: {food.price} MXN</Card.Text>
           </Card.Body>
           <Card.Footer className="text-muted">
             <Form onSubmit={props.onSubmit}>
               <div className="form-group food-form-group ">
-                <input name="id" defaultValue={value.id_product} hidden />
-                <input name="name" defaultValue={value.name} hidden />
-                <input name="price" defaultValue={value.price} hidden />
+                <input name="id" defaultValue={food.id_product} hidden />
+                <input name="name" defaultValue={food.name} hidden />
+                <input name="price" defaultValue={food.price} hidden />
                 <input
                   type="number"
                   id="qty"
@@ -260,29 +267,49 @@ function Cart(props) {
   if (cart.length > 0) {
     return (
       <>
-        <label >Send Order TO </label>
-        
+        <label>Send Order TO </label>
+
         <CartListItems
-        totalprice={props.totalprice}
-        cart={props.cart}
-        key={0}
-        onSubmit={props.onSubmit}
-        />       
+          totalprice={props.totalprice}
+          cart={props.cart}
+          key={0}
+          onSubmit={props.onSubmit}
+        />
         {props.displayMap && (
           <>
-              <div style={{"margin" : "0px 19%"}}>
-                <td>
-                  <select id="inputStore" name="inputStore" className="form-control" required onChange={props.handleChange}>
-                    <DeliveryList stores={props.stores} />
-                  </select>
-                  <iframe width="425" height="350" frameborder="0" scrolling="no" marginleft="50%" marginheight="0" marginwidth="0" src={url}></iframe>
-                  <Form onSubmit={props.sendOrder} style={{"margin" : "0px 38%"}}>
-                    <Button type="submit" className="btn-sm btn-dark" marginleft="50%">
-                      Submit order
-                    </Button>
-                  </Form>
-                </td>
-              </div>
+            <div style={{ margin: "0px 19%" }}>
+              <td>
+                <select
+                  id="inputStore"
+                  name="inputStore"
+                  className="form-control"
+                  required
+                  onChange={props.handleChange}
+                >
+                  <DeliveryList stores={props.stores} />
+                </select>
+                <iframe
+                  width="425"
+                  height="350"
+                  frameborder="0"
+                  scrolling="no"
+                  marginleft="50%"
+                  marginheight="0"
+                  marginwidth="0"
+                  src={url}
+                  title="Mapa waze"
+                ></iframe>
+                <Form onSubmit={props.sendOrder} style={{ margin: "0px 38%" }}>
+                  <Button
+                    type="submit"
+                    className="btn-sm btn-dark"
+                    marginleft="50%"
+                  >
+                    Submit order
+                  </Button>
+                </Form>
+              </td>
+            </div>
           </>
         )}
       </>
@@ -318,9 +345,13 @@ function CartListItems(props) {
       </tr>
       <tr>
         <td colSpan="4">
-            <Button type="submit" className="btn-sm btn-dark" onClick={props.onSubmit}>
-              Confirm order
-            </Button>
+          <Button
+            type="submit"
+            className="btn-sm btn-dark"
+            onClick={props.onSubmit}
+          >
+            Confirm order
+          </Button>
         </td>
       </tr>
     </React.Fragment>
@@ -353,14 +384,12 @@ function DeliveryList(props) {
   const listStores = stores.map((value, index) => {
     return (
       <option key={value.id_store} value={value.id_store}>
-        {value.name} is {`${Math.floor(value.distance*1000)}m away`}
+        {value.name} is {`${Math.floor(value.distance * 1000)}m away`}
       </option>
     );
   });
 
   return <React.Fragment>{listStores}</React.Fragment>;
 }
-
-
 
 export default Order;

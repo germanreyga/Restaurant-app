@@ -39,10 +39,10 @@ export class FoodMenu extends Component {
       <React.Fragment>
         <div className="container">
           <Alert variant={"info"}>
-            Inicia session para hacer tus ordenes! <a href="/login">Login</a>{" "}
+            Login to start ordering! <a href="/login">Login</a>{" "}
           </Alert>
           <br />
-          <h3>Menu de hoy</h3>
+          <h3>Today's menu</h3>
           <hr />
           <Food food={this.state.food} />
         </div>
