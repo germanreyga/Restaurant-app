@@ -14,9 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
-import fb from './fb.png';
-import tw from './tw.png';
-import ig from './ig.png';
+import fb from "./img/fb.png";
+import tw from "./img/tw.png";
+import ig from "./img/ig.png";
 let socket;
 
 function App() {
@@ -141,25 +141,13 @@ function App() {
                 <ul className="social">
                   <span>Social Networks</span>
                   <li>
-                      <img
-                        alt="Facebook"
-                        src={fb}
-                        className="social-icons"
-                      />
+                    <img alt="Facebook" src={fb} className="social-icons" />
                   </li>
                   <li>
-                      <img
-                        alt="twitter"
-                        src={tw}
-                        className="social-icons"
-                      />
+                    <img alt="twitter" src={tw} className="social-icons" />
                   </li>
                   <li>
-                      <img
-                        alt="instagram"
-                        src={ig}
-                        className="social-icons"
-                      />
+                    <img alt="instagram" src={ig} className="social-icons" />
                   </li>
                 </ul>
               </div>
