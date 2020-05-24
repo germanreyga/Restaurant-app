@@ -1,8 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,400i|IBM+Plex+Sans+Condensed:400,400i|IBM+Plex+Sans:100,100i,400,400i,700,700i|IBM+Plex+Serif:400,400i&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,400i|IBM+Plex+Sans+Condensed:400,400i|IBM+Plex+Sans:100,100i,400,400i,700,700i|IBM+Plex+Serif:400,400i&display=swap");*/
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
 
 body {
   margin: 0;
-  font-family: "IBM Plex Sans", sans-serif;
+  /*font-family: "IBM Plex Sans", sans-serif;*/
+  font-family: "Josefin Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
-import { Home } from "./components/Home";
+import Home from "./components/Home";
 import Order from "./components/Order";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
@@ -13,10 +13,12 @@ import { OrderListContext } from "./components/context/Context";
 import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
 import socketIOClient from "socket.io-client";
+
 import axios from "axios";
 import fb from "./img/fb.png";
 import tw from "./img/tw.png";
 import ig from "./img/ig.png";
+
 let socket;
 
 function App() {

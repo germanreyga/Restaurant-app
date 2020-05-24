@@ -4,11 +4,35 @@
   border-bottom-color: rgb(141, 197, 56);
 }
 
+body {
+  background-color: #fafafa;
+}
+
+.home-title {
+  width: fit-content;
+  padding: 20px;
+  color: white;
+  border-radius: 2px;
+  background-color: green;
+}
+
+.home-subtitle span {
+  color: rgb(224, 101, 0);
+}
+
+.info-panel {
+  margin-top: 10%;
+}
+
+.info-panel h4 {
+  color: rgb(248, 116, 8);
+}
+
 .home-link:hover {
   background-color: rgb(141, 197, 56);
   color: white;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: all 0.3s ease-in-out;
 }
 
 .order-link {
@@ -21,7 +45,7 @@
   background-color: rgb(106, 161, 23);
   color: white;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu-link {
@@ -34,7 +58,7 @@
   background-color: rgb(248, 116, 8);
   color: white;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: all 0.3s ease-in-out;
 }
 
 .admin-link {
@@ -47,7 +71,7 @@
   background-color: rgb(80, 121, 20);
   color: white;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: all 0.3s ease-in-out;
 }
 
 .employee-link {
@@ -60,7 +84,27 @@
   background-color: rgb(255, 157, 77);
   color: white;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-eco .card-title {
+  text-align: center;
+  color: rgb(141, 197, 56);
+}
+
+.card-taste .card-title {
+  text-align: center;
+  color: rgb(106, 161, 23);
+}
+
+.card-ingredients .card-title {
+  text-align: center;
+  color: rgb(80, 121, 20);
+}
+
+.card-healthy .card-title {
+  text-align: center;
+  color: rgb(255, 157, 77);
 }
 
 .nav-option {
@@ -72,7 +116,7 @@
 }
 
 .btn-orange {
-  background-color: rgb(255, 201, 131);
+  background-color: rgb(255, 178, 78);
   margin-right: 0.5em;
   margin-top: 0.5em;
   color: white;
@@ -82,7 +126,22 @@
 
 .btn-orange:hover {
   background-color: rgb(245, 165, 60);
-  border-color: rgb(255, 201, 131);
+  border-color: rgb(255, 178, 78);
+  color: white;
+}
+
+.btn-green {
+  background-color: rgb(106, 161, 23);
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+  color: white;
+  border-color: rgb(106, 161, 23);
+  padding: 0.5em 3em;
+}
+
+.btn-green:hover {
+  background-color: rgb(100, 150, 25);
+  border-color: rgb(106, 161, 23);
   color: white;
 }
 
@@ -187,8 +246,66 @@ footer .fa:hover {
   color: #9c7835 !important;
 }
 
-.social-icons{
+.social-icons {
   margin-right: 30px;
   width: 25px;
   height: 25px;
+}
+
+.awssld__prev {
+  background-color: white !important;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  width: 70px !important;
+}
+
+.awssld__next {
+  background-color: white !important;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  width: 70px !important;
+}
+
+.awssld {
+  --organic-arrow-color: green !important;
+  --loader-bar-color: rgb(141, 197, 56) !important;
+  --organic-arrow-thickness: 7px;
+  --organic-arrow-border-radius: 28px;
+  --organic-arrow-height: 37px;
+}
+
+.know-us {
+  background: linear-gradient(
+    90deg,
+    rgba(141, 197, 56, 1) 0%,
+    rgba(22, 121, 9, 0.5517740543483018) 50%,
+    rgba(255, 157, 77, 1) 100%
+  );
+  width: 150%;
+  margin-left: -25%;
+  color: white;
+}
+
+.gradient-line-main {
+  background: rgb(141, 197, 56);
+  background: linear-gradient(
+    90deg,
+    rgba(141, 197, 56, 1) 13%,
+    rgba(9, 121, 74, 1) 50%,
+    rgba(141, 197, 56, 1) 87%
+  );
+  width: 150%;
+  margin-left: -25%;
+  height: 2px;
+}
+
+.info-cards .card {
+  margin-top: 1%;
+  border-radius: 20px;
+}
+
+.aws-btn {
+  --organic-arrow-thickness: 7px;
+  --organic-arrow-border-radius: 28px;
+  --organic-arrow-height: 37px;
 }

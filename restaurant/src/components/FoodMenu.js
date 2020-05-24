@@ -53,27 +53,20 @@ export class FoodMenu extends Component {
 
 function Food(props) {
   const foods = props.food;
-  const listFood = foods.map((value, index) => {
+  const listFood = foods.map((food, index) => {
     return (
       <div key={index} className="col-auto mb-4">
         <Card
           className="text-justify"
           style={{ width: "18rem", height: "100%" }}
         >
+          <Card.Header>{food.category}</Card.Header>
           <Card.Body>
-            <Card.Title>{value.name.split(" ")[0]}</Card.Title>
-            <Card.Text>{value.name}</Card.Text>
-            <Card.Text>Price: {value.price} MXN</Card.Text>
+            <Card.Text>{food.name}</Card.Text>
+            <Card.Text>
+              Price: <b>${food.price} MXN</b>
+            </Card.Text>
           </Card.Body>
-          <Card.Footer className="text-muted">
-            <Form onSubmit={props.onSubmit}>
-              <div className="form-group food-form-group ">
-                <input name="id" defaultValue={value.id_product} hidden />
-                <input name="name" defaultValue={value.name} hidden />
-                <input name="price" defaultValue={value.price} hidden />
-              </div>
-            </Form>
-          </Card.Footer>
         </Card>
       </div>
     );

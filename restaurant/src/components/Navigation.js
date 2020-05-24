@@ -43,8 +43,10 @@ export class Navigation extends Component {
   render() {
     return (
       <>
-        <Navbar bg="light" expand="lg" className="mb-5">
-          <Navbar.Brand className="mr-5" href="/#">FOOD FACTORY</Navbar.Brand>
+        <Navbar bg="white" expand="lg" className="mb-5">
+          <Navbar.Brand className="mr-5" href="/#">
+            Fast Fruit
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto text-center">
@@ -74,14 +76,14 @@ function GuestMenuButtons(props) {
     <React.Fragment>
       <NavLink
         variant="outline-primary"
-        className="Nav.Link btn btn-orange"
+        className="Nav.Link btn btn-orange shadow-sm"
         to="/login"
       >
         Login
       </NavLink>
       <NavLink
         variant="outline-primary"
-        className="Nav.Link btn btn-orange"
+        className="Nav.Link btn btn-orange shadow-sm"
         to="/register"
       >
         Register
@@ -94,7 +96,11 @@ function UserMenuButtons(props) {
   return (
     <React.Fragment>
       <Form onSubmit={props.onSubmit}>
-        <Button type="submit" value="Logout" className="btn btn-danger">
+        <Button
+          type="submit"
+          value="Logout"
+          className="btn btn-orange shadow-sm"
+        >
           Logout
         </Button>
       </Form>
@@ -113,7 +119,10 @@ function MenuButtons(props) {
 function OrderLink(props) {
   if (props.type) {
     return (
-      <NavLink className="d-inline nav-option order-link w-100" to="/client/order">
+      <NavLink
+        className="d-inline nav-option order-link w-100"
+        to="/client/order"
+      >
         Order
       </NavLink>
     );
@@ -135,7 +144,10 @@ function AdminLink(props) {
     return null;
   } else if (props.type === "admin") {
     return (
-      <NavLink className="d-inline nav-option admin-link w-100" to="/admin/tools">
+      <NavLink
+        className="d-inline nav-option admin-link w-100"
+        to="/admin/tools"
+      >
         Admin tools
       </NavLink>
     );
