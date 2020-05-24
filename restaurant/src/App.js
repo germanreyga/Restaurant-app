@@ -113,7 +113,7 @@ function App() {
             />
           </Switch>
         </div>
-        <footer className="bg-dark text-white address">
+        <footer className="bg-ff-footer text-white address">
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mr-5">

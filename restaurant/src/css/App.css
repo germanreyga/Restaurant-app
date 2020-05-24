@@ -4,6 +4,10 @@
   border-bottom-color: rgb(141, 197, 56);
 }
 
+.bg-ff-footer {
+  background-color: #7ac369;
+}
+
 body {
   background-color: #fafafa;
 }
