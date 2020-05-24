@@ -131,18 +131,29 @@ body {
 }
 
 .btn-green {
-  background-color: rgb(106, 161, 23);
+  background-color: rgb(106, 161, 23) !important;
   margin-right: 0.5em;
   margin-top: 0.5em;
   color: white;
-  border-color: rgb(106, 161, 23);
+  border-color: rgb(106, 161, 23) !important;
   padding: 0.5em 3em;
 }
 
 .btn-green:hover {
-  background-color: rgb(100, 150, 25);
-  border-color: rgb(106, 161, 23);
+  background-color: rgb(100, 150, 25) !important;
+  border-color: rgb(106, 161, 23) !important;
   color: white;
+}
+
+.btn-green:active,
+.btn-green:visited {
+  background-color: rgb(100, 150, 25) !important;
+  border-color: rgb(106, 161, 23) !important;
+  color: white;
+}
+
+.btn-green:focus {
+  box-shadow: 0 0 0 0.2rem rgba(122, 187, 24, 0.281) !important;
 }
 
 .food-form-group {
@@ -150,19 +161,19 @@ body {
   width: 100%;
 }
 
-.food-form-group > input {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.food-form-group > button {
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 0px !important;
-}
-
 .order-card {
   background-color: rgba(255, 244, 183, 0.877);
   border-color: #e1e1e1 !important;
+}
+
+.btn-link,
+.btn-link:hover,
+.btn-link:active,
+.btn-link:visited,
+.btn-link:focus {
+  font-weight: 400;
+  color: #383c41;
+  text-decoration: underline;
 }
 
 footer {
@@ -281,8 +292,8 @@ footer .fa:hover {
     rgba(22, 121, 9, 0.5517740543483018) 50%,
     rgba(255, 157, 77, 1) 100%
   );
-  width: 150%;
-  margin-left: -25%;
+  width: 130%;
+  margin-left: -15%;
   color: white;
 }
 
@@ -294,9 +305,40 @@ footer .fa:hover {
     rgba(9, 121, 74, 1) 50%,
     rgba(141, 197, 56, 1) 87%
   );
-  width: 150%;
-  margin-left: -25%;
-  height: 2px;
+  width: 100%;
+  height: 3.5px;
+}
+
+.gradient-line-secondary {
+  background: rgb(98, 204, 130);
+  background: linear-gradient(
+    29deg,
+    rgba(98, 204, 130, 1) 33%,
+    rgba(133, 236, 109, 1) 54%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  width: 130%;
+  margin-left: -15%;
+  color: white;
+  padding-left: 10%;
+}
+
+.deli-text {
+  color: rgb(224, 101, 0);
+  text-shadow: -1px 0 white, 0 0.5px white, 0.5px 0 white, 0 -1px white;
+}
+
+.btn-add-order {
+  float: right;
+  margin-right: -18%;
+  margin-bottom: -13.85%;
+  padding: 1px !important;
+  border-radius: 60px;
+  min-width: 50px;
+  min-height: 50px;
+  font-size: 30px;
+  border-width: 2px !important;
+  border-color: #fafafa !important;
 }
 
 .info-cards .card {
@@ -308,4 +350,14 @@ footer .fa:hover {
   --organic-arrow-thickness: 7px;
   --organic-arrow-border-radius: 28px;
   --organic-arrow-height: 37px;
+}
+
+.blink-anim {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }

@@ -118,7 +118,7 @@ function App() {
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mr-5">
                 <ul>
-                  <span className="text-uppercase">Authors</span>
+                  <span>Authors</span>
                   <li>Kevin Ruvalcaba P.</li>
                   <li>Alejandro Moreno L.</li>
                   <li>Germán Reyes G.</li>
@@ -141,7 +141,7 @@ function App() {
               </div>
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <ul className="social">
-                  <span>Social Networks</span>
+                  <span>Social media</span>
                   <li>
                     <img alt="Facebook" src={fb} className="social-icons" />
                   </li>

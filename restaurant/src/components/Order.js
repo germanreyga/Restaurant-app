@@ -188,9 +188,22 @@ function Order(props) {
 
   return (
     <React.Fragment>
+      <div className="gradient-line-secondary shadow-lg">
+        <h2 className="text-left p-3">
+          Order <br />
+          something <br />
+          <span className="deli-text">delicious</span> <br />
+          today
+        </h2>
+      </div>
       <div className="container">
         <br />
-        <h3>Cart</h3>
+        <h3>
+          <span role="img" aria-label="shopping cart">
+            🛒
+          </span>{" "}
+          Cart
+        </h3>
         <hr />
         <Cart
           totalprice={order.totalprice}
@@ -204,7 +217,12 @@ function Order(props) {
           displayMap={displayMap}
         />
         <br />
-        <h3>Food</h3>
+        <h3>
+          <span role="img" aria-label="salad">
+            🥗
+          </span>
+          Food
+        </h3>
         <hr />
         <Food food={foodList} onSubmit={addToCart} />
       </div>
@@ -218,13 +236,17 @@ function Food(props) {
     return (
       <div key={index} className="col-auto mb-4">
         <Card
-          className="text-justify"
+          className="text-justify shadow-lg"
           style={{ width: "18rem", height: "100%" }}
         >
+          <Card.Header className="text-center">
+            <b>{food.category}</b>
+          </Card.Header>
           <Card.Body>
-            <Card.Title>{food.category}</Card.Title>
             <Card.Text>{food.name}</Card.Text>
-            <Card.Text>Price: {food.price} MXN</Card.Text>
+            <Card.Text>
+              Price: <strong>${food.price} MXN</strong>
+            </Card.Text>
           </Card.Body>
           <Card.Footer className="text-muted">
             <Form onSubmit={props.onSubmit}>
@@ -243,8 +265,11 @@ function Food(props) {
                   max="5"
                   required
                 />
-                <Button type="submit" className="btn-block rounded btn-dark">
-                  Add to order
+                <Button
+                  type="submit"
+                  className="btn-sm btn-green btn-add-order shadow-sm"
+                >
+                  <strong>+</strong>
                 </Button>
               </div>
             </Form>
@@ -267,7 +292,7 @@ function Cart(props) {
   if (cart.length > 0) {
     return (
       <>
-        <label>Send Order TO </label>
+        <label> The order you are placing has: </label>
 
         <CartListItems
           totalprice={props.totalprice}
@@ -277,38 +302,37 @@ function Cart(props) {
         />
         {props.displayMap && (
           <>
-            <div style={{ margin: "0px 19%" }}>
-              <td>
-                <select
-                  id="inputStore"
-                  name="inputStore"
-                  className="form-control"
-                  required
-                  onChange={props.handleChange}
-                >
-                  <DeliveryList stores={props.stores} />
-                </select>
+            <div className="text-center shadow-lg">
+              <select
+                id="inputStore"
+                name="inputStore"
+                className="form-control"
+                required
+                onChange={props.handleChange}
+              >
+                <DeliveryList stores={props.stores} />
+              </select>
+              <div>
                 <iframe
-                  width="425"
-                  height="350"
+                  width="100%"
+                  height="300px"
                   frameborder="0"
                   scrolling="no"
-                  marginleft="50%"
                   marginheight="0"
                   marginwidth="0"
                   src={url}
                   title="Mapa waze"
                 ></iframe>
-                <Form onSubmit={props.sendOrder} style={{ margin: "0px 38%" }}>
-                  <Button
-                    type="submit"
-                    className="btn-sm btn-dark"
-                    marginleft="50%"
-                  >
-                    Submit order
-                  </Button>
-                </Form>
-              </td>
+              </div>
+              <Form onSubmit={props.sendOrder}>
+                <Button
+                  type="submit"
+                  className="btn-block btn-green"
+                  marginleft="50%"
+                >
+                  <span className=" blink-anim">SUBMIT ORDER</span>
+                </Button>
+              </Form>
             </div>
           </>
         )}
@@ -317,7 +341,9 @@ function Cart(props) {
   } else {
     return (
       <React.Fragment>
-        <Alert variant="secondary">No items in your cart</Alert>
+        <Alert variant="secondary">
+          No items in your cart. Let's order something!
+        </Alert>
         <CartSubmitStatus cartSubmitSuccess={props.cartSubmitSuccess} />
       </React.Fragment>
     );
@@ -328,9 +354,8 @@ function CartListItems(props) {
   const cartListItems = props.cart.map((item, index) => {
     return (
       <tr key={index}>
-        <td>{item.id_product - 1}</td>
         <td>{item.name}</td>
-        <td>{item.quantity}</td>
+        <td>x{item.quantity}</td>
         <td>${item.price} MXN</td>
       </tr>
     );
@@ -338,18 +363,14 @@ function CartListItems(props) {
   cartListItems.push(
     <React.Fragment>
       <tr className="font-weight-bold">
-        <td colSpan="3" className="text-center">
+        <td colSpan="2" className="text-center">
           Total price
         </td>
-        <td>${props.totalprice} MXN</td>
+        <td>-- ${props.totalprice} MXN --</td>
       </tr>
       <tr>
-        <td colSpan="4">
-          <Button
-            type="submit"
-            className="btn-sm btn-dark"
-            onClick={props.onSubmit}
-          >
+        <td colSpan="3">
+          <Button type="submit" variant="link" onClick={props.onSubmit}>
             Confirm order
           </Button>
         </td>
@@ -357,10 +378,9 @@ function CartListItems(props) {
     </React.Fragment>
   );
   return (
-    <Table striped bordered hover size="sm" className="text-center">
+    <Table striped bordered hover size="sm" className="text-center shadow-lg">
       <thead>
         <tr>
-          <th>Food #</th>
           <th>Name</th>
           <th>Quantity</th>
           <th>Price</th>

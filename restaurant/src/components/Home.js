@@ -16,14 +16,18 @@ function Home() {
 
   return (
     <React.Fragment>
-      <h1 className="text-left home-title ">Fast fruit</h1>
+      <h1 className="text-left home-title ">
+        Fast
+        <br />
+        Fruit
+      </h1>
       <p className="home-subtitle">
         Eating healthy has never been more <span>delicious!</span>
       </p>
 
       <div className="gradient-line-main" />
       <AwesomeSlider
-        className="mt-5 mb-5 shadow-sm p-3 mb-5 bg-white rounded"
+        className="mt-5 shadow-sm p-3 bg-white rounded"
         bullets={true}
       >
         <div data-src={require("../img/slider-1.jpg")} />

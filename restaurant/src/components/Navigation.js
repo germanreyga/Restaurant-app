@@ -43,9 +43,9 @@ export class Navigation extends Component {
   render() {
     return (
       <>
-        <Navbar bg="white" expand="lg" className="mb-5">
+        <Navbar bg="white" expand="lg">
           <Navbar.Brand className="mr-5" href="/#">
-            Fast Fruit
+            FastFruit
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -76,14 +76,14 @@ function GuestMenuButtons(props) {
     <React.Fragment>
       <NavLink
         variant="outline-primary"
-        className="Nav.Link btn btn-orange shadow-sm"
+        className="Nav.Link btn btn-orange shadow-lg"
         to="/login"
       >
         Login
       </NavLink>
       <NavLink
         variant="outline-primary"
-        className="Nav.Link btn btn-orange shadow-sm"
+        className="Nav.Link btn btn-orange shadow-lg"
         to="/register"
       >
         Register
@@ -99,7 +99,7 @@ function UserMenuButtons(props) {
         <Button
           type="submit"
           value="Logout"
-          className="btn btn-orange shadow-sm"
+          className="btn btn-orange shadow-lg"
         >
           Logout
         </Button>

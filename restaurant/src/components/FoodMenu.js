@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Card, Form, CardDeck } from "react-bootstrap";
+import { Alert, Card, CardDeck } from "react-bootstrap";
 import axios from "axios";
 
 export class FoodMenu extends Component {
@@ -37,12 +37,26 @@ export class FoodMenu extends Component {
   render() {
     return (
       <React.Fragment>
+        <div className="gradient-line-secondary shadow-lg">
+          <h2 className="text-left p-3">
+            <a className="blink-anim" href="/login">
+              Login
+            </a>{" "}
+            <br />
+            to start <br />
+            ordering <br />
+            <span className="deli-text">delicious</span> <br />
+            food today
+          </h2>
+        </div>
         <div className="container">
-          <Alert variant={"info"}>
-            Login to start ordering! <a href="/login">Login</a>{" "}
-          </Alert>
           <br />
-          <h3>Today's menu</h3>
+          <h3>
+            <span role="img" aria-label="memo">
+              📝
+            </span>
+            Today's menu
+          </h3>
           <hr />
           <Food food={this.state.food} />
         </div>
@@ -57,7 +71,7 @@ function Food(props) {
     return (
       <div key={index} className="col-auto mb-4">
         <Card
-          className="text-justify"
+          className="text-justify shadow-lg"
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Header>{food.category}</Card.Header>
