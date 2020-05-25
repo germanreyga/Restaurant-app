@@ -49,3 +49,14 @@ On a new terminal, on root directory:
 1. `npm run devstart`
 
 This will run the backend on port 5000 of the PC (if by some reason you change the backend's port number, be sure to update the "proxy": "http://localhost:5000" line in the frontend's package.json file accordingly)
+
+## Main technologies used
+
+- React
+- Node.js (Express)
+- MySQL
+- Socket.io
+- react-bootstrap
+- Axios
+
+## Screenshots
