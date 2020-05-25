@@ -41,6 +41,7 @@ function App() {
             toast.success(data.message, {
               position: toast.POSITION.BOTTOM_RIGHT,
               className: "ff-notice-toast",
+              autoClose: false,
             });
         });
 
@@ -55,6 +56,7 @@ function App() {
             toast.success(data.message, {
               position: toast.POSITION.BOTTOM_RIGHT,
               className: "ff-ready-toast",
+              autoClose: false,
             });
         });
       });
