@@ -3,6 +3,8 @@ import { Card, Button, Alert, Form, CardDeck, Table } from "react-bootstrap";
 import { OrderListContext } from "./context/Context";
 import axios from "axios";
 import { distance, preciseRound } from "../constants/Functions";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
 function Order(props) {
   const notifyNewOrder = props.notifyNewOrder;
@@ -13,6 +15,7 @@ function Order(props) {
   const [storeList, setStoreList] = useState([]);
   const [selectedStore, setSelectedStore] = useState("");
   const [displayMap, setDisplayMap] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const [order, setOrder] = useState({
     totalprice: 0,
     index: 0,
@@ -119,7 +122,7 @@ function Order(props) {
 
     // Reset the fields and load a quick animation
     event.target.qty.value = 0;
-    event.target.submit_btn.innerHTML = "✓";
+    event.target.submit_btn.innerHTML = "&#10003;"; // Check mark
     event.target.submit_btn.classList.add("check");
     setTimeout(function () {
       event.target.submit_btn.innerHTML = "+";
@@ -157,6 +160,7 @@ function Order(props) {
         setNotifyNewOrder(!notifyNewOrder);
         setOrderList(!orderList);
         setDisplayMap(false);
+        setModalState(true);
       })
       .catch((err) => {
         setOrder({ cartSubmitSuccess: false });
@@ -192,8 +196,23 @@ function Order(props) {
     return id;
   };
 
+  const closeModal = () => {
+    setModalState(false);
+  };
+
   return (
     <React.Fragment>
+      <Modal open={modalState} onClose={closeModal}>
+        <h5>
+          <strong>Your order has been submitted</strong>
+          <span role="img" aria-label="blushing-smiley">
+            😊
+          </span>
+        </h5>
+        <p>
+          You'll receive a notification when your order is ready for pick-up!
+        </p>
+      </Modal>
       <div className="gradient-line-secondary shadow-lg">
         <h2 className="text-left p-3 text-uppercase">
           Order <br />

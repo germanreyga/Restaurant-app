@@ -386,3 +386,7 @@ footer .fa:hover {
   position: absolute;
   z-index: 2;
 }
+
+.react-responsive-modal-modal {
+  background-color: rgba(98, 204, 130);
+}
