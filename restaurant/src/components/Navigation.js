@@ -44,7 +44,7 @@ export class Navigation extends Component {
     return (
       <>
         <Navbar bg="white" expand="lg">
-          <Navbar.Brand className="mr-5" href="/#">
+          <Navbar.Brand className="mr-5">
             <p className="text-left brand-logo mt-4">
               Fast
               <br />
