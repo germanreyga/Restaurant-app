@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Card, CardDeck } from "react-bootstrap";
+import { Card, CardDeck } from "react-bootstrap";
 import axios from "axios";
 
 export class FoodMenu extends Component {
@@ -37,11 +37,9 @@ export class FoodMenu extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="gradient-line-secondary shadow-lg">
-          <h2 className="text-left p-3">
-            <a className="blink-anim" href="/login">
-              Login
-            </a>{" "}
+        <div className="gradient-line-secondary shadow-lg ">
+          <h2 className="text-left p-3 text-uppercase">
+            Login
             <br />
             to start <br />
             ordering <br />
@@ -52,8 +50,8 @@ export class FoodMenu extends Component {
         <div className="container">
           <br />
           <h3>
-            <span role="img" aria-label="memo">
-              📝
+            <span role="img" aria-label="blushing-smiley">
+              😊
             </span>
             Today's menu
           </h3>
@@ -75,6 +73,16 @@ function Food(props) {
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Header>{food.category}</Card.Header>
+          <Card.Img
+            variant="top"
+            style={{
+              height: "12vw",
+              objectFit: "cover",
+              width: "100%",
+            }}
+            className="food-photo"
+            src={food.photo_url}
+          />
           <Card.Body>
             <Card.Text>{food.name}</Card.Text>
             <Card.Text>

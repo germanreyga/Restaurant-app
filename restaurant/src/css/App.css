@@ -365,3 +365,8 @@ footer .fa:hover {
     opacity: 0;
   }
 }
+
+.food-photo {
+  opacity: 0.8;
+  border-radius: 0px !important;
+}

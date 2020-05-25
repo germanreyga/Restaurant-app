@@ -42,6 +42,7 @@ exports.up = function (knex) {
       table.string("name", 255).notNullable();
       table.float("price").notNullable();
       table.string("category", 255).notNullable();
+      table.string("photo_url", 255).notNullable();
       table.timestamps(true, true);
     })
     .createTable("order_product", (table) => {

@@ -16,7 +16,7 @@ function Home() {
 
   return (
     <React.Fragment>
-      <h1 className="text-left home-title ">
+      <h1 className="text-left home-title mt-4">
         Fast
         <br />
         Fruit
@@ -39,7 +39,9 @@ function Home() {
       <Description />
       <div className="jumbotron jumbotron-fluid know-us shadow-lg ">
         <div className="container">
-          <h2 className="text-center">What we offer in each food</h2>
+          <h2 className="text-center text-uppercase">
+            What we offer in each food
+          </h2>
         </div>
       </div>
       <div className="d-flex justify-content-center">

@@ -189,7 +189,7 @@ function Order(props) {
   return (
     <React.Fragment>
       <div className="gradient-line-secondary shadow-lg">
-        <h2 className="text-left p-3">
+        <h2 className="text-left p-3 text-uppercase">
           Order <br />
           something <br />
           <span className="deli-text">delicious</span> <br />
@@ -242,6 +242,16 @@ function Food(props) {
           <Card.Header className="text-center">
             <b>{food.category}</b>
           </Card.Header>
+          <Card.Img
+            variant="top"
+            style={{
+              height: "12vw",
+              objectFit: "cover",
+              width: "100%",
+            }}
+            className="food-photo"
+            src={food.photo_url}
+          />
           <Card.Body>
             <Card.Text>{food.name}</Card.Text>
             <Card.Text>
