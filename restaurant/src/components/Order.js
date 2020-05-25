@@ -117,7 +117,14 @@ function Order(props) {
       totalprice: roundedPriceTwoDecimals,
     });
 
-    event.target.qty.value = "";
+    // Reset the fields and load a quick animation
+    event.target.qty.value = 0;
+    event.target.submit_btn.innerHTML = "✓";
+    event.target.submit_btn.classList.add("check");
+    setTimeout(function () {
+      event.target.submit_btn.innerHTML = "+";
+      event.target.submit_btn.classList.remove("check");
+    }, 1500);
   };
 
   const confirmedOrder = (event) => {
@@ -146,11 +153,10 @@ function Order(props) {
     })
       .then((res) => {
         setCart([]);
-        setOrder({ cartSubmitSuccess: true });
+        setOrder({ cartSubmitSuccess: true, totalprice: 0, index: 0 });
         setNotifyNewOrder(!notifyNewOrder);
         setOrderList(!orderList);
         setDisplayMap(false);
-        console.log(res);
       })
       .catch((err) => {
         setOrder({ cartSubmitSuccess: false });
@@ -239,6 +245,7 @@ function Food(props) {
           className="text-justify shadow-lg"
           style={{ width: "18rem", height: "100%" }}
         >
+          {/* <div className="card-overlay"></div> */}
           <Card.Header className="text-center">
             <b>{food.category}</b>
           </Card.Header>
@@ -277,6 +284,7 @@ function Food(props) {
                 />
                 <Button
                   type="submit"
+                  name="submit_btn"
                   className="btn-sm btn-green btn-add-order shadow-sm"
                 >
                   <strong>+</strong>
@@ -307,7 +315,6 @@ function Cart(props) {
         <CartListItems
           totalprice={props.totalprice}
           cart={props.cart}
-          key={0}
           onSubmit={props.onSubmit}
         />
         {props.displayMap && (

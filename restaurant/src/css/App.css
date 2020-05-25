@@ -252,13 +252,13 @@ footer .fa:hover {
 }
 
 .ff-notice-toast {
-  background-color: #d4edda !important;
+  background-color: rgb(106, 161, 23) !important;
   color: #155724 !important;
 }
 
 .ff-ready-toast {
-  background-color: #ffe8bd !important;
-  color: #9c7835 !important;
+  background-color: rgb(248, 116, 8) !important;
+  color: #976403 !important;
 }
 
 .social-icons {
@@ -343,6 +343,14 @@ footer .fa:hover {
   font-size: 30px;
   border-width: 2px !important;
   border-color: #fafafa !important;
+  position: relative;
+  z-index: 5;
+}
+
+.check {
+  background-color: white !important;
+  color: rgb(121, 185, 24) !important;
+  transition: all 0.3s ease-in-out;
 }
 
 .info-cards .card {
@@ -369,4 +377,12 @@ footer .fa:hover {
 .food-photo {
   opacity: 0.8;
   border-radius: 0px !important;
+}
+
+.card-overlay {
+  background-color: rgba(98, 204, 130, 0.445);
+  min-height: 100% !important;
+  min-width: 100% !important;
+  position: absolute;
+  z-index: 2;
 }
