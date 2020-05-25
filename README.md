@@ -58,6 +58,11 @@ This will run the backend on port 5000 of the PC (if by some reason you change t
 - Socket.io
 - react-bootstrap
 - Axios
+- Mocha
+
+## How to run unitary tests
+1. `cd server`
+2. `npm run test`
 
 ## Screenshots
 * Homepage

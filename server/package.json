@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "migrations": "knex migrate:latest",
-    "seeds": "knex seed:run"
+    "seeds": "knex seed:run",
+    "test": "mocha --exit"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -22,6 +23,7 @@
     "helmet": "^3.21.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "mocha": "^7.2.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",

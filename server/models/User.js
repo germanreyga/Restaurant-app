@@ -34,6 +34,12 @@ exports.checkExistingUser = async username => {
   }
 };
 
+exports.deleteUser = async username => {
+  const userdata = await knex.from("users").where({ username: username });
+  const userID = userdata[0].id_user;
+  return knex('users').where('id_user',userID).del();
+}
+
 exports.findAll = () => {
   const result = knex.from("users").timeout(1000, { cancel: true });
   return result;
