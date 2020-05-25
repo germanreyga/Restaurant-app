@@ -253,12 +253,12 @@ footer .fa:hover {
 
 .ff-notice-toast {
   background-color: rgb(106, 161, 23) !important;
-  color: #155724 !important;
+  color: white !important;
 }
 
 .ff-ready-toast {
   background-color: rgb(248, 116, 8) !important;
-  color: #976403 !important;
+  color: white !important;
 }
 
 .social-icons {

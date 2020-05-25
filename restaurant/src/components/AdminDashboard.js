@@ -15,7 +15,7 @@ export class AdminDashboard extends Component {
     errors: [],
     success: undefined,
     employees: [],
-    stores: []
+    stores: [],
   };
 
   async componentDidMount() {
@@ -26,19 +26,19 @@ export class AdminDashboard extends Component {
   async getAllStores() {
     await axios
       .get("/stores/all")
-      .then(res => {
+      .then((res) => {
         this.setState({ stores: res.data.data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   async getAllEmployees() {
     await axios
       .get("/employees/all")
-      .then(res => {
+      .then((res) => {
         this.setState({ employees: res.data.data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   handleSubmit(event) {
@@ -52,26 +52,26 @@ export class AdminDashboard extends Component {
       inputType: userinfo.inputType,
       inputStore: userinfo.inputStore,
       inputPassword: userinfo.inputPassword,
-      inputConfirmPassword: userinfo.inputConfirmPassword
+      inputConfirmPassword: userinfo.inputConfirmPassword,
     };
 
     axios({
       method: "post",
       url: "/registerUser",
-      data: user
+      data: user,
     })
-      .then(res => {
+      .then((res) => {
         if (res.data.status !== undefined) {
           this.setState({
             success: undefined,
-            errors: res.data.message.errors
+            errors: res.data.message.errors,
           });
         } else {
           this.getAllEmployees();
           this.setState({ success: res.data.message, errors: [] });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         this.setState({ success: undefined, errors: err.description });
         console.log(err);
@@ -87,7 +87,7 @@ export class AdminDashboard extends Component {
     const name = target.name;
 
     await this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -95,7 +95,12 @@ export class AdminDashboard extends Component {
     return (
       <div className="container">
         <br />
-        <h3>Add employee</h3>
+        <h3>
+          <span role="img" aria-label="employee">
+            👨‍💼
+          </span>
+          Add employee
+        </h3>
         <hr />
         <EmployeeForm
           onSubmit={this.handleSubmit}
@@ -103,7 +108,12 @@ export class AdminDashboard extends Component {
           handleInputChange={this.handleInputChange}
         />
         <br />
-        <h3>Employee list</h3>
+        <h3>
+          <span role="img" aria-label="employees">
+            🧑‍🤝‍🧑
+          </span>
+          Employee list
+        </h3>
         <hr />
         <EmployeeList employees={this.state.employees} />
       </div>
@@ -113,7 +123,7 @@ export class AdminDashboard extends Component {
 
 function EmployeeForm(props) {
   return (
-    <Form className="form-signin" onSubmit={props.onSubmit}>
+    <Form className="form-signin shadow-sm" onSubmit={props.onSubmit}>
       <div className="form-label-group">
         <label htmlFor="inputUsername">Username</label>
         <input
@@ -189,8 +199,8 @@ function EmployeeForm(props) {
       <Success success={props.state.success} />
       <Errors errors={props.state.errors} />
       <br />
-      <Button className="btn btn-lg btn-dark btn-block" type="submit">
-        Add employee
+      <Button className="btn btn-lg btn-green btn-block" type="submit">
+        Add this employee
       </Button>
     </Form>
   );
@@ -249,7 +259,7 @@ function EmployeeList(props) {
     });
 
     return (
-      <Table striped bordered hover size="sm" className="text-center">
+      <Table striped bordered hover size="sm" className="text-center shadow-lg">
         <thead>
           <tr>
             <th>ID</th>

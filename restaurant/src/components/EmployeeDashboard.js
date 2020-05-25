@@ -102,14 +102,24 @@ function EmployeeDashboard(props) {
   return (
     <div className="container">
       <br />
-      <h3>Orders to prepare</h3>
+      <h3>
+        <span role="img" aria-label="pending-order">
+          🍳
+        </span>
+        Orders to prepare
+      </h3>
       <hr />
       <PendingOrders
         orders={preparingOrdersList}
         onSubmit={pendingOrderSubmit}
       />
       <br />
-      <h3>Completed orders</h3>
+      <h3>
+        <span role="img" aria-label="ready-order">
+          📤
+        </span>
+        Completed orders
+      </h3>
       <hr />
       <OtherOrders orders={otherOrdersList} onSubmit={otherOrderSubmit} />
     </div>
@@ -131,7 +141,7 @@ function PendingOrders(props) {
         <Card
           border="dark"
           key={index}
-          className="text-center order-card"
+          className="text-center order-card shadow-lg"
           style={{ width: "18rem", height: "100%" }}
         >
           <Card.Header as="h5">Order #{outside.order[0].id_order}</Card.Header>
@@ -184,7 +194,7 @@ function OtherOrders(props) {
   });
 
   return (
-    <Table striped bordered hover size="sm" className="text-center">
+    <Table striped bordered hover size="sm" className="text-center shadow-lg">
       <thead>
         <tr>
           <th>Order #</th>
