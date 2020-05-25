@@ -10,6 +10,7 @@ import smoothie from "../img/smoothie.png";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import "../css/Home.css";
+import axios from "axios";
 
 function Home() {
   const history = useHistory();
@@ -52,7 +53,7 @@ function Home() {
           className="btn-green shadow-lg"
           variant="primary"
           onClick={() => {
-            history.push("/FoodMenu");
+            navigateToFoodMenu(history);
           }}
         >
           Check out the menu!
@@ -60,6 +61,36 @@ function Home() {
       </div>
     </React.Fragment>
   );
+}
+
+async function navigateToFoodMenu(history) {
+  let user = await getUserCredentials();
+
+  if (user.type === undefined) {
+    history.push("/FoodMenu");
+  } else {
+    history.push("/client/order");
+  }
+}
+
+async function getUserCredentials() {
+  let type = undefined;
+  let id = undefined;
+  await axios
+    .get("/user/credentials")
+    .then((res) => {
+      type = res.data.type;
+      id = res.data.id;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const user = {
+    id: id,
+    type: type,
+  };
+  return user;
 }
 
 function Description() {

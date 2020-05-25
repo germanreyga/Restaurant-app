@@ -17,7 +17,24 @@ body {
   padding: 20px;
   color: white;
   border-radius: 2px;
-  background-color: green;
+  background: rgb(141, 197, 56);
+  background: linear-gradient(
+    90deg,
+    rgba(141, 197, 56, 1) 13%,
+    rgba(9, 121, 74, 1) 13%
+  );
+}
+
+.brand-logo {
+  background: rgb(141, 197, 56);
+  background: linear-gradient(
+    90deg,
+    rgba(141, 197, 56, 1) 13%,
+    rgba(9, 121, 74, 1) 13%
+  );
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .home-subtitle span {
@@ -166,8 +183,18 @@ body {
 }
 
 .order-card {
-  background-color: rgba(255, 244, 183, 0.877);
-  border-color: #e1e1e1 !important;
+  background-color: rgba(98, 204, 130, 0.445);
+  border-color: rgb(74, 155, 98) !important;
+  border-width: 1px;
+}
+
+.order-card .border-bottom {
+  border-color: rgb(74, 155, 98) !important;
+}
+
+.order-by {
+  font-size: 22px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .btn-link,

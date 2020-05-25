@@ -45,7 +45,11 @@ export class Navigation extends Component {
       <>
         <Navbar bg="white" expand="lg">
           <Navbar.Brand className="mr-5" href="/#">
-            FastFruit
+            <p className="text-left brand-logo mt-4">
+              Fast
+              <br />
+              Fruit
+            </p>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -146,7 +146,7 @@ function PendingOrders(props) {
         >
           <Card.Header as="h5">Order #{outside.order[0].id_order}</Card.Header>
           <Card.Body>
-            <Card.Subtitle className="mb-2 text-muted">
+            <Card.Subtitle className="mb-2 text-white order-by">
               By: {outside.order[0].username}
             </Card.Subtitle>
             {orderListInside}

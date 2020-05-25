@@ -123,7 +123,7 @@ export class AdminDashboard extends Component {
 
 function EmployeeForm(props) {
   return (
-    <Form className="form-signin shadow-sm" onSubmit={props.onSubmit}>
+    <Form className="form-signin shadow-lg p-3" onSubmit={props.onSubmit}>
       <div className="form-label-group">
         <label htmlFor="inputUsername">Username</label>
         <input

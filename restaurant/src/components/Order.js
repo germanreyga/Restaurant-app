@@ -380,7 +380,6 @@ function Cart(props) {
         <Alert variant="secondary">
           No items in your cart. Let's order something!
         </Alert>
-        <CartSubmitStatus cartSubmitSuccess={props.cartSubmitSuccess} />
       </React.Fragment>
     );
   }
@@ -425,14 +424,6 @@ function CartListItems(props) {
       <tbody>{cartListItems}</tbody>
     </Table>
   );
-}
-
-function CartSubmitStatus(props) {
-  if (props.cartSubmitSuccess) {
-    return <Alert variant={"success"}>Order submitted!</Alert>;
-  } else {
-    return null;
-  }
 }
 
 function DeliveryList(props) {
