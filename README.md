@@ -64,6 +64,12 @@ This will run the backend on port 5000 of the PC (if by some reason you change t
 1. `cd server`
 2. `npm run test`
 
+## How to run browser tests
+1. `cd server`
+2. `npx cypress open`
+3. `open FastFruit-login (it has 3 tests that are dependent on a succsesfull log in)`
+
+
 ## Screenshots
 * Homepage
 ![home_menu](https://user-images.githubusercontent.com/26470569/82774294-0a6d0580-9e0a-11ea-8e0c-607083eaea10.png)

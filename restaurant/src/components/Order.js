@@ -292,7 +292,7 @@ function Food(props) {
                 <input name="price" defaultValue={food.price} hidden />
                 <input
                   type="number"
-                  id="qty"
+                  id= {"qty"+index}
                   name="qty"
                   className="form-control"
                   placeholder="Qty."
@@ -305,6 +305,7 @@ function Food(props) {
                   type="submit"
                   name="submit_btn"
                   className="btn-sm btn-green btn-add-order shadow-sm"
+                  id={"addItem"+index}
                 >
                   <strong>+</strong>
                 </Button>

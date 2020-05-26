@@ -105,7 +105,7 @@ export class Login extends Component {
           </ul>
         </Alert>
         <Error error={this.state.error} />
-        <button className="btn btn-lg btn-orange btn-block" type="submit">
+        <button className="btn btn-lg btn-orange btn-block" type="submit" id="sendCredentials">
           Login
         </button>
         <p className="mt-5 mb-3 text-muted text-center">© {this.state.year}</p>
