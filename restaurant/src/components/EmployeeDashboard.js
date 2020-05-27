@@ -28,7 +28,7 @@ function EmployeeDashboard(props) {
     const id = event.target.id.value; // Gets the input with the id_order
 
     await axios
-      .post(`http://backend.fruitcompany.rocks/order/ready/${id}`)
+      .post(`https://backend.fruitcompany.rocks/order/ready/${id}`)
       .then((res) => {
         setNotifyOrderReady(res.data.order_id);
       })
@@ -44,7 +44,7 @@ function EmployeeDashboard(props) {
     const id = event.target.id.value; // Gets the input with the id_order
 
     await axios
-      .post(`http://backend.fruitcompany.rocks/order/delivered/${id}`)
+      .post(`https://backend.fruitcompany.rocks/order/delivered/${id}`)
       .then((res) => {
         console.log(res);
       })
@@ -56,14 +56,14 @@ function EmployeeDashboard(props) {
   const getPreparingOrders = async () => {
     let newList = [];
     await axios
-      .get("http://backend.fruitcompany.rocks/order/preparing")
+      .get("https://backend.fruitcompany.rocks/order/preparing")
       .then((res) => {
         const ids = res.data.data;
 
         ids.map(async (item, index) => {
           await axios
             .get(
-              `http://backend.fruitcompany.rocks/order/products/${item.id_order}`
+              `https://backend.fruitcompany.rocks/order/products/${item.id_order}`
             )
             .then((res) => {
               newList.push({ order: res.data.data });
@@ -83,7 +83,7 @@ function EmployeeDashboard(props) {
   const getReadyOrDelivOrdersList = async () => {
     let list = [];
     await axios
-      .get("http://backend.fruitcompany.rocks/order/readyOrDelivered")
+      .get("https://backend.fruitcompany.rocks/order/readyOrDelivered")
       .then((res) => {
         list = res.data.data;
       })
