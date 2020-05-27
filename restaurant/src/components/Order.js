@@ -31,7 +31,7 @@ function Order(props) {
     });
 
     axios
-      .get("http://backend.fruitcompany.rocks/food/all")
+      .get("//backend.fruitcompany.rocks/food/all")
       .then((res) => {
         setFoodList(res.data.data);
       })
@@ -52,7 +52,7 @@ function Order(props) {
         return userCoordinates;
       })
       .then((userCoordinates) => {
-        axios("http://backend.fruitcompany.rocks/stores/all")
+        axios("//backend.fruitcompany.rocks/stores/all")
           .then((res) => {
             var orderedStores = [];
             res.data.data.forEach((store) => {
@@ -185,7 +185,7 @@ function Order(props) {
   const getUserId = async () => {
     let id = undefined;
     await axios
-      .get("http://backend.fruitcompany.rocks/user/credentials")
+      .get("//backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         id = res.data.user;
       })

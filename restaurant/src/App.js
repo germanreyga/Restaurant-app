@@ -167,7 +167,7 @@ function App() {
     let type = undefined;
     let id = undefined;
     await axios
-      .get("http://backend.fruitcompany.rocks/user/credentials")
+      .get("//backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         type = res.data.type;
         id = res.data.id;
@@ -187,7 +187,7 @@ function App() {
   async function getUserOrdersIds(id) {
     let ids = [];
     await axios
-      .get(`http://backend.fruitcompany.rocks/order/all/${id}`)
+      .get(`//backend.fruitcompany.rocks/order/all/${id}`)
       .then((res) => {
         ids = res.data.ids;
       })
