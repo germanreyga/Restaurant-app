@@ -42,7 +42,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "//backend.fruitcompany.rocks/",
+  "proxy": "http://backend.fruitcompany.rocks/",
   "devDependencies": {
     "gh-pages": "^2.2.0"
   }
