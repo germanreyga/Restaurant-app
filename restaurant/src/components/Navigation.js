@@ -15,7 +15,7 @@ export class Navigation extends Component {
 
   componentDidMount() {
     axios
-      .get("/user/credentials")
+      .get("http://backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         // Changes to type of user login
         this.setState({ isLoggedIn: true, type: res.data.type });

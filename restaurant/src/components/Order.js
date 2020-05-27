@@ -31,7 +31,7 @@ function Order(props) {
     });
 
     axios
-      .get("/food/all")
+      .get("http://backend.fruitcompany.rocks/food/all")
       .then((res) => {
         setFoodList(res.data.data);
       })
@@ -52,7 +52,7 @@ function Order(props) {
         return userCoordinates;
       })
       .then((userCoordinates) => {
-        axios("/stores/all")
+        axios("http://backend.fruitcompany.rocks/stores/all")
           .then((res) => {
             var orderedStores = [];
             res.data.data.forEach((store) => {
@@ -185,7 +185,7 @@ function Order(props) {
   const getUserId = async () => {
     let id = undefined;
     await axios
-      .get("/user/credentials")
+      .get("http://backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         id = res.data.user;
       })
@@ -292,7 +292,7 @@ function Food(props) {
                 <input name="price" defaultValue={food.price} hidden />
                 <input
                   type="number"
-                  id= {"qty"+index}
+                  id={"qty" + index}
                   name="qty"
                   className="form-control"
                   placeholder="Qty."
@@ -305,7 +305,7 @@ function Food(props) {
                   type="submit"
                   name="submit_btn"
                   className="btn-sm btn-green btn-add-order shadow-sm"
-                  id={"addItem"+index}
+                  id={"addItem" + index}
                 >
                   <strong>+</strong>
                 </Button>
