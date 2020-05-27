@@ -25,7 +25,7 @@ export class AdminDashboard extends Component {
 
   async getAllStores() {
     await axios
-      .get("/stores/all")
+      .get("http://backend.fruitcompany.rocks/stores/all")
       .then((res) => {
         this.setState({ stores: res.data.data });
       })
@@ -34,7 +34,7 @@ export class AdminDashboard extends Component {
 
   async getAllEmployees() {
     await axios
-      .get("/employees/all")
+      .get("http://backend.fruitcompany.rocks/employees/all")
       .then((res) => {
         this.setState({ employees: res.data.data });
       })
@@ -57,7 +57,7 @@ export class AdminDashboard extends Component {
 
     axios({
       method: "post",
-      url: "/registerUser",
+      url: "http://backend.fruitcompany.rocks/registerUser",
       data: user,
     })
       .then((res) => {

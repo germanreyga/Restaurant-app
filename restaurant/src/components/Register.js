@@ -16,7 +16,7 @@ export class Register extends Component {
     inputConfirmPassword: undefined,
     year: "_",
     errors: [],
-    success: undefined
+    success: undefined,
   };
 
   async componentDidMount() {
@@ -34,7 +34,7 @@ export class Register extends Component {
     const name = target.name;
 
     await this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -48,25 +48,25 @@ export class Register extends Component {
       inputUsername: userinfo.inputUsername,
       inputType: userinfo.inputType,
       inputPassword: userinfo.inputPassword,
-      inputConfirmPassword: userinfo.inputConfirmPassword
+      inputConfirmPassword: userinfo.inputConfirmPassword,
     };
 
     axios({
       method: "post",
-      url: "/registerUser",
-      data: user
+      url: "http://backend.fruitcompany.rocks/registerUser",
+      data: user,
     })
-      .then(res => {
+      .then((res) => {
         if (res.data.status !== undefined) {
           this.setState({
             success: undefined,
-            errors: res.data.message.errors
+            errors: res.data.message.errors,
           });
         } else {
           this.setState({ success: res.data.message, errors: [] });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         this.setState({ success: undefined, errors: err.description });
         console.log(err);

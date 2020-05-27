@@ -15,7 +15,7 @@ export class Navigation extends Component {
 
   componentDidMount() {
     axios
-      .get("/user/credentials")
+      .get("http://backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         // Changes to type of user login
         this.setState({ isLoggedIn: true, type: res.data.type });
@@ -29,7 +29,7 @@ export class Navigation extends Component {
     event.preventDefault();
 
     axios
-      .get("/logout")
+      .get("http://backend.fruitcompany.rocks/logout")
       .then((res) => {
         this.setState({ isLoggedIn: false });
         window.location.href = "/login";

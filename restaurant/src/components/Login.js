@@ -13,7 +13,7 @@ export class Login extends Component {
     inputUsername: undefined,
     inputPassword: undefined,
     year: "_",
-    error: undefined
+    error: undefined,
   };
 
   async componentDidMount() {
@@ -31,7 +31,7 @@ export class Login extends Component {
     const name = target.name;
 
     await this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -43,19 +43,19 @@ export class Login extends Component {
   loginUser(userinfo) {
     let user = {
       inputUsername: userinfo.inputUsername,
-      inputPassword: userinfo.inputPassword
+      inputPassword: userinfo.inputPassword,
     };
 
     axios({
       method: "post",
-      url: "/loginUser",
-      data: user
+      url: "http://backend.fruitcompany.rocks/loginUser",
+      data: user,
     })
-      .then(res => {
+      .then((res) => {
         this.setState({ error: undefined });
         window.location.href = "/";
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ error: "Incorrect username or password" });
       });
   }
@@ -105,7 +105,11 @@ export class Login extends Component {
           </ul>
         </Alert>
         <Error error={this.state.error} />
-        <button className="btn btn-lg btn-orange btn-block" type="submit" id="sendCredentials">
+        <button
+          className="btn btn-lg btn-orange btn-block"
+          type="submit"
+          id="sendCredentials"
+        >
           Login
         </button>
         <p className="mt-5 mb-3 text-muted text-center">© {this.state.year}</p>

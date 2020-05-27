@@ -13,7 +13,7 @@ export class FoodMenu extends Component {
 
   componentDidMount() {
     axios
-      .get("/food/all")
+      .get("http://backend.fruitcompany.rocks/food/all")
       .then((res) => {
         this.setState({ food: res.data.data });
       })
@@ -23,7 +23,7 @@ export class FoodMenu extends Component {
   async getUserId() {
     let id = undefined;
     await axios
-      .get("/user/credentials")
+      .get("http://backend.fruitcompany.rocks/user/credentials")
       .then((res) => {
         id = res.data.user;
       })
