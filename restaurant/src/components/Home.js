@@ -77,7 +77,7 @@ async function getUserCredentials() {
   let type = undefined;
   let id = undefined;
   await axios
-    .get("https://backend.fruitcompany.rocks/user/credentials")
+    .get("http://backend.fruitcompany.rocks/user/credentials")
     .then((res) => {
       type = res.data.type;
       id = res.data.id;
