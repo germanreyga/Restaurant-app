@@ -36,9 +36,9 @@ function App() {
     id: undefined,
   });
 
-  /* useEffect(() => {
-    console.dir(credentials);
-  }, [credentials]); */
+  useEffect(() => {
+    console.dir("CREDENTIALS", credentials);
+  }, [credentials]);
 
   useEffect(() => {
     const user = {
@@ -46,7 +46,7 @@ function App() {
       type: credentials.type,
     };
 
-    getUserOrdersIds(user.id).then((ids) => {
+    getUserOrdersIds(credentials.id).then((ids) => {
       // Start a web socket globally
       socket = socketIOClient("/");
 
