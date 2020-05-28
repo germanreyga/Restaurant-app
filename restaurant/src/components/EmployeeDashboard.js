@@ -63,7 +63,7 @@ function EmployeeDashboard(props) {
         ids.map(async (item, index) => {
           await axios
             .get(
-              `http://backend.fruitcompany.rocks/order/preparing/order/products/${item.id_order}`
+              `http://backend.fruitcompany.rocks/order/products/${item.id_order}`
             )
             .then((res) => {
               newList.push({ order: res.data.data });
