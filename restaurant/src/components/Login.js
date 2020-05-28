@@ -49,7 +49,7 @@ function Login() {
 
     axios({
       method: "post",
-      url: "/loginUser",
+      url: "http://backend.fruitcompany.rocks/loginUser",
       data: user,
     })
       .then((res) => {

@@ -60,13 +60,14 @@ app.use(passport.session());
 
 // Routes
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 app.use("/", routes);
 
 // Cors config
-const corsOptions = {
+/* const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); */
 
 module.exports = { app: app, server: server };

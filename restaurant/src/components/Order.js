@@ -35,7 +35,7 @@ function Order(props) {
     });
 
     axios
-      .get("/food/all")
+      .get("http://backend.fruitcompany.rocks/food/all")
       .then((res) => {
         setFoodList(res.data.data);
       })
@@ -56,7 +56,7 @@ function Order(props) {
         return userCoordinates;
       })
       .then((userCoordinates) => {
-        axios("/stores/all")
+        axios("http://backend.fruitcompany.rocks/stores/all")
           .then((res) => {
             var orderedStores = [];
             res.data.data.forEach((store) => {
@@ -157,7 +157,7 @@ function Order(props) {
 
     axios({
       method: "post",
-      url: "/order",
+      url: "http://backend.fruitcompany.rocks/order",
       data: body,
     })
       .then((res) => {

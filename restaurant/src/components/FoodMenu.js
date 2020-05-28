@@ -13,7 +13,7 @@ export class FoodMenu extends Component {
 
   componentDidMount() {
     axios
-      .get("/food/all")
+      .get("http://backend.fruitcompany.rocks/food/all")
       .then((res) => {
         this.setState({ food: res.data.data });
       })
