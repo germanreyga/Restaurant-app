@@ -37,10 +37,6 @@ function App() {
   });
 
   useEffect(() => {
-    console.dir("CREDENTIALS", credentials);
-  }, [credentials]);
-
-  useEffect(() => {
     const user = {
       id: credentials.id,
       type: credentials.type,
@@ -48,7 +44,7 @@ function App() {
 
     getUserOrdersIds(credentials.id).then((ids) => {
       // Start a web socket globally
-      socket = socketIOClient("/");
+      socket = socketIOClient("http://backend.fruitcompany.rocks/");
 
       // Inform an employee when a new order has been placed by a client
       socket.on("inform-employees", (data) => {
