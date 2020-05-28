@@ -186,6 +186,8 @@ function App() {
         console.log(err);
       });
 
+    if (!ids) ids = [];
+
     const numericalIds = ids.map((object) => {
       return object.id_order;
     });
