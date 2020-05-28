@@ -31,9 +31,9 @@ function App() {
   const isFirstRunNewOrder = useRef(true);
   const isFirstRunOrderReady = useRef(true);
   const [credentials, setCredentials] = useState({
-    user: "none",
-    type: "none",
-    id: 0,
+    user: undefined,
+    type: undefined,
+    id: undefined,
   });
 
   /* useEffect(() => {
@@ -41,39 +41,41 @@ function App() {
   }, [credentials]); */
 
   useEffect(() => {
-    console.log("CAMBIA");
-    getUserCredentials().then((user) => {
-      getUserOrdersIds(user.id).then((ids) => {
-        // Start a web socket globally
-        socket = socketIOClient("/");
+    const user = {
+      id: credentials.id,
+      type: credentials.type,
+    };
 
-        // Inform an employee when a new order has been placed by a client
-        socket.on("inform-employees", (data) => {
-          if (user.type === "admin" || user.type === "employee")
-            toast.success(data.message, {
-              position: toast.POSITION.BOTTOM_RIGHT,
-              className: "ff-notice-toast",
-              autoClose: false,
-            });
-        });
+    getUserOrdersIds(user.id).then((ids) => {
+      // Start a web socket globally
+      socket = socketIOClient("/");
 
-        // Inform a client when his order has been prepared by an employee
-        socket.on("inform-client", (data) => {
-          if (
-            (user.type === "admin" ||
-              user.type === "employee" ||
-              user.type === "client") &&
-            ids.includes(parseInt(data.id))
-          )
-            toast.success(data.message, {
-              position: toast.POSITION.BOTTOM_RIGHT,
-              className: "ff-ready-toast",
-              autoClose: false,
-            });
-        });
+      // Inform an employee when a new order has been placed by a client
+      socket.on("inform-employees", (data) => {
+        if (user.type === "admin" || user.type === "employee")
+          toast.success(data.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+            className: "ff-notice-toast",
+            autoClose: false,
+          });
+      });
+
+      // Inform a client when his order has been prepared by an employee
+      socket.on("inform-client", (data) => {
+        if (
+          (user.type === "admin" ||
+            user.type === "employee" ||
+            user.type === "client") &&
+          ids.includes(parseInt(data.id))
+        )
+          toast.success(data.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+            className: "ff-ready-toast",
+            autoClose: false,
+          });
       });
     });
-  }, [orderList]);
+  }, [orderList, credentials]);
 
   useEffect(() => {
     if (isFirstRunNewOrder.current) {
@@ -176,33 +178,6 @@ function App() {
       </OrderListContext.Provider>
     </UserCredentialsContext.Provider>
   );
-
-  async function getUserCredentials() {
-    let type = undefined;
-    let id = undefined;
-    await axios
-      .get("/user/credentials")
-      .then((res) => {
-        type = res.data.type;
-        id = res.data.id;
-
-        const user = {
-          id: id,
-          type: type,
-        };
-
-        setCredentials(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const user = {
-      id: id,
-      type: type,
-    };
-    return user;
-  }
 
   async function getUserOrdersIds(id) {
     let ids = [];

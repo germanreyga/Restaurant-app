@@ -20,20 +20,6 @@ export class FoodMenu extends Component {
       .catch((err) => console.log(err));
   }
 
-  async getUserId() {
-    let id = undefined;
-    await axios
-      .get("/user/credentials")
-      .then((res) => {
-        id = res.data.user;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return id;
-  }
-
   render() {
     return (
       <React.Fragment>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import { Card, Image } from "react-bootstrap";
@@ -10,10 +10,11 @@ import smoothie from "../img/smoothie.png";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import "../css/Home.css";
-import axios from "axios";
+import { UserCredentialsContext } from "./context/Context";
 
 function Home() {
   const history = useHistory();
+  const [credentials] = useContext(UserCredentialsContext);
 
   return (
     <React.Fragment>
@@ -61,36 +62,24 @@ function Home() {
       </div>
     </React.Fragment>
   );
-}
 
-async function navigateToFoodMenu(history) {
-  let user = await getUserCredentials();
+  function navigateToFoodMenu(history) {
+    let user = getUserCredentials();
 
-  if (user.type === undefined) {
-    history.push("/FoodMenu");
-  } else {
-    history.push("/client/order");
+    if (user.type === undefined) {
+      history.push("/FoodMenu");
+    } else {
+      history.push("/client/order");
+    }
   }
-}
 
-async function getUserCredentials() {
-  let type = undefined;
-  let id = undefined;
-  await axios
-    .get("/user/credentials")
-    .then((res) => {
-      type = res.data.type;
-      id = res.data.id;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  const user = {
-    id: id,
-    type: type,
-  };
-  return user;
+  function getUserCredentials() {
+    const user = {
+      id: credentials.id,
+      type: credentials.type,
+    };
+    return user;
+  }
 }
 
 function Description() {

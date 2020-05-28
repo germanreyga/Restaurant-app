@@ -10,18 +10,6 @@ function Navigation() {
   const [credentials, setCredentials] = useContext(UserCredentialsContext);
   const history = useHistory();
 
-  /* componentDidMount() {
-    axios
-      .get("/user/credentials")
-      .then((res) => {
-        // Changes to type of user login
-        this.setState({ isLogged: true, type: res.data.type });
-      })
-      .catch((err) => {
-        this.setState({ isLogged: false });
-      });
-  } */
-
   useEffect(() => {
     setType(credentials.type);
     if (

@@ -6,9 +6,11 @@ import { distance, preciseRound } from "../constants/Functions";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { useHistory } from "react-router-dom";
+import { UserCredentialsContext } from "./context/Context";
 
 function Order(props) {
   const history = useHistory();
+  const [credentials] = useContext(UserCredentialsContext);
   const notifyNewOrder = props.notifyNewOrder;
   const setNotifyNewOrder = props.setNotifyNewOrder;
   const [orderList, setOrderList] = useContext(OrderListContext);
@@ -87,12 +89,12 @@ function Order(props) {
       });
   }, []);
 
-  const addToCart = async (event) => {
+  const addToCart = (event) => {
     event.preventDefault();
     event.persist();
 
     // Moves the user to the login page if he isn't logged in
-    const loggedUserId = await getUserId();
+    const loggedUserId = getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
       history.push("/login");
@@ -141,7 +143,7 @@ function Order(props) {
     event.persist();
     // Moves the user to the login page if he isn't logged in
     const loggedUserId = await getUserId();
-    if (loggedUserId === undefined) {
+    if (loggedUserId === undefined || loggedUserId === 0) {
       // Returns to login
       history.push("/login");
     }
@@ -184,18 +186,8 @@ function Order(props) {
     });
   };
 
-  const getUserId = async () => {
-    let id = undefined;
-    await axios
-      .get("/user/credentials")
-      .then((res) => {
-        id = res.data.user;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return id;
+  const getUserId = () => {
+    return credentials.id;
   };
 
   const closeModal = () => {
