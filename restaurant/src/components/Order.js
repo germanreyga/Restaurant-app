@@ -95,6 +95,7 @@ function Order(props) {
 
     // Moves the user to the login page if he isn't logged in
     const loggedUserId = getUserId();
+
     if (loggedUserId === undefined) {
       // Returns to login
       history.push("/login");
@@ -142,7 +143,8 @@ function Order(props) {
     event.preventDefault();
     event.persist();
     // Moves the user to the login page if he isn't logged in
-    const loggedUserId = await getUserId();
+    const loggedUserId = getUserId();
+
     if (loggedUserId === undefined || loggedUserId === 0) {
       // Returns to login
       history.push("/login");

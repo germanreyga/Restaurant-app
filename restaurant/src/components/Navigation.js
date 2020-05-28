@@ -29,7 +29,7 @@ function Navigation() {
       id: 0,
     });
     setIsLogged(false);
-    history.push("/");
+    history.push("/login");
   };
 
   return (
@@ -48,7 +48,7 @@ function Navigation() {
             <NavLink className="d-inline nav-option home-link w-100" to="/">
               Home
             </NavLink>
-            <OrderLink type={isLogged}></OrderLink>
+            <OrderLink isLogged={isLogged}></OrderLink>
             <AdminLink type={type}></AdminLink>
             <EmployeeLink type={type}></EmployeeLink>
           </Nav>
@@ -114,7 +114,7 @@ function MenuButtons(props) {
 }
 
 function OrderLink(props) {
-  if (props.type !== "none") {
+  if (props.isLogged === true) {
     return (
       <NavLink
         className="d-inline nav-option order-link w-100"
