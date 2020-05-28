@@ -17,10 +17,14 @@ router.post(
 
 router.post(
   "/loginUser",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/register",
-  })
+  passport.authenticate("local", { session: false }),
+  function (req, res) {
+    return res.json({
+      user: req.user.username,
+      type: req.user.type,
+      id: req.user.id_user,
+    });
+  }
 );
 
 router.get("/user/credentials", authController.userCredentials);

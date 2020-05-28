@@ -5,8 +5,10 @@ import axios from "axios";
 import { distance, preciseRound } from "../constants/Functions";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import { useHistory } from "react-router-dom";
 
 function Order(props) {
+  const history = useHistory();
   const notifyNewOrder = props.notifyNewOrder;
   const setNotifyNewOrder = props.setNotifyNewOrder;
   const [orderList, setOrderList] = useContext(OrderListContext);
@@ -93,7 +95,7 @@ function Order(props) {
     const loggedUserId = await getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
-      return (window.location.href = "/login");
+      history.push("/login");
     }
 
     const id = event.target.id.value; // Gets the input with the id
@@ -141,7 +143,7 @@ function Order(props) {
     const loggedUserId = await getUserId();
     if (loggedUserId === undefined) {
       // Returns to login
-      return (window.location.href = "/login");
+      history.push("/login");
     }
 
     const body = {
@@ -292,7 +294,7 @@ function Food(props) {
                 <input name="price" defaultValue={food.price} hidden />
                 <input
                   type="number"
-                  id= {"qty"+index}
+                  id={"qty" + index}
                   name="qty"
                   className="form-control"
                   placeholder="Qty."
@@ -305,7 +307,7 @@ function Food(props) {
                   type="submit"
                   name="submit_btn"
                   className="btn-sm btn-green btn-add-order shadow-sm"
-                  id={"addItem"+index}
+                  id={"addItem" + index}
                 >
                   <strong>+</strong>
                 </Button>

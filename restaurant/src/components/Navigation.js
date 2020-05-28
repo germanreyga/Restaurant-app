@@ -1,81 +1,80 @@
-import React, { Component } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Form, Navbar, Nav, Button } from "react-bootstrap";
-import axios from "axios";
-export class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+import { UserCredentialsContext } from "./context/Context";
+import { useHistory } from "react-router-dom";
 
-  state = {
-    isLoggedIn: false,
-    type: undefined,
-  };
+function Navigation() {
+  const [isLogged, setIsLogged] = useState(false);
+  const [type, setType] = useState("none");
+  const [credentials, setCredentials] = useContext(UserCredentialsContext);
+  const history = useHistory();
 
-  componentDidMount() {
+  /* componentDidMount() {
     axios
       .get("/user/credentials")
       .then((res) => {
         // Changes to type of user login
-        this.setState({ isLoggedIn: true, type: res.data.type });
+        this.setState({ isLogged: true, type: res.data.type });
       })
       .catch((err) => {
-        this.setState({ isLoggedIn: false });
+        this.setState({ isLogged: false });
       });
-  }
+  } */
 
-  handleSubmit(event) {
+  useEffect(() => {
+    setType(credentials.type);
+    if (
+      credentials.type === "admin" ||
+      credentials.type === "employee" ||
+      credentials.type === "client"
+    ) {
+      setIsLogged(true);
+    }
+  }, [credentials]);
+
+  const handleLogout = (event) => {
     event.preventDefault();
+    setCredentials({
+      user: "none",
+      type: "none",
+      id: 0,
+    });
+    setIsLogged(false);
+    history.push("/");
+  };
 
-    axios
-      .get("/logout")
-      .then((res) => {
-        this.setState({ isLoggedIn: false });
-        window.location.href = "/login";
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({ isLoggedIn: true, error: "User couldn't logout" });
-      });
-  }
+  return (
+    <>
+      <Navbar bg="white" expand="lg">
+        <Navbar.Brand className="mr-5">
+          <p className="text-left brand-logo mt-4">
+            Fast
+            <br />
+            Fruit
+          </p>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto text-center">
+            <NavLink className="d-inline nav-option home-link w-100" to="/">
+              Home
+            </NavLink>
+            <OrderLink type={isLogged}></OrderLink>
+            <AdminLink type={type}></AdminLink>
+            <EmployeeLink type={type}></EmployeeLink>
+          </Nav>
 
-  render() {
-    return (
-      <>
-        <Navbar bg="white" expand="lg">
-          <Navbar.Brand className="mr-5">
-            <p className="text-left brand-logo mt-4">
-              Fast
-              <br />
-              Fruit
-            </p>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto text-center">
-              <NavLink className="d-inline nav-option home-link w-100" to="/">
-                Home
-              </NavLink>
-              <OrderLink type={this.state.isLoggedIn}></OrderLink>
-              <AdminLink type={this.state.type}></AdminLink>
-              <EmployeeLink type={this.state.type}></EmployeeLink>
-            </Nav>
-
-            <div className="access-butons">
-              <MenuButtons
-                isLoggedIn={this.state.isLoggedIn}
-                onSubmit={this.handleSubmit}
-              />
-            </div>
-          </Navbar.Collapse>
-        </Navbar>
-      </>
-    );
-  }
+          <div className="access-butons">
+            <MenuButtons isLogged={isLogged} onSubmit={handleLogout} />
+          </div>
+        </Navbar.Collapse>
+      </Navbar>
+    </>
+  );
 }
 
-function GuestMenuButtons(props) {
+function GuestMenuButtons() {
   return (
     <React.Fragment>
       <NavLink
@@ -97,31 +96,37 @@ function GuestMenuButtons(props) {
 }
 
 function UserMenuButtons(props) {
-  return (
-    <React.Fragment>
-      <Form onSubmit={props.onSubmit}>
-        <Button
-          type="submit"
-          value="Logout"
-          className="btn btn-orange shadow-lg"
-        >
-          Logout
-        </Button>
-      </Form>
-    </React.Fragment>
-  );
+  if (props.isLogged) {
+    return (
+      <React.Fragment>
+        <Form onSubmit={props.onSubmit}>
+          <Button
+            type="submit"
+            value="Logout"
+            className="btn btn-orange shadow-lg"
+          >
+            Logout
+          </Button>
+        </Form>
+      </React.Fragment>
+    );
+  } else {
+    return;
+  }
 }
 
 function MenuButtons(props) {
-  if (props.isLoggedIn) {
-    return <UserMenuButtons onSubmit={props.onSubmit} />;
+  if (props.isLogged) {
+    return (
+      <UserMenuButtons isLogged={props.isLogged} onSubmit={props.onSubmit} />
+    );
   } else {
     return <GuestMenuButtons onSubmit={props.onSubmit} />;
   }
 }
 
 function OrderLink(props) {
-  if (props.type) {
+  if (props.type !== "none") {
     return (
       <NavLink
         className="d-inline nav-option order-link w-100"
@@ -141,9 +146,10 @@ function OrderLink(props) {
 
 function AdminLink(props) {
   if (
-    props.type === undefined ||
+    props.type === "none" ||
     props.type === "client" ||
-    props.type === "employee"
+    props.type === "employee" ||
+    props.type === undefined
   ) {
     return null;
   } else if (props.type === "admin") {
@@ -161,7 +167,11 @@ function AdminLink(props) {
 }
 
 function EmployeeLink(props) {
-  if (props.type === undefined || props.type === "client") {
+  if (
+    props.type === undefined ||
+    props.type === "none" ||
+    props.type === "client"
+  ) {
     return null;
   } else if (props.type === "admin" || props.type === "employee") {
     return (
@@ -176,3 +186,5 @@ function EmployeeLink(props) {
     return null;
   }
 }
+
+export default Navigation;
