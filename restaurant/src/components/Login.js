@@ -49,6 +49,7 @@ export class Login extends Component {
     axios({
       method: "post",
       url: "http://backend.fruitcompany.rocks/loginUser",
+//      withCredentials: true,
       data: user,
     })
       .then((res) => {
@@ -56,7 +57,8 @@ export class Login extends Component {
         window.location.href = "/";
       })
       .catch((err) => {
-        this.setState({ error: "Incorrect username or password" });
+        console.log('HERE YOU DINGUS',err);
+	this.setState({ error: 'Incorrect user or password' });
       });
   }
 

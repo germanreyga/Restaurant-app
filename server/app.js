@@ -55,18 +55,37 @@ app.use(
   })
 );
 app.use(flash());
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", routes);
+//changes for corse
+/*
+app.use(function (req, res, next) {
+	    res.setHeader('Access-Control-Allow-Credentials', true);
+	    // Website you wish to allow to connect
+	     res.setHeader('Access-Control-Allow-Origin', 'http://fruitcompany.rocks');
+	
+	     // Request methods you wish to allow
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	
+	                 // Request headers you wish to allow
+	                     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	
+	                         // Pass to next layer of middleware
+	                             next();
+	                             });
+	                           
 
+*/
 // Cors config
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
 };
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 module.exports = { app: app, server: server };

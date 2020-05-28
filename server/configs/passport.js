@@ -26,6 +26,7 @@ const verifyCallback = async (inputUsername, inputPassword, done) => {
       }
     })
     .catch(err => {
+      console.log('wooowo what an error !: ',err);
       done(err);
     });
 };

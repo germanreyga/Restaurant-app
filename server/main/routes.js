@@ -18,8 +18,8 @@ router.post(
 router.post(
   "/loginUser",
   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/register",
+  successRedirect: "http://fruitcompany.rocks/",
+    failureRedirect: "http://fruitcompany.rocks/register",
   })
 );
 
