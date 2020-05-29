@@ -77,6 +77,9 @@ This will run the backend on port 5000 of the PC (if by some reason you change t
 * Food ordering page
 ![order_menu](https://user-images.githubusercontent.com/26470569/82774438-79e2f500-9e0a-11ea-8d56-c262f981487d.png)
 
+* Adding items to the cart
+![cart_example](https://user-images.githubusercontent.com/26470569/83167108-7040e200-a0d5-11ea-9f9a-bde0ab23d8c0.png)
+
 * Admin dashboard
 ![admin_menu](https://user-images.githubusercontent.com/26470569/82774302-0e992300-9e0a-11ea-9b5e-2d3f4ca9323b.png)
 
