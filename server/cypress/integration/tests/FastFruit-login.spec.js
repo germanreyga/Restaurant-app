@@ -1,14 +1,14 @@
-describe('http://localhost:3000', ()=> {
+describe('http://fruitcompany.rocks', ()=> {
     describe('Operations Based on Login', ()=> {
         it('Should be able to log in', () => {
-            cy.visit('http://localhost:3000');
+            cy.visit('http://fruitcompany.rocks');
             cy.contains('Login').click();
             cy.get('#inputUsername').clear().type('admin');
             cy.get('#inputPassword').clear().type('admin');
             cy.get('#sendCredentials').click();
         });
         it('Should be able to order food', () => {
-            cy.visit('http://localhost:3000');
+            cy.visit('http://fruitcompany.rocks');
             cy.contains('Login').click();
             cy.get('#inputUsername').clear().type('admin');
             cy.get('#inputPassword').clear().type('admin');
@@ -20,7 +20,7 @@ describe('http://localhost:3000', ()=> {
             cy.contains('SUBMIT ORDER').end();
         });
         it('Should be able to use the admin tools', () => {
-            cy.visit('http://localhost:3000');
+            cy.visit('http://fruitcompany.rocks');
             cy.contains('Login').click();
             cy.get('#inputUsername').clear().type('admin');
             cy.get('#inputPassword').clear().type('admin');
