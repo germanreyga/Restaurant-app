@@ -13,6 +13,18 @@ The `restaurant` folder contains the frontend, the `server` folder contains the 
    - Functional components are easier to read, understand and maintain than class components
    - Redux could've been implemented instead of the Context API, thinking about the project's scalability and use cases
    - Bootstrap is a great tool for rapid design and for its grid system, but probably it could've been better just to use CSS grid tools for the layout instead use a more powerful tool for styling components such as Styled Components or Ant Design
+   
+
+## Main technologies used
+
+- React
+- Node.js (Express)
+- MySQL
+- Socket.io
+- react-bootstrap
+- Axios
+- Mocha
+
 
 ## Install dependencies
 
@@ -57,16 +69,6 @@ On a new terminal, on root directory:
 1. `npm run devstart`
 
 This will run the backend on port 5000 of the PC (if by some reason you change the backend's port number, be sure to update the "proxy": "http://localhost:5000" line in the frontend's package.json file accordingly)
-
-## Main technologies used
-
-- React
-- Node.js (Express)
-- MySQL
-- Socket.io
-- react-bootstrap
-- Axios
-- Mocha
 
 ## How to run unitary tests
 
