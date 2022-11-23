@@ -30,7 +30,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   },
   "devDependencies": {
     "knex": "^0.20.13",
