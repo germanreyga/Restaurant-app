@@ -33,7 +33,7 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "knex": "^0.20.13",
+    "knex": "^2.4.0",
     "nodemon": "^2.0.2"
   }
 }
